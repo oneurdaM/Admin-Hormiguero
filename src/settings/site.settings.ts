@@ -1,8 +1,8 @@
 import { Routes } from '@/config/routes'
 
 export const siteSettings = {
-  name: 'Kali Connect',
-  description: 'Kali Connect Admin Panel',
+  name: 'Centro Cultural El Hormiguero',
+  description: 'Centro Cultural El Hormiguero Admin Panel',
   logo: {
     url: '/images/logo.png',
     alt: 'KaliConnect',
