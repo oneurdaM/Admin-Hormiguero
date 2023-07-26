@@ -80,7 +80,11 @@ const LoginForm = () => {
               className="mb-4"
               forgotPageLink={Routes.forgotPassword}
             />
-            <Button className="w-full" loading={isLoading} disabled={isLoading}>
+            <Button
+              className="w-full bg-dark"
+              loading={isLoading}
+              disabled={isLoading}
+            >
               {t('form:button-label-login')}
             </Button>
           </>
