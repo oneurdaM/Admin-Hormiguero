@@ -24,8 +24,10 @@ export default function AuthPageLayout({
       </div>
     </div> */}
       <div className="flex h-screen flex-row">
-        <div className="flex flex-1 items-center justify-center bg-dark text-white">
-          <Image src={logo} alt="logo-bw" loading="eager" />
+        <div className="flex flex-1 items-center justify-center bg-dark text-white ">
+          <div className=" w-auto max-w-[700px]">
+            <Image src={logo} alt="logo-bw" loading="eager" />
+          </div>
         </div>
 
         <div className="flex flex-1 items-center justify-center bg-gray-100">
