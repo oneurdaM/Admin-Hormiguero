@@ -13,7 +13,7 @@ export default function AuthPageLayout({
       className="flex h-screen items-center justify-center sm:bg-gray-100"
       dir="ltr"
     >
-      <div className="m-auto w-full max-w-[420px] rounded p-5 sm:p-8 sm:shadow">
+      <div className="m-auto w-full max-w-[420px] rounded bg-light p-5 sm:p-8 sm:shadow">
         <div className="flex h-[100px] items-center justify-center">
           <Logo />
         </div>
