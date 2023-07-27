@@ -12,7 +12,7 @@ export default function AuthPageLayout({
 
   return (
     <>
-      {/* <div
+      {/* <div // commented jul, 27th, 2023
       className="flex h-screen items-center justify-center sm:bg-gray-100"
       dir="ltr"
     >
@@ -23,8 +23,8 @@ export default function AuthPageLayout({
         {children}
       </div>
     </div> */}
-      <div className="flex h-screen flex-row">
-        <div className="flex flex-1 items-center justify-center bg-dark text-white ">
+      <div className="flex h-screen flex-row" dir="ltr">
+        <div className="hidden flex-1 items-center justify-center bg-dark text-white md:flex ">
           <div className=" w-auto max-w-[700px]">
             <Image src={logo} alt="logo-bw" loading="eager" />
           </div>
