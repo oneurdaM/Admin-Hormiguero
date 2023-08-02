@@ -18,7 +18,7 @@ export default function LoginPage() {
   const router = useRouter()
   const { token, permissions } = getAuthCredentials()
   if (isAuthenticated({ token, permissions })) {
-    router.replace(Routes.dashboard)
+    router.replace(Routes.users.list) //redirect to "/users"
   }
   const { t } = useTranslation('common')
 
