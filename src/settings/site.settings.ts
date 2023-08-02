@@ -32,7 +32,7 @@ export const siteSettings = {
     admin: [
       {
         href: Routes.users.list,
-        label: 'Administrador Usuarios',
+        label: 'Administrador de Usuarios',
         icon: 'UsersIcon',
       },
       {
