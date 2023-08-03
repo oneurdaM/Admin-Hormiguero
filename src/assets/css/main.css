@@ -19,7 +19,7 @@
     /*
     * Hover state color of primary color
     */
-    --color-accent-hover: 41, 145, 206;
+    --color-accent-hover: 127, 127, 127;
 
     /*
     * shade of primary color
@@ -269,4 +269,5 @@
     @apply no-underline;
   }
 }
+
 @import './custom-plugins.css';

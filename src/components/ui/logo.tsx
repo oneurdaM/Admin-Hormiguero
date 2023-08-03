@@ -27,7 +27,7 @@ const Logo: React.FC<React.AnchorHTMLAttributes<{}>> = ({
           alt={siteTitle ?? siteSettings.logo.alt}
           fill
           sizes="(max-width: 768px) 100vw"
-          className="object-contain"
+          className="object-cover"
           loading="eager"
         />
       </span>

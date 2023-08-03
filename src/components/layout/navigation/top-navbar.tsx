@@ -1,29 +1,19 @@
-import Logo from '@/components/ui/logo'
+// import Logo from '@/components/ui/logo'
 import { useUI } from '@/contexts/ui.context'
 import AuthorizedMenu from './authorized-menu'
-import LinkButton from '@/components/ui/link-button'
 import { NavbarIcon } from '@/components/icons/navbar-icon'
 import { motion } from 'framer-motion'
-import { useTranslation } from 'next-i18next'
-import {
-  adminAndOwnerOnly,
-  getAuthCredentials,
-  hasAccess,
-} from '@/utils/auth-utils'
+
 import LanguageSwitcher from './language-switcher'
 import { Config } from '@/config'
-import { Routes } from '@/config/routes'
 
 const Navbar = () => {
-  const { t } = useTranslation()
   const { toggleSidebar } = useUI()
-
-  const { permissions } = getAuthCredentials()
 
   const { enableMultiLang } = Config
 
   return (
-    <header className="fixed z-40 w-full bg-white shadow">
+    <header className="fixed w-full bg-white shadow">
       <nav className="flex items-center justify-between px-5 py-4 md:px-8">
         {/* <!-- Mobile menu button --> */}
         <motion.button
@@ -34,20 +24,9 @@ const Navbar = () => {
           <NavbarIcon />
         </motion.button>
 
-        <div className="hidden ms-5 me-auto md:flex">
-          <Logo />
-        </div>
+        <div className="me-auto ms-5 hidden md:flex">{/* <Logo /> */}</div>
 
         <div className="flex items-center space-s-8">
-          {hasAccess(adminAndOwnerOnly, permissions) && (
-            <LinkButton
-              href={Routes.environments.create}
-              className="ms-4 md:ms-6"
-              size="small"
-            >
-              {t('common:text-create-environment')}
-            </LinkButton>
-          )}
           {enableMultiLang ? <LanguageSwitcher /> : null}
           <AuthorizedMenu />
         </div>

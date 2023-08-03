@@ -6,42 +6,54 @@ export const Routes = {
   settings: '/settings',
   forgotPassword: '/forgot-password',
   profileUpdate: '/profile-update',
-  message: {
-    ...routesFactory('/message'),
+  users: {
+    ...routesFactory('/users'),
   },
-  userMessage: {
-    ...routesFactory('/user-message'),
+  orders: {
+    ...routesFactory('/orders'),
+  },
+  products: {
+    ...routesFactory('/products'),
   },
   blog: {
     ...routesFactory('/blog'),
   },
-  cateogires: {
-    ...routesFactory('/categories'),
-  },
-  storeNotice: {
-    ...routesFactory('/notices'),
-  },
-  alerts: {
-    ...routesFactory('/alerts'),
-  },
-  suggestions: {
-    ...routesFactory('/suggestions'),
-  },
-  tracker: {
-    ...routesFactory('/tracker'),
-  },
-  environments: {
-    ...routesFactory('/environments'),
-  },
-  users: {
-    ...routesFactory('/users'),
-  },
-  operators: {
-    ...routesFactory('/operators'),
-  },
-  conversations: {
-    ...routesFactory('/message'),
-  },
+  // message: {
+  //   ...routesFactory('/message'),
+  // },
+  // userMessage: {
+  //   ...routesFactory('/user-message'),
+  // },
+  // blog: {
+  //   ...routesFactory('/blog'),
+  // },
+  // cateogires: {
+  //   ...routesFactory('/categories'),
+  // },
+  // storeNotice: {
+  //   ...routesFactory('/notices'),
+  // },
+  // alerts: {
+  //   ...routesFactory('/alerts'),
+  // },
+  // suggestions: {
+  //   ...routesFactory('/suggestions'),
+  // },
+  // tracker: {
+  //   ...routesFactory('/tracker'),
+  // },
+  // environments: {
+  //   ...routesFactory('/environments'),
+  // },
+  // users: {
+  //   ...routesFactory('/users'),
+  // },
+  // operators: {
+  //   ...routesFactory('/operators'),
+  // },
+  // conversations: {
+  //   ...routesFactory('/message'),
+  // },
 }
 
 function routesFactory(endpoint: string) {

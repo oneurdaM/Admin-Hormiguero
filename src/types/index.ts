@@ -17,14 +17,14 @@ export interface StoreNoticeQueryOptions extends QueryOptions {
 ;[
   {
     id: 1,
-    name: 'Kali Connect',
+    name: 'Centro Cultural El Hormiguero',
     logo: null,
     active: false,
     primary_color: '#0f406b',
     secondary_color: '#1285c1',
     Segment: {
       id: 1,
-      name: 'kali-connect',
+      name: 'centro-cultural-el-hormiguero',
       environmentId: 1,
     },
   },
