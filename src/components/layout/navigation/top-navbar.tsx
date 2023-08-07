@@ -13,7 +13,7 @@ const Navbar = () => {
   const { enableMultiLang } = Config
 
   return (
-    <header className="fixed w-full bg-white shadow">
+    <header className="fixed z-10 w-full bg-white shadow">
       <nav className="flex items-center justify-between px-5 py-4 md:px-8">
         {/* <!-- Mobile menu button --> */}
         <motion.button

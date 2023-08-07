@@ -29,7 +29,7 @@ const AdminLayout: React.FC<{ children?: React.ReactNode }> = ({
         <SidebarItemMap />
       </MobileNavigation>
       <div className="flex flex-1 pt-20">
-        <aside className="xl:w-76 fixed bottom-0 hidden h-full w-72 overflow-y-auto bg-dark px-4 pt-5 shadow ltr:left-0 ltr:right-auto rtl:left-auto rtl:right-0 lg:block">
+        <aside className="xl:w-76 fixed bottom-0 z-20 hidden h-full w-72 overflow-y-auto bg-dark px-4 pt-5 shadow ltr:left-0 ltr:right-auto rtl:left-auto rtl:right-0 lg:block">
           <div className=" flex justify-center">
             <span
               className="relative overflow-hidden"
