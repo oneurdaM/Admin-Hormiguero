@@ -36,19 +36,39 @@ export const siteSettings = {
         icon: 'UsersIcon',
       },
       {
-        href: Routes.orders.list,
-        label: 'Monitoreo de Pedidos',
-        icon: 'DashboardIcon',
+        href: Routes.users.list,
+        label: 'Monitor de Alertas',
+        icon: 'Bell',
       },
       {
-        href: Routes.products.list,
+        href: Routes.users.list,
+        label: 'Monitor de Pedidos',
+        icon: 'ProductsIcon', //change
+      },
+      {
+        href: Routes.users.list,
+        label: 'Monitor de Eventos',
+        icon: 'ShopIcon', //change
+      },
+      {
+        href: Routes.users.list,
         label: 'Productos',
-        icon: 'ProductsIcon',
+        icon: 'TagIcon',
+      },
+      {
+        href: Routes.users.list,
+        label: 'Impacto Social',
+        icon: 'ReviewIcon', //change
       },
       {
         href: Routes.blog.list,
         label: 'Blog de Notas',
-        icon: 'ReviewIcon',
+        icon: 'ChatIcon', //change
+      },
+      {
+        href: Routes.users.list,
+        label: 'Catálogos',
+        icon: 'DashboardIcon', //change
       },
       // {
       //   href: Routes.dashboard,
