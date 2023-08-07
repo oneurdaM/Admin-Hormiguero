@@ -6,7 +6,7 @@ import { UsersResponse } from '@/types/users'
 import { useForm } from 'react-hook-form'
 import Card from '../common/card'
 import Description from '../ui/description'
-import FileInput from '../ui/file-input'
+// import FileInput from '../ui/file-input'
 import Input from '../ui/input'
 import Button from '../ui/button'
 
@@ -38,7 +38,7 @@ export default function ProfileUpdateForm({ me }: UsersResponse | any) {
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
+      {/* <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
         <Description
           title="Avatar"
           details="Actualiza tu foto de perfil"
@@ -47,7 +47,7 @@ export default function ProfileUpdateForm({ me }: UsersResponse | any) {
         <Card className="w-full sm:w-8/12 md:w-2/3">
           <FileInput name="image" control={control} />
         </Card>
-      </div>
+      </div> */}
       <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
         <Description
           title="Nombre"
