@@ -33,9 +33,9 @@ export const Routes = {
   // storeNotice: {
   //   ...routesFactory('/notices'),
   // },
-  // alerts: {
-  //   ...routesFactory('/alerts'),
-  // },
+  alerts: {
+    ...routesFactory('/alerts'),
+  },
   // suggestions: {
   //   ...routesFactory('/suggestions'),
   // },
