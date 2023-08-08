@@ -1,6 +1,6 @@
 {
   "env": {
-    "NEXT_PUBLIC_REST_API_ENDPOINT": "https://hormiguero1-ff8b257ea498.herokuapp.com",
+    "NEXT_PUBLIC_REST_API_ENDPOINT": "https://centro-cultural-el-hormiguero-9st2.vercel.app",
     "NEXT_PUBLIC_GOOGLE_MAP_API_KEY": "AIzaSyDbQ0EYliA5mpyqIwU9RfohMU5cVUHs6Hc",
     "NEXT_PUBLIC_AUTH_TOKEN_KEY": "AUTH_CRED",
     "APPLICATION_MODE": "production",
@@ -10,7 +10,7 @@
   },
   "build": {
     "env": {
-      "NEXT_PUBLIC_REST_API_ENDPOINT": "https://hormiguero1-ff8b257ea498.herokuapp.com",
+      "NEXT_PUBLIC_REST_API_ENDPOINT": "https://centro-cultural-el-hormiguero-9st2.vercel.app",
       "NEXT_PUBLIC_GOOGLE_MAP_API_KEY": "AIzaSyDbQ0EYliA5mpyqIwU9RfohMU5cVUHs6Hc",
       "NEXT_PUBLIC_AUTH_TOKEN_KEY": "AUTH_CRED",
       "APPLICATION_MODE": "production",
