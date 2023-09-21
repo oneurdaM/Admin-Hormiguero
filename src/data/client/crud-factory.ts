@@ -18,10 +18,10 @@ export function crudFactory<Type, QueryParams, InputType>(endpoint: string) {
     create(data: InputType) {
       return HttpClient.post<Type>(endpoint, data)
     },
-    update({ id, ...input }: Partial<InputType> & { id: string }) {
+    update({ id, ...input }: Partial<InputType> & { id: number }) {
       return HttpClient.put<Type>(`${endpoint}/${id}`, input)
     },
-    delete({ id }: { id: string }) {
+    delete(id: number) {
       return HttpClient.delete<boolean>(`${endpoint}/${id}`)
     },
   }

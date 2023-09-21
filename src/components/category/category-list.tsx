@@ -6,6 +6,9 @@ import { siteSettings } from '@/settings/site.settings'
 import { MappedPaginatorInfo } from '@/types'
 import { Category } from '@/types/category'
 import { formatDate } from '@/utils/format-date'
+import { AlignType } from 'rc-table/lib/interface'
+import ActionButtons from '../ui/action-buttons'
+import { Routes } from '@/config/routes'
 
 type CategoryListProps = {
   categories: Category[]
@@ -37,9 +40,9 @@ const CategoryList = ({
       ),
     },
     {
-      title: 'Título',
-      dataIndex: 'title',
-      key: 'title',
+      title: 'Nombre',
+      dataIndex: 'name',
+      key: 'name',
       align: 'center',
     },
     {
@@ -56,11 +59,26 @@ const CategoryList = ({
       align: 'center',
       render: (date: string) => <span>{formatDate(date)}</span>,
     },
+    {
+      title: 'Acciones',
+      dataIndex: 'id',
+      key: 'id',
+      align: 'right' as AlignType,
+      render: (id: string) => {
+        return (
+          <ActionButtons
+            id={id}
+            detailsUrl={Routes.categories.details({ id })}
+            deleteModalView={'DELETE_CATEGORY'}
+          />
+        )
+      },
+    },
   ]
 
   return (
     <>
-      <div className="mb-6 overflow-hidden rounded shadow">
+      <div className="mb-6 overflow-hidden overflow-x-scroll rounded shadow">
         <Table columns={columns} data={categories} rowKey={'id'} />
       </div>
       {!!paginatorInfo?.total && (

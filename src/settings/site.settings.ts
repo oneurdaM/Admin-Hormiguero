@@ -5,7 +5,7 @@ export const siteSettings = {
   description: 'Centro Cultural El Hormiguero Admin Panel',
   logo: {
     url: '/images/logo.png',
-    alt: 'KaliConnect',
+    alt: 'Hormiguero',
     href: '/',
     width: 128,
     height: 40,
@@ -23,11 +23,15 @@ export const siteSettings = {
       labelTransKey: 'Perfil',
     },
     {
+      href: Routes.userAlerts.list,
+      labelTransKey: 'Alertas',
+    },
+    {
       href: Routes.logout,
       labelTransKey: 'Salir',
     },
   ],
-  currencyCode: 'USD',
+  currencyCode: 'MXN',
   sidebarLinks: {
     admin: [
       {
@@ -37,89 +41,44 @@ export const siteSettings = {
       },
       {
         href: Routes.users.list,
-        label: 'Monitor de Alertas',
+        label: 'Pedidos',
+        icon: 'DashboardIcon',
+      },
+      {
+        href: Routes.products.list,
+        label: 'Productos',
+        icon: 'ProductsIcon',
+      },
+      {
+        href: Routes.alerts.list,
+        label: 'Configuración de Alertas',
         icon: 'Bell',
       },
-      {
-        href: Routes.users.list,
-        label: 'Monitor de Pedidos',
-        icon: 'ProductsIcon', //change
-      },
-      {
-        href: Routes.users.list,
-        label: 'Monitor de Eventos',
-        icon: 'ShopIcon', //change
-      },
-      {
-        href: Routes.users.list,
-        label: 'Productos',
-        icon: 'TagIcon',
-      },
-      {
-        href: Routes.users.list,
-        label: 'Impacto Social',
-        icon: 'ReviewIcon', //change
-      },
-      {
-        href: Routes.blog.list,
-        label: 'Blog de Notas',
-        icon: 'ChatIcon', //change
-      },
-      {
-        href: Routes.users.list,
-        label: 'Catálogos',
-        icon: 'DashboardIcon', //change
-      },
       // {
-      //   href: Routes.dashboard,
-      //   label: 'Dashboard',
-      //   icon: 'DashboardIcon',
-      // },
-      // {
-      //   href: Routes.conversations.list,
-      //   label: 'Chat',
-      //   icon: 'ChatIcon',
-      // },
-      // {
-      //   href: Routes.users.list,
-      //   label: 'Usuarios',
-      //   icon: 'UsersIcon',
-      // },
-      // {
-      //   href: Routes.environments.list,
-      //   label: 'Entornos',
-      //   icon: 'EnvironmentsIcon',
-      // },
-      // {
-      //   href: Routes.storeNotice.list,
-      //   label: 'sidebar-nav-item-store-notice',
-      //   icon: 'StoreNoticeIcon',
-      // },
-      // {
-      //   href: Routes.blog.list,
-      //   label: 'Notas',
-      //   icon: 'ProductsIcon',
-      // },
-      // {
-      //   href: Routes.cateogires.list,
-      //   label: 'Categorías',
-      //   icon: 'CategoriesIcon',
-      // },
-      // {
-      //   href: Routes.alerts.list,
-      //   label: 'Alertas',
+      //   href: Routes.modules.list,
+      //   label: 'Modulos y Tareas',
       //   icon: 'Bell',
       // },
       // {
-      //   href: Routes.suggestions.list,
-      //   label: 'Sugerencias',
-      //   icon: 'ReviewIcon',
+      //   href: Routes.events.list,
+      //   label: 'Eventos',
+      //   icon: 'UsersIcon',
       // },
       // {
-      //   href: Routes.settings,
-      //   label: 'Configuración',
-      //   icon: 'SettingsIcon',
+      //   href: Routes.casts.list,
+      //   label: 'Elencos',
+      //   icon: 'UsersIcon',
       // },
+      // {
+      //   href: Routes.genders.list,
+      //   label: 'Genres',
+      //   icon: 'UsersIcon',
+      // },
+      {
+        href: Routes.blog.list,
+        label: 'Blog',
+        icon: 'ReviewIcon',
+      },
     ],
   },
   avatar: {

@@ -1,25 +1,20 @@
-import { Alert } from './alerts'
-
 export interface UsersResponse {
   id: number
   username: string
   email: string
   firstName: string
+  middleName?: string | null
   lastName: string
-  middleName?: null
-  image?: null
+  image?: string | null
   emailVerified?: boolean
-  birthDate?: null
+  birthDate?: null | string
   registrationDate?: Date
   lastSeen?: Date
   role: string
   banned: boolean
   online?: boolean
-  oneSignalId?: null
-  environmentId?: null
-  alerts?: Alert[]
-  conversations?: any[]
-  Tracking?: Tracking[]
+
+  // oneSignalId?: null
 }
 
 export interface Tracking {
@@ -33,8 +28,11 @@ export interface Tracking {
 
 export enum Role {
   User = 'USER',
-  Admin = 'ADMIN',
-  Operator = 'OPERATOR',
+  Director= 'DIRECTOR',
+  Coordination = 'COORDINATION',
+  Communication = 'COMMUNICATION',
+  Technicalarea = 'TECHNICALAREA',
+  Cafeteria = 'CAFETERIA',
 }
 
 export type UserPagination = {
@@ -52,4 +50,6 @@ export type UserRegistration = {
   firstName: string
   middleName?: string | null
   lastName: string
+  birthDate: string
+  role: string | null
 }

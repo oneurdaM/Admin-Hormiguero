@@ -3,6 +3,7 @@ export const API_ENDPOINTS = {
   LOGOUT: '/auth/logout',
   LOGIN: '/auth/login',
   ME: '/users/me',
+  EVENTS: '/events',
   STAFFS: '/staffs',
   ADD_STAFF: '/staffs',
   REMOVE_STAFF: '/staffs',
@@ -30,7 +31,14 @@ export const API_ENDPOINTS = {
   ENVIRONMENTS: 'configuration/environments',
   CATEGORY: 'category',
   ALERTS: 'alerts',
+  NOTICE: 'notice',
+  PRODUCTS: 'product',
+  PRODUCTS_CATEGORIES: 'catalog-prodructs', //has a typo
 
   TRACKER: 'tracker',
   TRACK_USER: 'tracker/user',
+
+  // Cast
+  CAST: 'casts',
+  GENDER: 'genders',
 }

@@ -1,11 +1,13 @@
 import { useCreateNoteMutation, useUpdateNoteMutation } from '@/data/blog'
-import { useMeQuery } from '@/data/users'
 import { Note } from '@/types/blog'
 import { getErrorMessage } from '@/utils/form-error'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
+import { useState } from 'react'
 
+import Select from '../select/select'
+import Label from '../ui/label'
 import Card from '../common/card'
 import Button from '../ui/button'
 import Description from '../ui/description'
@@ -14,6 +16,7 @@ import Input from '../ui/input'
 import TextArea from '../ui/text-area'
 import { noteValidationSchema } from './note-validation-schema'
 import { slugglify } from '@/utils/slugglify'
+import { useCategoriesQuery } from '@/data/category'
 
 type FormValues = {
   id: number
@@ -31,7 +34,9 @@ type IProps = {
 
 export default function CreateOrUpdateNoteForm({ initialValues }: IProps) {
   const router = useRouter()
-  const { data } = useMeQuery()
+  const [selectedCategory, setSelectedCategory] = useState(
+    initialValues?.categoryId ?? null
+  )
 
   const {
     register,
@@ -49,6 +54,11 @@ export default function CreateOrUpdateNoteForm({ initialValues }: IProps) {
     }),
   })
 
+  const { categories, loading: loadingCategories } = useCategoriesQuery({
+    limit: 10,
+    page: 1,
+    search: '',
+  })
   const { mutate: updateNote, isLoading: updating } = useUpdateNoteMutation()
   const { mutate: createNote, isLoading: creating } = useCreateNoteMutation()
 
@@ -59,25 +69,19 @@ export default function CreateOrUpdateNoteForm({ initialValues }: IProps) {
       content,
       slug: slugglify(title),
       image: image ?? initialValues?.image ?? '',
-      createdBy: initialValues?.createdBy ?? data!.id, // Add userID admin here
+      categoryId: selectedCategory,
     }
 
     try {
       if (!initialValues) {
-        //console.log('create', input)
-        createNote({
-          ...input,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        })
+        createNote(input)
       } else {
         updateNote({
-          id: initialValues?.id.toString() ?? '0',
+          id: initialValues?.id,
           ...input,
         })
       }
     } catch (error) {
-      //console.log('error', error)
       const serverErrors = getErrorMessage(error)
       Object.keys(serverErrors?.validation).forEach((field: any) => {
         setError(field.split('.')[1], {
@@ -91,7 +95,7 @@ export default function CreateOrUpdateNoteForm({ initialValues }: IProps) {
   const imageInformation = (
     <span>
       Carga la imagen de la nota desde aquí <br />
-      La dimensión de la imagen se recomienda sea de &nbsp;
+      La dimensión de la imagen se recomienda sea de&nbsp;
       <span className="font-bold">1024x1024 px</span>
     </span>
   )
@@ -100,7 +104,7 @@ export default function CreateOrUpdateNoteForm({ initialValues }: IProps) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
         <Description
-          title="Imágen"
+          title="Imagen"
           details={imageInformation}
           className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
         />
@@ -119,6 +123,7 @@ export default function CreateOrUpdateNoteForm({ initialValues }: IProps) {
           <Input
             {...register('title')}
             label="Titulo"
+            placeholder="Titulo de nota"
             variant="outline"
             className="mb-5"
             error={errors?.title?.message}
@@ -126,10 +131,24 @@ export default function CreateOrUpdateNoteForm({ initialValues }: IProps) {
 
           <TextArea
             label="Contenido"
+            placeholder="Contenido de nota"
             {...register('content')}
             variant="outline"
             className="mb-5"
             error={errors?.content?.message}
+          />
+
+          <Label className="mb-4">Categoría</Label>
+          <Select
+            name="cateogry"
+            isLoading={loadingCategories}
+            options={categories ?? []}
+            getOptionLabel={(option: any) => option?.name ?? ''}
+            getOptionValue={(option: any) => option?.id ?? ''}
+            placeholder="Categoría de nota"
+            onChange={(value: any) => setSelectedCategory(value?.id ?? null)}
+            isClearable={true}
+            // defaultValue={{ label: initi.role, value: user.role }}
           />
         </Card>
       </div>

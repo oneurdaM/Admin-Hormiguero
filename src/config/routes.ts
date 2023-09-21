@@ -15,45 +15,34 @@ export const Routes = {
   products: {
     ...routesFactory('/products'),
   },
+  productsCategories: {
+    ...routesFactory('/products-categories'),
+  },
   blog: {
     ...routesFactory('/blog'),
   },
-  // message: {
-  //   ...routesFactory('/message'),
-  // },
-  // userMessage: {
-  //   ...routesFactory('/user-message'),
-  // },
-  // blog: {
-  //   ...routesFactory('/blog'),
-  // },
-  // cateogires: {
-  //   ...routesFactory('/categories'),
-  // },
-  // storeNotice: {
-  //   ...routesFactory('/notices'),
-  // },
+  categories: {
+    ...routesFactory('/categories')
+  },
+  events: {
+    ...routesFactory('/events'),
+  },
+  casts: {
+    ...routesFactory('/casts'),
+  },
+  genders: {
+    ...routesFactory('/genders'),
+  },
   alerts: {
     ...routesFactory('/alerts'),
   },
-  // suggestions: {
-  //   ...routesFactory('/suggestions'),
-  // },
-  // tracker: {
-  //   ...routesFactory('/tracker'),
-  // },
-  // environments: {
-  //   ...routesFactory('/environments'),
-  // },
-  // users: {
-  //   ...routesFactory('/users'),
-  // },
-  // operators: {
-  //   ...routesFactory('/operators'),
-  // },
-  // conversations: {
-  //   ...routesFactory('/message'),
-  // },
+  userAlerts: {
+    ...routesFactory('/'),
+  },
+  modules: {
+    ...routesFactory('/modules-tasks'),
+  },
+  
 }
 
 function routesFactory(endpoint: string) {

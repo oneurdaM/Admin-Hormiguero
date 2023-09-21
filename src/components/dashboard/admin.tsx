@@ -1,17 +1,12 @@
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
-import Datepicker from 'react-tailwindcss-datepicker'
-import dayjs from 'dayjs'
 
 import StickerCard from '@/components/widgets/sticker-card'
 import ErrorMessage from '@/components/ui/error-message'
 import Loader from '@/components/ui/loader/loader'
 import { Bell } from '@/components/icons/sidebar/bell'
-import { NotesIcon } from '@/components/icons/notes-icon'
 
 import { useAnalyticsQuery } from '@/data/analytics'
-import Card from '../common/card'
-import { UserIcon } from '../icons/user-icon'
 
 export default function Dashboard() {
   const { t } = useTranslation()
@@ -38,75 +33,38 @@ export default function Dashboard() {
     setValue(value)
   }
 
-  function formatDate(date: Date) {
-    return dayjs(date).format('DD MMMM, YYYY')
-  }
-
   return (
     <>
-      <div className="mb-6 grid w-full grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+      <div className="mb-6 w-full grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
         <div className="w-full">
           <StickerCard
-            titleTransKey="sticker-card-title-rev"
-            subtitleTransKey="sticker-card-subtitle-rev"
+            // titleTransKey="sticker-card-title-rev"
+            titleTransKey="Nombre de la alerta - Nueva"
+            subtitleTransKey="Descripción de la alerta - fecha: 10/09/2023 16:00 hrs"
             icon={<Bell className="h-7 w-7" color="#d60000" />}
             iconBgStyle={{ backgroundColor: '#ffafaf' }}
-            price={analytics.alertsCount}
+            // price={analytics.alertsCount}
           />
         </div>
+        <br />
         <div className="w-full">
           <StickerCard
-            titleTransKey="sticker-card-title-order"
-            subtitleTransKey="sticker-card-subtitle-order"
-            icon={<NotesIcon />}
-            price={analytics?.notesCount}
+            titleTransKey="Nombre de la alerta - Vista"
+            subtitleTransKey="Descripción de la alerta - fecha: 1/08/2023 16:00 hrs"
+            icon={<Bell className="h-7 w-7" color="white" />}
+            iconBgStyle={{ backgroundColor: '#024154' }}
           />
         </div>
+        <br />
         <div className="w-full">
           <StickerCard
-            titleTransKey="sticker-card-title-today-rev"
-            icon={<UserIcon />}
-            price={analytics.usersCount}
+            titleTransKey="Nombre de la alerta - Atendida"
+            subtitleTransKey="Descripción de la alerta - fecha: 1/08/2023 16:00 hrs"
+            icon={<Bell className="h-7 w-7" color="white" />}
+            iconBgStyle={{ backgroundColor: '#024154' }}
           />
         </div>
       </div>
-
-      <Card className="mb-6 w-full xl:mb-0">
-        <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-2">
-          <div className="w-full">
-            <Datepicker
-              primaryColor={'sky'}
-              value={value}
-              onChange={handleValueChange}
-              maxDate={new Date()}
-              minDate={new Date('2021-01-01')}
-              displayFormat="DD/MM/YYYY"
-            />
-          </div>
-          <div className="w-full">
-            {/* Put here range selected with format like 23 Jun 2023 */}
-            <div className="col-span-2 mb-4 flex justify-center">
-              <p className="text-center text-gray-700">
-                {selected
-                  ? `${formatDate(value.startDate)} | ${formatDate(
-                      value.endDate
-                    )}`
-                  : 'Seleccione un rango de fechas'}
-              </p>
-            </div>
-
-            {/* Center button */}
-            <div className="col-span-2 flex justify-center">
-              <button
-                className="focus:shadow-outline rounded bg-blue-800 px-4 py-2 font-bold text-white hover:bg-blue-900 focus:outline-none disabled:opacity-50"
-                disabled={!selected}
-              >
-                Descargar Reporte
-              </button>
-            </div>
-          </div>
-        </div>
-      </Card>
     </>
   )
 }

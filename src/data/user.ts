@@ -56,7 +56,7 @@ export const useVerifyForgetPasswordTokenMutation = () => {
 
 export const useUserQuery = ({ id }: { id: number }) => {
   const { data, isLoading, error } = useQuery<UsersResponse, Error>(
-    [API_ENDPOINTS.ALERTS, id],
+    [API_ENDPOINTS.NOTICE, id],
     () => userClient.get({ id }),
     {
       keepPreviousData: true,

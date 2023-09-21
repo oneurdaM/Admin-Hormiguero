@@ -5,54 +5,62 @@ import Description from '../ui/description'
 import Input from '../ui/input'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useCreateCategoryMutation } from '@/data/category'
-import TextArea from '../ui/text-area'
-import Label from '../ui/label'
 import FileInput from '../ui/file-input'
-import { slugglify } from '@/utils/slugglify'
-import SwitchInput from '../ui/switch-input copy'
-import { CreateCategoryInput } from '@/types/category'
+import { categoryValidationSchema } from './category-validation-schema'
 
 type FormValues = {
-  title: string
-  slug: string
-  content: string
-  image?: string | null
-  is_approved: boolean
+  name: string
+  slug?: string
+  thumbnail?: string
+  image?: string
 }
-const CategoryForm = ({ defaultValues }: { defaultValues?: any }) => {
-  const {
-    mutate: createCategory,
-    isLoading: creating,
-    error,
-  } = useCreateCategoryMutation()
+
+const defaultValues: FormValues = {
+  name: '',
+  slug: '',
+  thumbnail: '',
+  image: '',
+}
+
+const CategoryForm = () => {
+  const { mutate: createCategory, isLoading: loading } =
+    useCreateCategoryMutation()
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     control,
+    setError,
   } = useForm<FormValues>({
     defaultValues,
+    resolver: yupResolver(categoryValidationSchema),
   })
 
-  async function onSubmit(values: FormValues) {
-    const body: any = {
-      name: values.title,
-      title: values.title,
-      slug: slugglify(values.title),
-      content: values.content,
-      thumbnail: values.image,
-      is_approved: values.is_approved,
-    }
-    createCategory(body)
+  async function onSubmit({ name, image }: FormValues) {
+    createCategory(
+      { name, image, thumbnail: image, slug: '' },
+      {
+        onError: (error: any) => {
+          if (error.response?.data?.errors) {
+            error.response.data.errors.forEach((error: any) => {
+              setError(error.field, {
+                type: 'manual',
+                message: error.message,
+              })
+            })
+          }
+        },
+      }
+    )
   }
 
   return (
     <form noValidate onSubmit={handleSubmit(onSubmit)}>
       <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
         <Description
-          title="Imágen"
-          details={'Sube una imágen para la categoría.'}
+          title="Imagen"
+          details={'Sube una imagen para la categoría.'}
           className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
         />
         <Card className="w-full sm:w-8/12 md:w-2/3">
@@ -68,29 +76,28 @@ const CategoryForm = ({ defaultValues }: { defaultValues?: any }) => {
 
         <Card className="w-full sm:w-8/12 md:w-2/3">
           <Input
-            label="Título"
-            {...register('title')}
+            label="Nombre"
+            {...register('name')}
             type="text"
             variant="outline"
             className="mb-4"
-            error={errors.title?.message?.toString()}
+            error={errors.name?.message?.toString()}
           />
-          <TextArea
+          {/* <TextArea
             label="Contenido"
             className="mb-4"
             variant="outline"
             {...register('content')}
             error={errors.content?.message?.toString()}
           />
-
           <div className="flex items-center gap-x-4">
             <SwitchInput name="is_approved" control={control} />
             <Label className="mb-0">Publicar</Label>
-          </div>
+          </div> */}
         </Card>
       </div>
       <div className="mb-4 text-end sm:mb-8">
-        <Button disabled={creating} loading={creating}>
+        <Button disabled={loading} loading={loading}>
           Crear
         </Button>
       </div>

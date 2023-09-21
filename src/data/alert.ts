@@ -5,7 +5,6 @@ import { useQuery } from 'react-query'
 import { QueryOptionsType } from '../types'
 import { alertClient } from './client/alert'
 import { API_ENDPOINTS } from './client/api-endpoints'
-import { trackerClient } from './client/tracker'
 
 export const useAlertsQuery = (options: Partial<QueryOptionsType>) => {
   const { data, isLoading, error } = useQuery<AlertResponse, Error>(
@@ -28,6 +27,7 @@ export type AlerResponse = {
   alert: Alert
   message: string
 }
+
 export const useAlertQuery = ({ id }: { id: number }) => {
   const { data, isLoading, error } = useQuery<AlerResponse, Error>(
     [API_ENDPOINTS.ALERTS, id],
@@ -43,3 +43,5 @@ export const useAlertQuery = ({ id }: { id: number }) => {
     error,
   }
 }
+
+//register alert here

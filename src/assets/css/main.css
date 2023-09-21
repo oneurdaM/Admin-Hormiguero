@@ -14,12 +14,12 @@
     /*
     * primary color
     */
-    --color-accent: 0, 73, 136;
+    --color-accent: 2, 65, 84;
 
     /*
     * Hover state color of primary color
     */
-    --color-accent-hover: 127, 127, 127;
+    --color-accent-hover: 4, 36, 43;
 
     /*
     * shade of primary color

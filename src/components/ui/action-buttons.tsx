@@ -2,7 +2,6 @@
 import { BanUser } from '@/components/icons/ban-user'
 import { EditIcon } from '@/components/icons/edit'
 import { TrashIcon } from '@/components/icons/trash'
-import { Eye } from '@/components/icons/eye-icon'
 import { CheckMarkCircle } from '@/components/icons/checkmark-circle'
 import { useModalAction } from '@/components/ui/modal/modal.context'
 import { CloseFillIcon } from '@/components/icons/close-fill'
@@ -173,7 +172,7 @@ const ActionButtons = ({
           title={'Detalles'}
           locale={customLocale}
         >
-          <Eye width={24} />
+          <EditIcon width={24} />
         </Link>
       )}
       {

@@ -9,38 +9,65 @@ import Description from '../ui/description'
 import Input from '../ui/input'
 import PasswordInput from '../ui/password-input'
 import { userValidationSchema } from './user-validation-schema'
-import { useEnviromentQuery } from '@/data/enviroment'
 import Select from '../select/select'
-import Loader from '../ui/loader/loader'
 import Label from '../ui/label'
+
+import { Role } from '@/types/users'
+import { useState } from 'react'
 
 type FormValues = {
   firstName: string
+  middleName?: string
   lastName: string
   email: string
   password: string
-  middleName?: string
-  username: string
-  enviroment?: any
+  birthDate: string
+  role: string | null
 }
 
 const defaultValues: FormValues = {
   firstName: '',
+  middleName: '',
   lastName: '',
   email: '',
   password: '',
-  middleName: '',
-  username: '',
-  enviroment: null,
+  birthDate: '',
+  role: null,
 }
+
+const roleOptions = [
+  {
+    label: Role.Director, //translate each label
+    value: Role.Director,
+  },
+  {
+    label: Role.Coordination,
+    value: Role.Coordination,
+  },
+  {
+    label: Role.Communication,
+    value: Role.Communication,
+  },
+  {
+    label: Role.Cafeteria,
+    value: Role.Cafeteria,
+  },
+  {
+    label: Role.Technicalarea,
+    value: Role.Technicalarea,
+  },
+  {
+    label: Role.User,
+    value: Role.User,
+  },
+]
 
 const UserCreateForm = () => {
   const { mutate: registerUser, isLoading: loading } = useRegisterMutation()
-  const { enviroments, loading: loadEnviroment } = useEnviromentQuery({
-    limit: 15,
-    page: 1,
-    search: '',
-  })
+  const [selectedRole, setSelectedRole] = useState<string | null>(null)
+  let currentDate = new Date()
+  currentDate.setFullYear(currentDate.getFullYear() - 18)
+  const minAge = currentDate.toISOString().split('T')[0]
 
   const {
     register,
@@ -54,11 +81,11 @@ const UserCreateForm = () => {
 
   async function onSubmit({
     firstName,
+    middleName,
     lastName,
     email,
     password,
-    middleName,
-    username,
+    birthDate,
   }: FormValues) {
     registerUser(
       {
@@ -67,7 +94,9 @@ const UserCreateForm = () => {
         email,
         password,
         middleName: middleName || null,
-        username,
+        username: email,
+        birthDate,
+        role: selectedRole,
       },
       {
         onError: (error: any) => {
@@ -84,9 +113,6 @@ const UserCreateForm = () => {
     )
   }
 
-  if (loadEnviroment) {
-    return <Loader />
-  }
   return (
     <form noValidate onSubmit={handleSubmit(onSubmit)}>
       <div className="my-5 flex flex-wrap sm:my-8">
@@ -96,29 +122,40 @@ const UserCreateForm = () => {
           className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
         />
         <Card className="w-full sm:w-8/12 md:w-2/3">
-          <Input
-            label="Nombre"
-            {...register('firstName')}
-            type="text"
-            variant="outline"
-            className="mb-4"
-            error={errors.firstName?.message?.toString()}
-          />
-          <Input
-            label="Segundo nombre"
-            className="mb-4"
-            variant="outline"
-            {...register('middleName')}
-          />
+          <div className="flex flex-wrap">
+            <div className="w-full sm:w-1/2">
+              <Input
+                label="Nombre"
+                placeholder="Nombre"
+                type="text"
+                {...register('firstName')}
+                variant="outline"
+                className="mb-5 md:mr-5"
+                error={errors.firstName?.message?.toString()}
+              />
+            </div>
+            <div className="w-full sm:w-1/2">
+              <Input
+                label="Segundo nombre"
+                placeholder="Segundo nombre"
+                className="mb-5 md:ml-5"
+                variant="outline"
+                {...register('middleName')}
+                error={errors.middleName?.message?.toString()}
+              />
+            </div>
+          </div>
           <Input
             label="Apellido"
+            placeholder="Apellido"
             className="mb-4"
             variant="outline"
             {...register('lastName')}
-            error={errors.middleName?.message?.toString()}
+            error={errors.lastName?.message?.toString()}
           />
           <Input
             label="Email"
+            placeholder="Email"
             className="mb-4"
             type="email"
             variant="outline"
@@ -128,28 +165,32 @@ const UserCreateForm = () => {
           <PasswordInput
             {...register('password')}
             label="Contraseña"
+            placeholder="Contraseña"
             className="mb-4"
             variant="outline"
             error={errors.password?.message?.toString()}
           />
           <Input
-            label="Usuario"
-            className="mb-4"
+            type="date"
+            label="Fecha de nacimiento"
+            placeholder="Fecha de nacimiento"
+            {...register('birthDate')}
             variant="outline"
-            {...register('username')}
-            error={errors.username?.message?.toString()}
+            className="mb-5"
+            max={minAge}
+            error={errors.birthDate?.message?.toString()}
           />
 
-          {/* <Label className="mb-4">Selecciona el Ambiente</Label>
+          <Label className="mb-4">Rol de usuario</Label>
           <Select
-            options={enviroments ?? []}
             isLoading={loading}
-            getOptionLabel={(option: any) => option?.name ?? ''}
-            getOptionValue={(option: any) => option?.id ?? ''}
-            placeholder="Encuentra a un usuario"
-            onChange={(value: any) => console.log(value)}
+            options={roleOptions}
+            getOptionLabel={(option: any) => option?.label ?? ''}
+            getOptionValue={(option: any) => option?.value ?? ''}
+            placeholder="Rol del usuario"
+            onChange={(value: any) => setSelectedRole(value?.value ?? null)}
             isClearable={true}
-          /> */}
+          />
         </Card>
       </div>
       <div className="mb-4 text-end sm:mb-8">

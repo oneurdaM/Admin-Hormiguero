@@ -1,21 +1,23 @@
 export interface Alert {
   id: number
-  content: string
-  image: string
-  userId: number
-  status: AlertStatus
-  latitude: number
-  longitude: number
-  createdAt: string
-  updatedAt: string
-  user?: {
+  description: string
+  alertName: string
+  module: string
+  task: string
+  repeat: RepeatAlert
+  dateRange: {
+    start: string
+    end: string
+  }
+  userCreates?: {
     email: string
     id: number
     name: string
-    latestLocation: {
-      latitude: number
-      longitude: number
-    }
+  }
+  userReceives?: {
+    email: string
+    id: number
+    name: string
   }
 }
 
@@ -31,6 +33,14 @@ export enum AlertStatus {
   Solved = 'SOLVED',
   Rejected = 'REJECTED',
   FalseAlarm = 'FALSE_ALARM',
+}
+
+export enum RepeatAlert {
+  daily = 'DAY',
+  weekly = 'WEEK',
+  monthly = 'MONTH',
+  event = 'EVENT',
+  custom = 'CUSTOM',
 }
 
 export interface AlertResponse {

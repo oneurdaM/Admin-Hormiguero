@@ -19,20 +19,20 @@ const UserList = ({ users, paginatorInfo, onPagination }: UserListProps) => {
   const router = useRouter()
 
   const columns = [
-    // {
-    //   title: 'Avatar',
-    //   dataIndex: 'users',
-    //   key: 'users',
-    //   align: 'center' as AlignType,
-    //   render: (image: string) => (
-    //     <Image
-    //       src={image ?? siteSettings.logo.url}
-    //       alt="Avatar"
-    //       width={40}
-    //       height={40}
-    //     />
-    //   ),
-    // },
+    {
+      title: 'Avatar',
+      dataIndex: 'users',
+      key: 'users',
+      align: 'center' as AlignType,
+      render: (image: string) => (
+        <Image
+          src={image ?? siteSettings.logo.url}
+          alt="Avatar"
+          width={40}
+          height={40}
+        />
+      ),
+    },
     {
       title: 'Nombre',
       dataIndex: 'firstName',
@@ -51,15 +51,6 @@ const UserList = ({ users, paginatorInfo, onPagination }: UserListProps) => {
       dataIndex: 'email',
       key: 'email',
       align: 'center' as AlignType,
-    },
-    {
-      title: 'Tipo usuario',
-      dataIndex: 'role',
-      key: 'role',
-      align: 'center' as AlignType,
-      render: (role: string) => (
-        <span>{role === 'USER' ? 'Operador' : 'Administrador'}</span>
-      ),
     },
     {
       title: 'Estatus',
@@ -82,12 +73,10 @@ const UserList = ({ users, paginatorInfo, onPagination }: UserListProps) => {
         return (
           <ActionButtons
             id={id}
-            // userStatus={true}
-            // isUserActive={!banned}
-            // showMakeAdminButton={true}
+            userStatus={true}
+            isUserActive={!banned}
             detailsUrl={`${router.asPath}/${id}`}
             role={role as Role}
-            // editUrl={`/users/${id}`}
           />
         )
       },
@@ -95,8 +84,8 @@ const UserList = ({ users, paginatorInfo, onPagination }: UserListProps) => {
   ]
   return (
     <>
-      <div className="mb-6 overflow-hidden rounded shadow">
-        <Table columns={columns} data={users} rowKey={'id'} />
+      <div className="mb-6 overflow-hidden overflow-x-auto rounded shadow">
+        <Table columns={columns} data={users} rowKey={'username'} />
       </div>
       {!!paginatorInfo?.total && (
         <div className="flex items-center justify-end">

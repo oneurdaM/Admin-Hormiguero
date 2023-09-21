@@ -12,7 +12,7 @@ const PageLoader = () => {
     >
       <div className="relative flex">
         <div className={styles.page_loader}></div>
-        <h3 className="absolute top-1/2 -mt-2 w-full text-center text-sm font-semibold italic text-body">
+        <h3 className="absolute top-1/2 -mt-2 w-full text-center text-sm font-semibold italic text-white">
           {t("text-loading")}
         </h3>
       </div>

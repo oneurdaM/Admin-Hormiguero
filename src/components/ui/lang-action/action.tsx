@@ -16,14 +16,15 @@ export default function LanguageSwitcher({
   id,
   deleteModalView,
   routes,
+  slug
 }: LanguageSwitcherProps) {
   const {
     query: { suggestions },
   } = useRouter()
   return (
     <ActionButtons
-      id={record?.id}
-      editUrl={routes.editWithoutLang(id, suggestions)}
+      id={id}
+      editUrl={routes.editWithoutLang(slug, suggestions)}
       deleteModalView={deleteModalView}
     />
   )

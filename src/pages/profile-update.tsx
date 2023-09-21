@@ -19,7 +19,7 @@ export default function ProfilePage() {
           Actualiza tu perfil
         </h1>
       </div>
-      <ProfileUpdateForm me={data} />
+      <ProfileUpdateForm user={data} />
       <ChangePasswordForm />
     </>
   )

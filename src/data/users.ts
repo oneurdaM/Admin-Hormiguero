@@ -31,10 +31,9 @@ export const useUpdateUserMutation = () => {
 
   return useMutation(userClient.update, {
     onSuccess() {
-      toast.success('User updated successfully')
+      toast.success('Se actualizó la información de usuario')
     },
     onSettled: () => {
-      queryClient.invalidateQueries(API_ENDPOINTS.ME)
       queryClient.invalidateQueries(API_ENDPOINTS.USERS)
     },
   })
@@ -72,7 +71,7 @@ export const useUnblockUserMutation = () => {
 
   return useMutation(userClient.unblock, {
     onSuccess() {
-      toast.success('User unblocked successfully')
+      toast.success('Usuario desbloqueado')
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.USERS)
@@ -85,7 +84,7 @@ export const useBlockUserMutation = () => {
 
   return useMutation(userClient.block, {
     onSuccess() {
-      toast.success('User blocked successfully')
+      toast.success('Usuario bloqueado')
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.USERS)
@@ -93,18 +92,6 @@ export const useBlockUserMutation = () => {
   })
 }
 
-export const useModifyRoleMutation = () => {
-  const queryClient = useQueryClient()
-
-  return useMutation(userClient.modifyRole, {
-    onSuccess() {
-      toast.success('Role modified successfully')
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries(API_ENDPOINTS.USERS)
-    },
-  })
-}
 
 export function useLogin() {
   return useMutation(userClient.login)
