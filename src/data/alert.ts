@@ -1,10 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Alert, AlertResponse } from '@/types/alerts'
 import { mapPaginatorData } from '@/utils/data-mappers'
-import { useQuery } from 'react-query'
+import { useQuery, useQueryClient, useMutation } from 'react-query'
 import { QueryOptionsType } from '../types'
 import { alertClient } from './client/alert'
 import { API_ENDPOINTS } from './client/api-endpoints'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/router'
+
+export type AlertQueryResponse = {
+  data: Alert
+  message: string
+}
 
 export const useAlertsQuery = (options: Partial<QueryOptionsType>) => {
   const { data, isLoading, error } = useQuery<AlertResponse, Error>(
@@ -20,28 +27,66 @@ export const useAlertsQuery = (options: Partial<QueryOptionsType>) => {
     loading: isLoading,
     paginatorInfo: mapPaginatorData(data as any),
     error,
+    data,
   }
 }
 
-export type AlerResponse = {
-  alert: Alert
-  message: string
-}
-
 export const useAlertQuery = ({ id }: { id: number }) => {
-  const { data, isLoading, error } = useQuery<AlerResponse, Error>(
+  const { data, isLoading, error } = useQuery<AlertQueryResponse, Error>(
     [API_ENDPOINTS.ALERTS, id],
     () => alertClient.byId({ id }),
     {
       keepPreviousData: true,
     }
   )
-
   return {
-    alert: data?.alert,
+    Alert: data?.data,
     loading: isLoading,
     error,
   }
 }
 
-//register alert here
+export const useCreateAlertMutation = () => {
+  const queryClient = useQueryClient()
+  const router = useRouter()
+
+  return useMutation(alertClient.register, {
+    onSuccess() {
+      toast.success('Alert created successfully')
+      router.back()
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(API_ENDPOINTS.ALERTS)
+    },
+  })
+}
+
+export const useUpdateAlertMutation = () => {
+  const queryClient = useQueryClient()
+  const router = useRouter()
+
+  return useMutation(alertClient.update, {
+    onSuccess() {
+      toast.success('Alert updated successfully')
+      router.back()
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(API_ENDPOINTS.ALERTS)
+    },
+  })
+}
+
+export const useDeleteAlertMutation = () => {
+  const queryClient = useQueryClient()
+  const router = useRouter()
+
+  return useMutation(alertClient.delete, {
+    onSuccess: () => {
+      toast.success('Alert deleted successfully')
+      router.reload()
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(API_ENDPOINTS.ALERTS)
+    },
+  })
+}

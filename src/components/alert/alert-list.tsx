@@ -1,7 +1,7 @@
 import { Table } from '../ui/table'
 import Pagination from '../ui/pagination'
 
-import { Notice } from '@/types/notices'
+import { Notice } from '@/types/alerts'
 import { MappedPaginatorInfo } from '@/types/index'
 import ActionButtons from '../ui/action-buttons'
 import { AlignType } from 'rc-table/lib/interface'
@@ -35,13 +35,6 @@ const AlertList = ({ alerts, paginatorInfo, onPagination }: AlertListProps) => {
       dataIndex: 'creator',
       key: 'creator',
       align: 'center',
-    },
-    {
-      title: 'Usuario Crea',
-      dataIndex: 'creator',
-      key: 'creator',
-      align: 'center',
-      width: 100,
     },
     {
       title: 'Usuario Recibe',

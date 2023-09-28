@@ -8,6 +8,7 @@ type AvatarProps = {
   width?: number
   height?: number
   online?: boolean
+  alerts?: number | null
   onClick?: () => void
 }
 
@@ -17,12 +18,13 @@ const Avatar: React.FC<AvatarProps> = ({
   alt = 'Avatar',
   onClick,
   online,
+  alerts,
   ...rest
 }) => {
   return (
     <div
       className={cn(
-        'relative h-10 w-10 cursor-pointer overflow-hidden rounded-full border border-border-100',
+        'border-border-900 relative h-10 w-10 cursor-pointer border',
         className
       )}
       {...rest}
@@ -35,18 +37,17 @@ const Avatar: React.FC<AvatarProps> = ({
         sizes="(max-width: 768px) 100vw"
       />
 
-      {online && (
-        <span
-          className="z-2 absolute right-0 top-0 my-1 h-4 w-4 rounded-full border-2 border-white bg-green-400"
-          title="Online"
-        />
-      )}
-      {!online && (
-        <span
-          className="absolute right-0 top-0 my-1 h-4 w-4 rounded-full border-2 border-white bg-red-500"
-          title="Offline"
-        />
-      )}
+      <span
+        className={`z-2 absolute bottom-6 left-7 my-1 h-4 w-4 rounded-full text-xs  
+        ${
+          alerts !== 0
+            ? 'bg-[#FFAEAF] text-[#d60001]'
+            : 'bg-[#024154] text-white'
+        }`}
+        title="New Alerts"
+      >
+        {alerts}
+      </span>
     </div>
   )
 }

@@ -1,29 +1,30 @@
+import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
 import AppLayout from '@/components/layout/app'
 import Card from '@/components/common/card'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import AlertList from '@/components/alert/alert-list'
-import { useState } from 'react'
 import Loader from '@/components/ui/loader/loader'
 import ErrorMessage from '@/components/ui/error-message'
-import { useNoticesQuery } from '@/data/notice'
 import LinkButton from '@/components/ui/link-button'
-import { Routes } from '@/config/routes'
 import Search from '@/components/common/search'
+import { useAlertsQuery } from '@/data/alert'
+import { Routes } from '@/config/routes'
 
 export default function Alerts() {
   const { t } = useTranslation()
   const [searchTerm, setSearchTerm] = useState('')
   const [page, setPage] = useState(1)
-  const { alerts, loading, error, paginatorInfo } = useNoticesQuery({
+  const { alerts, loading, error, paginatorInfo } = useAlertsQuery({
     limit: 5,
     page,
     search: searchTerm,
   })
 
-  if (loading) return <Loader text="Cargando alertas..." />
+  // if (loading) return <Loader text="Cargando alertas..." />
 
-  if (error) return <ErrorMessage message={error.message} />
+  // if (error) return <ErrorMessage message={error.message} />
 
   function handleSearch({ searchText }: { searchText: string }) {
     setSearchTerm(searchText)
@@ -43,13 +44,13 @@ export default function Alerts() {
           </h1>
         </div>
 
-        <div className="ms-auto flex w-full items-center md:w-3/4">
+        <div className="ms-auto flex w-full flex-col items-center space-y-4 md:flex-row md:space-y-0 xl:w-2/3">
           <Search onSearch={handleSearch} />
           <LinkButton
             href={`${Routes.alerts.create}`}
-            className="ms-4 h-12 md:ms-6"
+            className="h-12 w-full md:ms-6 md:w-auto"
           >
-            <span>+ {t('form:button-label-add-alert')}</span>
+            <span>+</span>
           </LinkButton>
         </div>
       </Card>

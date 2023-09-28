@@ -3,9 +3,10 @@ import pick from 'lodash/pick'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useRouter } from 'next/router'
 
 import { alertValidationSchema } from './alert-validation-schema'
-import { useUpdateNoticeMutation } from '@/data/notice'
+import { useUpdateAlertMutation } from '@/data/alert'
 import Card from '../common/card'
 import Button from '../ui/button'
 import Description from '../ui/description'
@@ -18,7 +19,7 @@ import { useUsersQuery } from '@/data/users'
 import { Alert } from '@/types/alerts'
 
 type FormValues = {
-  notice: string
+  alert: string
   description?: string
   notifies_to: number | null
   hour: string
@@ -30,13 +31,13 @@ type WeekDay = {
   checked: boolean
 }
 
-export default function AlertCreateForm({ noticeData }: Alert | any) {
+export default function AlertCreateForm({ alertData }: Alert | any) {
+  const router = useRouter()
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [userReceivesSelect, setUserReceivesSelect] = useState(null)
   const [selected, setSelected] = useState(
-    noticeData?.expiredAt && noticeData?.effectiveFrom ? true : false
+    alertData?.expiredAt && alertData?.effectiveFrom ? true : false
   )
-  const [repeatOn, setRepeatOn] = useState<Number | null>(2)
   const [weekDays, setWeekDays] = useState<WeekDay[]>([
     { day: 'L', checked: false },
     { day: 'M', checked: false },
@@ -48,20 +49,9 @@ export default function AlertCreateForm({ noticeData }: Alert | any) {
   ])
 
   const [value, setValue] = useState({
-    startDate: noticeData?.effectiveFrom ?? new Date(),
-    endDate: noticeData?.expiredAt ?? new Date(),
+    startDate: alertData?.effectiveFrom ?? new Date(),
+    endDate: alertData?.expiredAt ?? new Date(),
   })
-
-  const repeatOnOptions = [
-    {
-      label: 'Diario', // translate
-      value: 1,
-    },
-    {
-      label: 'Personalizado', // translate
-      value: 2,
-    },
-  ]
 
   const { users, loading: loadingUsers } = useUsersQuery({
     limit: 10,
@@ -69,7 +59,7 @@ export default function AlertCreateForm({ noticeData }: Alert | any) {
     search: searchTerm,
   })
 
-  const { mutate: updateNotice, isLoading: loading } = useUpdateNoticeMutation()
+  const { mutate: updatealert, isLoading: loading } = useUpdateAlertMutation()
 
   const {
     register,
@@ -78,26 +68,29 @@ export default function AlertCreateForm({ noticeData }: Alert | any) {
     setError,
   } = useForm<FormValues>({
     defaultValues: {
-      ...(noticeData &&
-        pick(noticeData, ['notice', 'description', 'creator', 'hour'])),
+      ...(alertData &&
+        pick(alertData, ['alert', 'description', 'creator', 'hour'])),
     },
     resolver: yupResolver(alertValidationSchema),
   })
 
-  async function onSubmit({ notice, description, hour }: FormValues) {
+  async function onSubmit({ alert, description, hour }: FormValues) {
     const days: string[] = weekDays
       .filter((item) => item.checked)
       .map((item) => item.day)
 
-    updateNotice(
+    updatealert(
       {
-        notice,
-        description,
-        effectiveFrom: value.startDate,
-        expiredAt: value.endDate,
-        is_approved: true,
-        days,
-        notifies_to: userReceivesSelect,
+        id: alertData.id,
+        input: {
+          alert,
+          description,
+          effectiveFrom: value.startDate,
+          expiredAt: value.endDate,
+          // is_approved: true,
+          days,
+          notifies_to: userReceivesSelect,
+        },
       },
       {
         onError: (error: any) => {
@@ -123,21 +116,10 @@ export default function AlertCreateForm({ noticeData }: Alert | any) {
     setValue(value)
   }
 
-  // const onSelectRepeatOn = (value: { label: string; value: number }) => {
-  //   setRepeatOn(value?.value ?? null)
-
-  //   let checkedWeekDays = weekDays
-  //   checkedWeekDays.forEach((day) => {
-  //     day.checked = value?.label === 'Diario' ? true : false
-  //   })
-
-  //   setWeekDays(checkedWeekDays)
-  // }
-
   const onSelectDay = (e: { target: { value: string } }) => {
     const selected = e.target.value
     const updatedWeekDays = weekDays.map((day) => {
-      if (day.day === selected && repeatOn === 2) {
+      if (day.day === selected) {
         return { ...day, checked: !day.checked }
       }
       return day
@@ -166,11 +148,11 @@ export default function AlertCreateForm({ noticeData }: Alert | any) {
           <Input
             label="Nombre de alerta"
             placeholder="Nombre"
-            {...register('notice')}
+            {...register('alert')}
             type="text"
             variant="outline"
             className="mb-4"
-            error={errors.notice?.message?.toString()}
+            error={errors.alert?.message?.toString()}
           />
 
           <Input
@@ -222,17 +204,6 @@ export default function AlertCreateForm({ noticeData }: Alert | any) {
             className="my-4"
             error={errors.hour?.message?.toString()}
           />
-          {/* <Label className="my-4">Periodicidad</Label>
-          <Select
-            className="mb-4"
-            options={repeatOnOptions}
-            isLoading={loading}
-            getOptionLabel={(option: any) => option?.label ?? ''}
-            getOptionValue={(option: any) => option?.value ?? ''}
-            placeholder="Selecciona la Periodicidad"
-            onChange={(value: any) => onSelectRepeatOn(value)}
-            isClearable={true}
-          /> */}
 
           <Label className="my-4">Días de la semana</Label>
           <div className="col-auto flex w-full gap-5">
@@ -247,9 +218,17 @@ export default function AlertCreateForm({ noticeData }: Alert | any) {
           </div>
         </Card>
       </div>
-      <div className="mb-4 text-end sm:mb-8">
+      <div className="mb-4 text-end">
+        <Button
+          variant="outline"
+          onClick={router.back}
+          className="me-4"
+          type="button"
+        >
+          Atrás
+        </Button>
         <Button disabled={loading} loading={loading}>
-          Crear
+          Actualizar
         </Button>
       </div>
     </form>

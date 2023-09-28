@@ -27,14 +27,14 @@ export default function BlogCategoryDetail() {
   if (error) return <ErrorMessage message={'error'} />
 
   return (
-    <Card className="mb-8">
+    <>
       <div className="flex border-b border-dashed border-border-base py-5 sm:py-8">
         <h1 className="text-lg font-semibold text-heading">
           Detalle Categoría
         </h1>
-        <CategoryDetailForm category={category} />
       </div>
-    </Card>
+      <CategoryDetailForm category={category} />
+    </>
   )
 }
 

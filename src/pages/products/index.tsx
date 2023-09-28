@@ -3,7 +3,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import AppLayout from '@/components/layout/app'
 import { Tabs, Tab } from '@/components/ui/tabs'
 import ProductsTab from '@/components/products/products-tab'
-import ProductsCategoriesTab from '@/components/products-categories/products-categories-tab'
+import DepartmentsTab from '@/components/departments/department-tab'
 
 export default function Products() {
   return (
@@ -12,7 +12,7 @@ export default function Products() {
         <ProductsTab />
       </Tab>
       <Tab label="Categorías de productos">
-        <ProductsCategoriesTab />
+        <DepartmentsTab />
       </Tab>
     </Tabs>
   )

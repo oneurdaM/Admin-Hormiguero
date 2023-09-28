@@ -5,7 +5,7 @@ import AlertDetailForm from '@/components/alert/alert-detail'
 import Layout from '@/components/layout/admin'
 import Loader from '@/components/ui/loader/loader'
 import ErrorMessage from '@/components/ui/error-message'
-import { useNoticeQuery } from '@/data/notice'
+import { useNoticeQuery } from '@/data/alert'
 
 export default function AlertDetail() {
   const router = useRouter()

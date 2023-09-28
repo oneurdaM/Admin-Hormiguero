@@ -10,8 +10,8 @@ const ComposerMessage = dynamic(
 const DeleteProduct = dynamic(
   () => import('@/components/products/delete-product-view')
 )
-const DeleteProductCategory = dynamic(
-  () => import('@/components/products-categories/delete-product-category-view')
+const DeleteDepartment = dynamic(
+  () => import('@/components/departments/delete-department-view')
 )
 const DeleteNotice = dynamic(
   () => import('@/components/alert/delete-alert-view')
@@ -21,6 +21,14 @@ const DeleteCategory = dynamic(
 )
 const DeleteNote = dynamic(() => import('@/components/blog/delete-note-view'))
 
+const ReserveSpaceView = dynamic(
+  () => import('@/components/reservations/reservation-status-view')
+)
+
+const DeleteSpace = dynamic(
+  () => import('@/components/spaces/delete-space-catalog-view')
+)
+
 function renderModal(view: MODAL_VIEWS | undefined, data: any) {
   switch (view) {
     case 'BAN_CUSTOMER':
@@ -29,18 +37,20 @@ function renderModal(view: MODAL_VIEWS | undefined, data: any) {
       return <MakeAdminView />
     case 'COMPOSE_MESSAGE':
       return <ComposerMessage />
-    case 'LOCATE_USER':
-      return <div>Locate User</div>
     case 'DELETE_PRODUCT':
       return <DeleteProduct />
     case 'DELETE_CATALOG':
-      return <DeleteProductCategory />
-    case 'DELETE_NOTICE':
+      return <DeleteDepartment />
+    case 'DELETE_DEPARTMENT':
       return <DeleteNotice />
     case 'DELETE_CATEGORY':
       return <DeleteCategory />
     case 'DELETE_NOTE':
       return <DeleteNote />
+    case 'RESERVATION_STATUS':
+      return <ReserveSpaceView />
+    case 'DELETE_SPACE':
+      return <DeleteSpace />
     default:
       return null
   }

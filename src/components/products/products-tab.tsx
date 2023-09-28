@@ -10,7 +10,6 @@ import Search from '@/components/common/search'
 import Loader from '@/components/ui/loader/loader'
 import ErrorMessage from '@/components/ui/error-message'
 import { useProductsQuery } from '@/data/product'
-// import Overview from '@/components/products/overview'
 
 function ProductsTab() {
   const { t } = useTranslation()
@@ -22,9 +21,9 @@ function ProductsTab() {
     search: searchTerm,
   })
 
-  if (loading) return <Loader text="Cargando productos..." />
+  // if (loading) return <Loader text="Cargando productos..." />
 
-  if (error) return <ErrorMessage message={error.message} />
+  // if (error) return <ErrorMessage message={error.message} />
 
   function handlePagination(current: number) {
     setPage(current)
@@ -44,17 +43,16 @@ function ProductsTab() {
           </h1>
         </div>
 
-        <div className="ms-auto flex w-full items-center justify-between md:w-3/4">
+        <div className="ms-auto flex w-full flex-col items-center space-y-4 md:flex-row md:space-y-0 xl:w-2/3">
           <Search onSearch={handleSearch} />
           <LinkButton
             href={`${Routes.products.create}`}
-            className="ms-4 h-12 md:ms-6"
+            className="h-12 w-full md:ms-6 md:w-auto"
           >
-            <span>+ {t('form:button-label-add-product')}</span>
+            <span>+</span>
           </LinkButton>
         </div>
       </Card>
-      {/* <Overview /> */}
       <ProductsList
         products={products ?? []}
         paginatorInfo={paginatorInfo}

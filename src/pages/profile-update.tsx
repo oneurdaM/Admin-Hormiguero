@@ -19,7 +19,14 @@ export default function ProfilePage() {
           Actualiza tu perfil
         </h1>
       </div>
-      <ProfileUpdateForm user={data} />
+      <ProfileUpdateForm
+        user={{
+          ...data,
+          birthDate: data?.birthDate
+            ? data?.birthDate.toString().split('T')[0]
+            : '',
+        }}
+      />
       <ChangePasswordForm />
     </>
   )

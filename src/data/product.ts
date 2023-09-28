@@ -6,6 +6,7 @@ import { QueryOptionsType } from '../types'
 import { productClient } from './client/product'
 import { API_ENDPOINTS } from './client/api-endpoints'
 import { toast } from 'react-toastify'
+import { useRouter } from 'next/router'
 
 export type ProductByIdResponse = {
   product: Product
@@ -14,7 +15,7 @@ export type ProductByIdResponse = {
 
 export const useProductsQuery = (options: Partial<QueryOptionsType>) => {
   const { data, isLoading, error } = useQuery<ProductResponse, Error>(
-    [API_ENDPOINTS, options],
+    [API_ENDPOINTS.PRODUCTS, options],
     () => productClient.paginated(options),
     {
       keepPreviousData: true,
@@ -47,10 +48,12 @@ export const useProductQuery = ({ id }: { id: number }) => {
 
 export const useCreateProductMutation = () => {
   const queryClient = useQueryClient()
+  const router = useRouter()
 
   return useMutation(productClient.register, {
     onSuccess() {
       toast.success('Product created successfully')
+      router.back()
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.PRODUCTS)
@@ -60,10 +63,12 @@ export const useCreateProductMutation = () => {
 
 export const useUpdateProductMutation = () => {
   const queryClient = useQueryClient()
+  const router = useRouter()
 
   return useMutation(productClient.update, {
     onSuccess() {
       toast.success('Product updated successfully')
+      router.back()
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.PRODUCTS)

@@ -9,14 +9,17 @@ import { AlignType, Table } from '../ui/table'
 import ActionButtons from '../common/action-buttons'
 import Pagination from '../ui/pagination'
 import { useRouter } from 'next/router'
+import { useMeQuery } from '@/data/user'
 
 type UserListProps = {
   users: UsersResponse[]
   paginatorInfo?: MappedPaginatorInfo | null
   onPagination?: (current: number) => void
 }
+
 const UserList = ({ users, paginatorInfo, onPagination }: UserListProps) => {
   const router = useRouter()
+  const { data: me } = useMeQuery()
 
   const columns = [
     {
@@ -75,13 +78,18 @@ const UserList = ({ users, paginatorInfo, onPagination }: UserListProps) => {
             id={id}
             userStatus={true}
             isUserActive={!banned}
-            detailsUrl={`${router.asPath}/${id}`}
+            detailsUrl={
+              me?.id !== parseInt(id)
+                ? `${router.asPath}/${id}`
+                : '/profile-update'
+            }
             role={role as Role}
           />
         )
       },
     },
   ]
+
   return (
     <>
       <div className="mb-6 overflow-hidden overflow-x-auto rounded shadow">

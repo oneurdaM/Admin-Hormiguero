@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useCreateProductMutation } from '@/data/product'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useRouter } from 'next/router'
 
 import Card from '../common/card'
 import Button from '../ui/button'
@@ -12,7 +13,7 @@ import { productValidationSchema } from './product-validation-schema'
 import Select from '../select/select'
 import Label from '../ui/label'
 import FileInput from '../ui/file-input'
-import { useProductsCategoriesQuery } from '@/data/product-category'
+import { useDepartmentsQuery } from '@/data/department'
 
 type FormValues = {
   title: string
@@ -33,14 +34,14 @@ const defaultValues: FormValues = {
 }
 
 const ProductCreateForm = () => {
+  const router = useRouter()
   const [productCatalog, setProductCatalog] = useState<number | null>(null)
 
-  const { productsCategories, loading: loadingCategories } =
-    useProductsCategoriesQuery({
-      limit: 10,
-      page: 1,
-      search: '',
-    })
+  const { departments, loading: loadingCategories } = useDepartmentsQuery({
+    limit: 10,
+    page: 1,
+    search: '',
+  })
 
   const { mutate: registerProduct, isLoading: loading } =
     useCreateProductMutation()
@@ -131,7 +132,7 @@ const ProductCreateForm = () => {
           <Label className="mb-4">Selecciona la categoría del producto</Label>
           <Select
             className="mb-4"
-            options={productsCategories ?? []}
+            options={departments ?? []}
             isLoading={loadingCategories}
             getOptionLabel={(option: any) => option?.name ?? ''}
             getOptionValue={(option: any) => option?.id ?? ''}
@@ -165,6 +166,14 @@ const ProductCreateForm = () => {
           />
         </Card>
         <div className="w-full text-end">
+          <Button
+            variant="outline"
+            onClick={router.back}
+            className="me-4"
+            type="button"
+          >
+            Atrás
+          </Button>
           <Button disabled={loading} loading={loading}>
             Crear
           </Button>

@@ -2,10 +2,11 @@
 import pick from 'lodash/pick'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
 
 import { useUpdateProductMutation } from '@/data/product'
 import { Product } from '@/types/products'
-import { useProductsCategoriesQuery } from '@/data/product-category'
+import { useDepartmentsQuery } from '@/data/department'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import { productValidationSchema } from './product-validation-schema'
@@ -27,10 +28,11 @@ type FormValues = {
 }
 
 export default function ProductUpdateForm({ product }: Product | any) {
+  const router = useRouter()
   const [productCatalog, setProductCatalog] = useState<number | null>(null)
 
-  const { productsCategories, loading: loadingCategories } =
-    useProductsCategoriesQuery({
+  const { departments, loading: loadingCategories } =
+    useDepartmentsQuery({
       limit: 10,
       page: 1,
       search: '',
@@ -110,7 +112,7 @@ export default function ProductUpdateForm({ product }: Product | any) {
           <Label className="mb-4">Selecciona la categoría del producto</Label>
           <Select
             className="mb-4"
-            options={productsCategories ?? []}
+            options={departments ?? []}
             isLoading={loadingCategories}
             getOptionLabel={(option: any) => option?.name ?? ''}
             getOptionValue={(option: any) => option?.id ?? ''}
@@ -145,6 +147,14 @@ export default function ProductUpdateForm({ product }: Product | any) {
           />
         </Card>
         <div className="w-full text-end">
+          <Button
+            variant="outline"
+            onClick={router.back}
+            className="me-4"
+            type="button"
+          >
+            Atrás
+          </Button>
           <Button disabled={loading} loading={loading}>
             Actualizar
           </Button>

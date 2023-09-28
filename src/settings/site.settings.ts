@@ -23,8 +23,8 @@ export const siteSettings = {
       labelTransKey: 'Perfil',
     },
     {
-      href: Routes.userAlerts.list,
-      labelTransKey: 'Alertas',
+      href: Routes.userNotifications.list,
+      labelTransKey: 'Notificaciones',
     },
     {
       href: Routes.logout,
@@ -36,33 +36,49 @@ export const siteSettings = {
     admin: [
       {
         href: Routes.users.list,
-        label: 'Administrador de Usuarios',
+        label: 'Usuarios',
         icon: 'UsersIcon',
       },
       {
-        href: Routes.users.list,
+        href: Routes.orders.list,
         label: 'Pedidos',
-        icon: 'DashboardIcon',
+        icon: 'ProductsIcon',
       },
       {
         href: Routes.products.list,
         label: 'Productos',
-        icon: 'ProductsIcon',
+        icon: 'DashboardIcon',
       },
       {
         href: Routes.alerts.list,
-        label: 'Configuración de Alertas',
+        label: 'Alertas',
         icon: 'Bell',
       },
+      {
+        href: Routes.spaces.list,
+        label: 'Espacios',
+        icon: 'Bell',
+      },
+      {
+        href: Routes.events.list,
+        label: 'Eventos',
+        icon: 'Bell',
+      },
+      {
+        href: Routes.users.list,
+        label: 'Impacto social',
+        icon: 'Bell',
+      },
+      {
+        href: Routes.blog.list,
+        label: 'Blog',
+        icon: 'ReviewIcon',
+      },
+
       // {
       //   href: Routes.modules.list,
       //   label: 'Modulos y Tareas',
       //   icon: 'Bell',
-      // },
-      // {
-      //   href: Routes.events.list,
-      //   label: 'Eventos',
-      //   icon: 'UsersIcon',
       // },
       // {
       //   href: Routes.casts.list,
@@ -74,11 +90,6 @@ export const siteSettings = {
       //   label: 'Genres',
       //   icon: 'UsersIcon',
       // },
-      {
-        href: Routes.blog.list,
-        label: 'Blog',
-        icon: 'ReviewIcon',
-      },
     ],
   },
   avatar: {

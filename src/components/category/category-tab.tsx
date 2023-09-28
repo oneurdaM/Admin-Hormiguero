@@ -19,9 +19,9 @@ function CategoryTab() {
     search: searchTerm,
   })
 
-  if (loading) return <Loader text="Cargando categorías..." />
+  // if (loading) return <Loader text="Cargando categorías..." />
 
-  if (error) return <ErrorMessage message={error.message} />
+  // if (error) return <ErrorMessage message={error.message} />
 
   function handleSearch({ searchText }: { searchText: string }) {
     setSearchTerm(searchText)
@@ -45,7 +45,7 @@ function CategoryTab() {
             href={`${Routes.categories.create}`}
             className="h-12 w-full md:ms-6 md:w-auto"
           >
-            <span>+ Agregar Categoría</span>
+            <span>+</span>
           </LinkButton>
         </div>
       </Card>

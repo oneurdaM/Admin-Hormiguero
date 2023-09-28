@@ -1,24 +1,29 @@
-import {PaginatorInfo,QueryOptions} from '.'
+import { PaginatorInfo, QueryOptions } from '.'
 
 export type CastsResponse = {
-	id?: number;
-	name: string;
+  id?: number
+  name: string
+}
+
+export type Cast = {
+  id?: number
+  name: string
 }
 
 export type CastInput = {
-	name: string;
+  name: string
 }
 
 export type CastsPagination = {
-	casts: CastsResponse[];
-	total: number;
-	totalPages: number;
-	currentPage: number;
-	perPage: number;
+  casts: CastsResponse[]
+  total: number
+  totalPages: number
+  currentPage: number
+  perPage: number
 }
 
 export interface CastsQueryOptions extends QueryOptions {
-	search?: string
+  search?: string
 }
 
 export type CastsPaginator = PaginatorInfo<CastsResponse>

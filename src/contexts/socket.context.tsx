@@ -1,14 +1,15 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
+// import { toast } from 'react-toastify'
 
 import useSocket from '@/hooks/useSocket'
-import { Alert } from '@/types/alerts'
+// import { Alert } from '@/types/alerts'
 import { AlertPaginator, MappedPaginatorInfo } from '@/types'
-import useSound from 'use-sound'
+// import useSound from 'use-sound'
 
 interface SocketContextType {
   online: boolean
   alerts: any[]
+  unattendedAlerts: number | null
   page: number
   setPage: React.Dispatch<React.SetStateAction<number>>
   limit: number
@@ -21,6 +22,7 @@ interface SocketContextType {
 const SocketContext = createContext<SocketContextType>({
   online: false,
   alerts: [],
+  unattendedAlerts: 0,
   page: 1,
   setPage: () => {},
   limit: 10,
@@ -50,16 +52,24 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
         socketContext.online = false
       })
 
-      socket.on('new_alert', (alert: Alert) => {
-        audio.play()
-        toast.error(alert.content, {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-        })
-        socketContext.alerts.unshift(alert)
+      // socket.on('new_alert', (alert: Alert) => {
+      //   audio.play()
+      //   toast.error(alert.content, {
+      //     position: 'top-right',
+      //     autoClose: 5000,
+      //     hideProgressBar: false,
+      //     closeOnClick: true,
+      //     pauseOnHover: true,
+      //   })
+      //   socketContext.alerts.unshift(alert)
+      // })
+
+      socket.on('alerts', (alerts: any) => {
+        console.log(alerts)
+        const unread = alerts.filter((alert: any) => alert.status === 'unattended')
+        socketContext.alerts = alerts
+        
+        socketContext.unattendedAlerts = unread.length
       })
     }
   }, [socket])

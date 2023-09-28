@@ -1,4 +1,6 @@
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
+
 import Card from '../common/card'
 import Button from '../ui/button'
 import Description from '../ui/description'
@@ -23,6 +25,7 @@ const defaultValues: FormValues = {
 }
 
 const CategoryForm = () => {
+  const router = useRouter()
   const { mutate: createCategory, isLoading: loading } =
     useCreateCategoryMutation()
 
@@ -96,7 +99,15 @@ const CategoryForm = () => {
           </div> */}
         </Card>
       </div>
-      <div className="mb-4 text-end sm:mb-8">
+      <div className="mb-4 text-end">
+        <Button
+          variant="outline"
+          onClick={router.back}
+          className="me-4"
+          type="button"
+        >
+          Atrás
+        </Button>
         <Button disabled={loading} loading={loading}>
           Crear
         </Button>

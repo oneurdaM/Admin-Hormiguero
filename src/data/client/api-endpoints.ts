@@ -19,7 +19,6 @@ export const API_ENDPOINTS = {
   ANALYTICS: 'analytics',
   UPDATE_PASSWORD: '/auth/change-password',
   SUGGESTIONS: '/suggestions',
-  // Chat
   CONVERSIONS: '/chat/conversations',
   MESSAGE: '/chat/conversations',
   CREATE_MESSAGE: '/chat/message',
@@ -30,15 +29,16 @@ export const API_ENDPOINTS = {
   FORGET_PASSWORD: 'forget-password',
   ENVIRONMENTS: 'configuration/environments',
   CATEGORY: 'category',
-  ALERTS: 'alerts',
-  NOTICE: 'notice',
+  ALERTS: 'notice',
   PRODUCTS: 'product',
-  PRODUCTS_CATEGORIES: 'catalog-prodructs', //has a typo
+  DEPARTMENTS: 'catalog-prodructs', //has a typo
+  ORDERS: 'orders',
+  SPACES: 'spaces',
+  RESERVATIONS: 'reservations',
 
   TRACKER: 'tracker',
   TRACK_USER: 'tracker/user',
 
-  // Cast
-  CAST: 'casts',
-  GENDER: 'genders',
+  CAST: '/events/casts',
+  GENRE: '/events/gender',
 }

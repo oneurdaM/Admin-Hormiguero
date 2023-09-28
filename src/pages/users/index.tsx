@@ -22,9 +22,9 @@ export default function Users() {
     search: searchTerm,
   })
 
-  if (loading) return <Loader text="Cargando usuarios..." />
+  // if (loading) return <Loader text="Cargando usuarios..." />
 
-  if (error) return <ErrorMessage message={error.message} />
+  // if (error) return <ErrorMessage message={error.message} />
 
   function handleSearch({ searchText }: { searchText: string }) {
     setSearchTerm(searchText)
@@ -44,13 +44,13 @@ export default function Users() {
           </h1>
         </div>
 
-        <div className="flex w-full items-center ms-auto md:w-3/4">
+        <div className="ms-auto flex w-full flex-col items-center space-y-4 md:flex-row md:space-y-0 xl:w-2/3">
           <Search onSearch={handleSearch} />
           <LinkButton
             href={`${Routes.users.create}`}
-            className="h-12 ms-4 md:ms-6"
+            className="h-12 w-full md:ms-6 md:w-auto"
           >
-            <span>+ {t('form:button-label-add-customer')}</span>
+            <span>+</span>
           </LinkButton>
         </div>
       </Card>

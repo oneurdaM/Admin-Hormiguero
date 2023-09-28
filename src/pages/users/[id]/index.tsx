@@ -1,10 +1,10 @@
-import ProfileUpdateForm from '@/components/auth/profile-update-form'
 import Layout from '@/components/layout/admin'
 import ErrorMessage from '@/components/ui/error-message'
 import Loader from '@/components/ui/loader/loader'
 import { useUserQuery } from '@/data/user'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
+import UserUpdateForm from '@/components/user/user-update'
 
 export default function UserPage() {
   const router = useRouter()
@@ -21,7 +21,7 @@ export default function UserPage() {
   if (error) return <ErrorMessage message={error.message} />
 
   return (
-    <ProfileUpdateForm
+    <UserUpdateForm
       user={{
         ...user,
         birthDate: user?.birthDate

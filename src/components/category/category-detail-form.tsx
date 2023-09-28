@@ -1,6 +1,7 @@
 import pick from 'lodash/pick'
-
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
+
 import Card from '../common/card'
 import Button from '../ui/button'
 import Description from '../ui/description'
@@ -19,6 +20,7 @@ type FormValues = {
 }
 
 const CategoryDetailForm = ({ category }: Category | any) => {
+  const router = useRouter()
   const { mutate: updateCategory, isLoading: loading } =
     useUpdateCategoryMutation()
 
@@ -84,7 +86,15 @@ const CategoryDetailForm = ({ category }: Category | any) => {
           </div> */}
         </Card>
       </div>
-      <div className="mb-4 text-end sm:mb-8">
+      <div className="mb-4 text-end ">
+        <Button
+          variant="outline"
+          onClick={router.back}
+          className="me-4"
+          type="button"
+        >
+          Atrás
+        </Button>
         <Button disabled={loading} loading={loading}>
           Actualizar
         </Button>

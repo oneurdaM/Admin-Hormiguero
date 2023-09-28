@@ -28,11 +28,11 @@ export interface Tracking {
 
 export enum Role {
   User = 'USER',
-  Director= 'DIRECTOR',
-  Coordination = 'COORDINATION',
-  Communication = 'COMMUNICATION',
-  Technicalarea = 'TECHNICALAREA',
-  Cafeteria = 'CAFETERIA',
+  Director = 'DIRECTOR',
+  Coordination = 'COORDINATOR',
+  Communication = 'COMMUNICATOR',
+  Technicalarea = 'TECHNICIAN',
+  Cafeteria = 'BARTENDER',
 }
 
 export type UserPagination = {

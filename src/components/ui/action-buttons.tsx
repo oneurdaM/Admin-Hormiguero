@@ -9,6 +9,7 @@ import { AdminIcon } from '@/components/icons/admin-icon'
 import Link from 'next/link'
 import { Role } from '@/types/users'
 import { ChatIcon } from '../icons/chat-icon'
+import { CalendarIcon } from '../icons/calendar'
 
 type Props = {
   id: string
@@ -28,6 +29,8 @@ type Props = {
   showReplyQuestion?: boolean
   customLocale?: string
   role?: Role
+  isReservationActive?: boolean
+  reservationStatus?: boolean
 }
 
 const ActionButtons = ({
@@ -45,6 +48,8 @@ const ActionButtons = ({
   showContact = false,
   customLocale,
   role,
+  isReservationActive = false,
+  reservationStatus = false,
 }: Props) => {
   const { openModal } = useModalAction()
 
@@ -58,6 +63,10 @@ const ActionButtons = ({
 
   function handleUserStatus(banned: boolean) {
     openModal('BAN_CUSTOMER', { id, banned })
+  }
+
+  function handleReservationStatus(active: boolean) {
+    openModal('RESERVATION_STATUS', { id, active })
   }
 
   function handleMakeAdmin() {
@@ -81,7 +90,7 @@ const ActionButtons = ({
   }
 
   return (
-    <div className="gap-8 inline-flex w-auto items-center">
+    <div className="inline-flex w-auto items-center gap-8">
       {showReplyQuestion && (
         <button
           onClick={handleReplyQuestion}
@@ -148,6 +157,27 @@ const ActionButtons = ({
           ) : (
             <button
               onClick={() => handleUserStatus(true)}
+              className="text-accent transition duration-200 hover:text-accent focus:outline-none"
+              title={'Activar'}
+            >
+              <CheckMarkCircle width={20} />
+            </button>
+          )}
+        </>
+      )}
+      {reservationStatus && (
+        <>
+          {isReservationActive ? (
+            <button
+              onClick={() => handleReservationStatus(false)}
+              className="text-red-500 transition duration-200 hover:text-red-600 focus:outline-none"
+              title={'Bloquear'}
+            >
+              <BanUser width={20} />
+            </button>
+          ) : (
+            <button
+              onClick={() => handleReservationStatus(true)}
               className="text-accent transition duration-200 hover:text-accent focus:outline-none"
               title={'Activar'}
             >

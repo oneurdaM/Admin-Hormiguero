@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 import { QueryOptionsType } from '../types'
 import { API_ENDPOINTS } from './client/api-endpoints'
 import { userClient } from './client/user'
+import { useRouter } from 'next/router'
 
 export const useUsersQuery = (params: Partial<QueryOptionsType>) => {
   const { data, isLoading, error } = useQuery<UserPagination, Error>(
@@ -28,10 +29,12 @@ export const useUsersQuery = (params: Partial<QueryOptionsType>) => {
 
 export const useUpdateUserMutation = () => {
   const queryClient = useQueryClient()
+  const router = useRouter()
 
   return useMutation(userClient.update, {
     onSuccess() {
       toast.success('Se actualizó la información de usuario')
+      router.back()
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.USERS)
@@ -41,10 +44,12 @@ export const useUpdateUserMutation = () => {
 
 export const useUpdatePasswordMutation = () => {
   const queryClient = useQueryClient()
+  const router = useRouter()
 
   return useMutation(userClient.changePassword, {
     onSuccess() {
       toast.success('Password updated successfully')
+      router.back()
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.ME)
@@ -55,10 +60,12 @@ export const useUpdatePasswordMutation = () => {
 
 export const useRegisterMutation = () => {
   const queryClient = useQueryClient()
+  const router = useRouter()
 
   return useMutation(userClient.register, {
     onSuccess() {
       toast.success('User created successfully')
+      router.back()
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.REGISTER)
@@ -91,7 +98,6 @@ export const useBlockUserMutation = () => {
     },
   })
 }
-
 
 export function useLogin() {
   return useMutation(userClient.login)

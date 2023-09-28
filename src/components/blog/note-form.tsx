@@ -153,16 +153,15 @@ export default function CreateOrUpdateNoteForm({ initialValues }: IProps) {
         </Card>
       </div>
       <div className="mb-4 text-end">
-        {initialValues && (
-          <Button
-            variant="outline"
-            onClick={router.back}
-            className="me-4"
-            type="button"
-          >
-            Atrás
-          </Button>
-        )}
+        <Button
+          variant="outline"
+          onClick={router.back}
+          className="me-4"
+          type="button"
+        >
+          Atrás
+        </Button>
+
         <Button loading={updating || creating} disabled={updating || creating}>
           {initialValues ? 'Actualizar Nota' : 'Crear Nota'}
         </Button>

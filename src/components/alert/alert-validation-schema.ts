@@ -1,7 +1,7 @@
 import * as yup from 'yup'
 
 export const alertValidationSchema = yup.object().shape({
-  notice: yup.string().required('Campo requerido'),
+  alert: yup.string().required('Campo requerido'),
   description: yup.string().required('Campo requerido'),
   hour: yup.string().required('Campo requerido'),
   creator: yup.string().nullable(),

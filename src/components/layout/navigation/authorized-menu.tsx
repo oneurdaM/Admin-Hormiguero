@@ -11,19 +11,21 @@ import { useMeQuery } from '@/data/user'
 import Avatar from '@/components/common/avatar'
 
 export default function AuthorizedMenu() {
-  const { online } = useSockets()
+  const { unattendedAlerts } = useSockets()
   const { data } = useMeQuery()
   const { t } = useTranslation('common')
-
   // Again, we're using framer-motion for the transition effect
+
+  //image validation
+  const image =
+    data?.image !== '' && data?.image !== null && data?.image !== undefined
+      ? data?.image
+      : siteSettings?.avatar?.placeholder
+
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu as="div" className="relative z-50 inline-block text-left">
       <Menu.Button className="flex items-center focus:outline-none">
-        <Avatar
-          src={data?.image ?? siteSettings?.avatar?.placeholder}
-          alt="avatar"
-          online={online}
-        />
+        <Avatar src={image} alt="avatar" alerts={unattendedAlerts} />
       </Menu.Button>
 
       <Transition
@@ -37,7 +39,7 @@ export default function AuthorizedMenu() {
       >
         <Menu.Items
           as="ul"
-          className="absolute mt-1 w-48 rounded bg-white shadow-md end-0 origin-top-end focus:outline-none"
+          className="absolute end-0 mt-1 w-48 rounded bg-white shadow-md origin-top-end focus:outline-none"
         >
           <Menu.Item key={data?.email}>
             <li

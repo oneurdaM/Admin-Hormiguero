@@ -5,6 +5,7 @@ import { useUpdateUserMutation } from '@/data/users'
 import { UsersResponse } from '@/types/users'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useRouter } from 'next/router'
 
 import { updateUserValidationSchema } from '../user/update-user-validation-schema'
 import Card from '../common/card'
@@ -45,6 +46,7 @@ const roleOptions = [
 ]
 
 export default function ProfileUpdateForm({ user }: UsersResponse | any) {
+  const router = useRouter()
   const [selectedRole, setSelectedRole] = useState(user.role)
   const { mutate: updateUser, isLoading: loading } = useUpdateUserMutation()
 
@@ -79,7 +81,7 @@ export default function ProfileUpdateForm({ user }: UsersResponse | any) {
           ...values,
           role: selectedRole,
           birthDate: `${values.birthDate}T00:00:00.000Z`,
-          image: ''
+          image: '',
         },
       })
     }
@@ -182,6 +184,7 @@ export default function ProfileUpdateForm({ user }: UsersResponse | any) {
 
           <Label className="mb-4">Rol de usuario</Label>
           <Select
+          isDisabled
             name="role"
             isLoading={loading}
             options={roleOptions}

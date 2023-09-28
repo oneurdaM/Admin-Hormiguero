@@ -48,9 +48,11 @@ export const useNoteQuery = ({ slug }: { slug: string }) => {
 
 export const useUpdateNoteMutation = () => {
   const queryClient = useQueryClient()
+  const router = useRouter()
   return useMutation(blogClient.update, {
     onSuccess: () => {
       toast.success('Note updated successfully')
+      router.back()
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.BLOG)

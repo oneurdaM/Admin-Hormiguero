@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react'
-import { useCreateNoticeMutation } from '@/data/notice'
+import { useCreateAlertMutation } from '@/data/alert'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useRouter } from 'next/router'
 
 import Card from '../common/card'
 import Button from '../ui/button'
@@ -16,14 +17,14 @@ import DayCheckbox from '../ui/checkbox/day-checkbox'
 import { useUsersQuery } from '@/data/users'
 
 type FormValues = {
-  notice: string
+  alert: string
   description?: string
   notifies_to: number | null
   hour: string
 }
 
 const defaultValues: FormValues = {
-  notice: '',
+  alert: '',
   description: '',
   notifies_to: null,
   hour: '',
@@ -35,10 +36,10 @@ type WeekDay = {
 }
 
 const AlertCreateForm = () => {
+  const router = useRouter()
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [userReceivesSelect, setUserReceivesSelect] = useState(null)
   const [selected, setSelected] = useState(false)
-  const [repeatOn, setRepeatOn] = useState<Number | null>(2)
   const [weekDays, setWeekDays] = useState<WeekDay[]>([
     { day: 'L', checked: false },
     { day: 'M', checked: false },
@@ -54,25 +55,13 @@ const AlertCreateForm = () => {
     endDate: new Date(),
   })
 
-  const repeatOnOptions = [
-    {
-      label: 'Diario', // translate
-      value: 1,
-    },
-    {
-      label: 'Personalizado', // translate
-      value: 2,
-    },
-  ]
-
   const { users, loading: loadingUsers } = useUsersQuery({
     limit: 10,
     page: 1,
     search: searchTerm,
   })
 
-  const { mutate: registerNotice, isLoading: loading } =
-    useCreateNoticeMutation()
+  const { mutate: registeralert, isLoading: loading } = useCreateAlertMutation()
 
   const {
     register,
@@ -84,14 +73,14 @@ const AlertCreateForm = () => {
     resolver: yupResolver(alertValidationSchema),
   })
 
-  async function onSubmit({ notice, description, hour }: FormValues) {
+  async function onSubmit({ alert, description, hour }: FormValues) {
     const days: string[] = weekDays
       .filter((item) => item.checked)
       .map((item) => item.day)
 
-    registerNotice(
+    registeralert(
       {
-        notice,
+        alert,
         description,
         effectiveFrom: `${value.startDate}T${hour}:00.000Z`,
         expiredAt: `${value.endDate}T${hour}:00.000Z`,
@@ -124,21 +113,10 @@ const AlertCreateForm = () => {
     setValue(value)
   }
 
-  // const onSelectRepeatOn = (value: { label: string; value: number }) => {
-  //   setRepeatOn(value?.value ?? null)
-
-  //   let checkedWeekDays = weekDays
-  //   checkedWeekDays.forEach((day) => {
-  //     day.checked = value?.label === 'Diario' ? true : false
-  //   })
-
-  //   setWeekDays(checkedWeekDays)
-  // }
-
   const onSelectDay = (e: { target: { value: string } }) => {
     const selected = e.target.value
     const updatedWeekDays = weekDays.map((day) => {
-      if (day.day === selected && repeatOn === 2) {
+      if (day.day === selected) {
         return { ...day, checked: !day.checked }
       }
       return day
@@ -159,11 +137,11 @@ const AlertCreateForm = () => {
           <Input
             label="Nombre de alerta"
             placeholder="Nombre"
-            {...register('notice')}
+            {...register('alert')}
             type="text"
             variant="outline"
             className="mb-4"
-            error={errors.notice?.message?.toString()}
+            error={errors.alert?.message?.toString()}
           />
 
           <Input
@@ -215,17 +193,6 @@ const AlertCreateForm = () => {
             className="my-4"
             error={errors.hour?.message?.toString()}
           />
-          {/* <Label className="my-4">Periodicidad</Label>
-          <Select
-            className="mb-4"
-            options={repeatOnOptions}
-            isLoading={loading}
-            getOptionLabel={(option: any) => option?.label ?? ''}
-            getOptionValue={(option: any) => option?.value ?? ''}
-            placeholder="Selecciona la Periodicidad"
-            onChange={(value: any) => onSelectRepeatOn(value)}
-            isClearable={true}
-          /> */}
 
           <Label className="my-4">Días de la semana</Label>
           <div className="col-auto flex w-full gap-5">
@@ -240,7 +207,15 @@ const AlertCreateForm = () => {
           </div>
         </Card>
       </div>
-      <div className="mb-4 text-end sm:mb-8">
+      <div className="mb-4 text-end">
+        <Button
+          variant="outline"
+          onClick={router.back}
+          className="me-4"
+          type="button"
+        >
+          Atrás
+        </Button>
         <Button disabled={loading} loading={loading}>
           Crear
         </Button>

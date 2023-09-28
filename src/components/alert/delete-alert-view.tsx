@@ -1,4 +1,4 @@
-import { useDeleteNoticeMutation } from '@/data/notice'
+import { useDeleteNoticeMutation } from '@/data/alert'
 import ConfirmationCard from '../common/confirmation-card'
 import { useModalAction, useModalState } from '../ui/modal/modal.context'
 

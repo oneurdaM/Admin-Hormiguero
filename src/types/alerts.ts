@@ -1,24 +1,15 @@
 export interface Alert {
-  id: number
-  description: string
-  alertName: string
-  module: string
-  task: string
-  repeat: RepeatAlert
-  dateRange: {
-    start: string
-    end: string
-  }
-  userCreates?: {
-    email: string
-    id: number
-    name: string
-  }
-  userReceives?: {
-    email: string
-    id: number
-    name: string
-  }
+  creator?: string
+  alert: string
+  description?: string
+  effectiveFrom: string
+  expiredAt: string
+  notifies_to: number | null
+  days: string[]
+  schedules?: string
+  is_approved?: boolean
+  type?: string
+  priority?: string
 }
 
 export interface CreateAlert {
@@ -49,4 +40,18 @@ export interface AlertResponse {
   totalPages: number
   currentPage: number
   perPage: number
+}
+
+export type AlertRegistration = {
+  creator?: string
+  alert: string
+  description?: string
+  effectiveFrom: string
+  expiredAt: string
+  notifies_to: number | null
+  days: string[]
+  schedules?: string
+  is_approved?: boolean
+  type?: string
+  priority?: string
 }

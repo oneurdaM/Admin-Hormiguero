@@ -9,20 +9,35 @@ export const Routes = {
   users: {
     ...routesFactory('/users'),
   },
+  userNotifications: {
+    ...routesFactory('/'),
+  },
   orders: {
     ...routesFactory('/orders'),
   },
   products: {
     ...routesFactory('/products'),
   },
-  productsCategories: {
-    ...routesFactory('/products-categories'),
+  departments: {
+    ...routesFactory('/departments'),
   },
   blog: {
     ...routesFactory('/blog'),
   },
   categories: {
-    ...routesFactory('/categories')
+    ...routesFactory('/categories'),
+  },
+  alerts: {
+    ...routesFactory('/alerts'),
+  },
+  spaces: {
+    ...routesFactory('/spaces'),
+  },
+  reservations: {
+    ...routesFactory('/reservations'),
+  },
+  tickets: {
+    ...routesFactory('/tickets'),
   },
   events: {
     ...routesFactory('/events'),
@@ -30,19 +45,9 @@ export const Routes = {
   casts: {
     ...routesFactory('/casts'),
   },
-  genders: {
-    ...routesFactory('/genders'),
+  genres: {
+    ...routesFactory('/genres'),
   },
-  alerts: {
-    ...routesFactory('/alerts'),
-  },
-  userAlerts: {
-    ...routesFactory('/'),
-  },
-  modules: {
-    ...routesFactory('/modules-tasks'),
-  },
-  
 }
 
 function routesFactory(endpoint: string) {

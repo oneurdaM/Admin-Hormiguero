@@ -11,6 +11,7 @@ import PasswordInput from '../ui/password-input'
 import { userValidationSchema } from './user-validation-schema'
 import Select from '../select/select'
 import Label from '../ui/label'
+import { useRouter } from 'next/router'
 
 import { Role } from '@/types/users'
 import { useState } from 'react'
@@ -63,6 +64,7 @@ const roleOptions = [
 ]
 
 const UserCreateForm = () => {
+  const router = useRouter()
   const { mutate: registerUser, isLoading: loading } = useRegisterMutation()
   const [selectedRole, setSelectedRole] = useState<string | null>(null)
   let currentDate = new Date()
@@ -193,7 +195,15 @@ const UserCreateForm = () => {
           />
         </Card>
       </div>
-      <div className="mb-4 text-end sm:mb-8">
+      <div className="mb-4 text-end">
+        <Button
+          variant="outline"
+          onClick={router.back}
+          className="me-4"
+          type="button"
+        >
+          Atrás
+        </Button>
         <Button disabled={loading} loading={loading}>
           Crear
         </Button>
