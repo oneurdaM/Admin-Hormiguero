@@ -19,7 +19,7 @@ export const genresClient = {
     return HttpClient.post(API_ENDPOINTS.GENRE, variables)
   },
 
-  update: ({ id, input }: { id: string; input: GenrePagination }) => {
+  update: ({ id, input }: { id: string; input: GenreInput }) => {
     return HttpClient.put(`${API_ENDPOINTS.GENRE}/${id}`, input)
   },
 

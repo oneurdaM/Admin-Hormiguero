@@ -7,19 +7,21 @@ import Button from '../ui/button'
 import Description from '../ui/description'
 import Input from '../ui/input'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useUpdateCastMutation } from '@/data/casts'
+import { useUpdateGenreMutation } from '@/data/genre'
 import FileInput from '../ui/file-input'
-import { castValidationSchema } from './cast-validation-schema'
-import { Cast } from '@/types/casts'
+import { genreValidationSchema } from './genre-validation-schema'
+import { Genre } from '@/types/genre'
 
 type FormValues = {
   name: string
+  slug?: string
+  thumbnail?: string
+  image?: string
 }
 
-const CastDetailForm = ({ cast }: Cast | any) => {
+const GenreDetailForm = ({ genre }: Genre | any) => {
   const router = useRouter()
-  const { mutate: updateCast, isLoading: loading } =
-    useUpdateCastMutation()
+  const { mutate: updateGenre, isLoading: loading } = useUpdateGenreMutation()
 
   const {
     register,
@@ -28,15 +30,15 @@ const CastDetailForm = ({ cast }: Cast | any) => {
     control,
   } = useForm<FormValues>({
     defaultValues: {
-      ...(cast && pick(cast, ['name'])),
+      ...(genre && pick(genre, ['name'])),
     },
-    resolver: yupResolver(castValidationSchema),
+    resolver: yupResolver(genreValidationSchema),
   })
 
   async function onSubmit(values: FormValues) {
-    if (cast.id !== undefined) {
-      updateCast({
-        id: cast.id,
+    if (genre.id !== undefined) {
+      updateGenre({
+        id: genre.id,
         input: { ...values },
       })
     }
@@ -46,8 +48,8 @@ const CastDetailForm = ({ cast }: Cast | any) => {
     <form noValidate onSubmit={handleSubmit(onSubmit)}>
       <div className="my-5 flex flex-wrap sm:my-8">
         <Description
-          title="Miembro de elenco"
-          details="Detalles del miembro del elenco."
+          title="Categoría"
+          details="Esta categoría podrá ser utilizada para clasificar los articulos de tu blog."
           className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
         />
 
@@ -79,4 +81,4 @@ const CastDetailForm = ({ cast }: Cast | any) => {
   )
 }
 
-export default CastDetailForm
+export default GenreDetailForm

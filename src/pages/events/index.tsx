@@ -1,6 +1,7 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import { Tabs, Tab } from '@/components/ui/tabs'
+import TicketsTab from '@/components/tickets/tickets-tab'
 import EventsTab from '@/components/events/events-tab'
 import GenresTab from '@/components/genres/genres-tab'
 import CastsTab from '@/components/casts/casts-tab'
@@ -10,7 +11,7 @@ export default function Events() {
   return (
     <Tabs>
       <Tab label="Tickets">
-        <>tickets</>
+        <TicketsTab />
       </Tab>
       <Tab label="Eventos">
         <EventsTab />

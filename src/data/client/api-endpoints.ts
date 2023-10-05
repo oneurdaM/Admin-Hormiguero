@@ -4,6 +4,7 @@ export const API_ENDPOINTS = {
   LOGIN: '/auth/login',
   ME: '/users/me',
   EVENTS: '/events',
+  TICKETS: '/tickets',
   STAFFS: '/staffs',
   ADD_STAFF: '/staffs',
   REMOVE_STAFF: '/staffs',

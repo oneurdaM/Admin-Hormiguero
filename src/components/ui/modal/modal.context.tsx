@@ -23,6 +23,8 @@ export type MODAL_VIEWS =
   | 'DELETE_NOTE'
   | 'RESERVATION_STATUS'
   | 'DELETE_SPACE'
+  | 'DELETE_GENRE'
+  | 'DELETE_CAST'
 
 interface State {
   view?: MODAL_VIEWS

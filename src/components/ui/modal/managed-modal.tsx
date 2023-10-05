@@ -29,6 +29,12 @@ const DeleteSpace = dynamic(
   () => import('@/components/spaces/delete-space-catalog-view')
 )
 
+const DeleteGenre = dynamic(
+  () => import('@/components/genres/delete-genre-view')
+)
+
+const DeleteCast = dynamic(() => import('@/components/casts/delete-cast-view'))
+
 function renderModal(view: MODAL_VIEWS | undefined, data: any) {
   switch (view) {
     case 'BAN_CUSTOMER':
@@ -51,6 +57,10 @@ function renderModal(view: MODAL_VIEWS | undefined, data: any) {
       return <ReserveSpaceView />
     case 'DELETE_SPACE':
       return <DeleteSpace />
+    case 'DELETE_GENRE':
+      return <DeleteGenre />
+    case 'DELETE_CAST':
+      return <DeleteCast />
     default:
       return null
   }

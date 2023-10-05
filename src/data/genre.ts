@@ -38,7 +38,7 @@ export const useGenreQuery = ({ id }: { id: number }) => {
   )
 
   return {
-    product: data,
+    genre: data,
     loading: isLoading,
     error,
   }

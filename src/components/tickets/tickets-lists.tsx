@@ -2,60 +2,66 @@ import { siteSettings } from '@/settings/site.settings'
 import Image from 'next/image'
 
 import Pagination from '../ui/pagination'
-import ActionButtons from '../ui/action-buttons'
 import { MappedPaginatorInfo } from '@/types'
 import { AlignType, Table } from '../ui/table'
-import { Event } from '@/types/events'
-import { Routes } from '@/config/routes'
+import { Ticket } from '@/types/tickets'
+// import { Routes } from '@/config/routes'
+// import ActionButtons from '../ui/action-buttons'
 
-type EventListProps = {
-  events: Event[]
+type TicketsListProps = {
+  tickets: Ticket[]
   paginatorInfo?: MappedPaginatorInfo | null
   onPagination?: (current: number) => void
 }
 
-const EventList = ({ events, paginatorInfo, onPagination }: EventListProps) => {
+const TicketsList = ({
+  tickets,
+  paginatorInfo,
+  onPagination,
+}: TicketsListProps) => {
   const columns = [
     {
       title: 'Imagen',
-      dataIndex: 'thumbnailUrl',
-      key: 'thumbnailUrl',
+      dataIndex: 'image',
+      key: 'image',
       align: 'center' as AlignType,
       render: (image: string) => (
         <Image
           src={image ?? siteSettings.logo.url}
-          alt="thumbnailUrl"
+          alt="image"
           width={40}
           height={40}
         />
       ),
     },
     {
-      title: 'Título',
-      dataIndex: 'title',
-      key: 'title',
+      title: 'Nombre',
+      dataIndex: 'name',
+      key: 'name',
       align: 'center' as AlignType,
     },
     {
-      title: 'Acciones',
-      dataIndex: 'id',
-      key: 'id',
+      title: 'Precio',
+      dataIndex: 'price',
+      key: 'price',
       align: 'center' as AlignType,
-      render: (id: string) => {
-        return (
-          <ActionButtons
-            id={id}
-            detailsUrl={Routes.events.details({ id })}
-            // deleteModalView="DELETE_EVENT"
-          />
-        )
-      },
     },
+    // {
+    //   title: 'Acciones',
+    //   dataIndex: 'id',
+    //   key: 'id',
+    //   align: 'center' as AlignType,
+    //   render: (id: string) => {
+    //     return (
+    //       <ActionButtons id={id} detailsUrl={Routes.tickets.details({ id })} />
+    //     )
+    //   },
+    // },
   ]
   return (
     <>
       <div className="mb-6 overflow-hidden rounded shadow">
-        <Table columns={columns} data={events} rowKey={'id'} />
+        <Table columns={columns} data={tickets} rowKey={'id'} />
       </div>
       {!!paginatorInfo?.total && (
         <div className="flex items-center justify-end">
@@ -71,4 +77,4 @@ const EventList = ({ events, paginatorInfo, onPagination }: EventListProps) => {
   )
 }
 
-export default EventList
+export default TicketsList

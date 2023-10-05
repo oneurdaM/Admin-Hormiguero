@@ -38,7 +38,7 @@ export const useCastQuery = ({ id }: { id: number }) => {
   )
 
   return {
-    product: data,
+    cast: data,
     loading: isLoading,
     error,
   }

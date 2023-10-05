@@ -24,7 +24,7 @@ export const castsClient = {
     return HttpClient.post(API_ENDPOINTS.CAST, variables)
   },
 
-  update: ({ id, input }: { id: string; input: CastsPagination }) => {
+  update: ({ id, input }: { id: string; input: CastInput }) => {
     return HttpClient.put(`${API_ENDPOINTS.CAST}/${id}`, input)
   },
 

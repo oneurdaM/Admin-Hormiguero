@@ -4,20 +4,20 @@ import { useRouter } from 'next/router'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import AppLayout from '@/components/layout/app'
-import { useGenreQuery } from '@/data/genre'
+import { useEventQuery } from '@/data/events'
 
 import Loader from '@/components/ui/loader/loader'
 import ErrorMessage from '@/components/ui/error-message'
-import CategoryDetailForm from '@/components/genres/genre-detail-form'
+import EventDetailForm from '@/components/events/event-detail'
 
-export default function GenreDetail() {
+export default function EventDetail() {
   const router = useRouter()
 
   const {
     query: { id },
   } = router
 
-  const { genre, error, loading } = useGenreQuery({
+  const { event, error, loading } = useEventQuery({
     id: Number(id),
   })
 
@@ -28,9 +28,9 @@ export default function GenreDetail() {
   return (
     <>
       <div className="flex border-b border-dashed border-border-base py-5 sm:py-8">
-        <h1 className="text-lg font-semibold text-heading">Detalle Género</h1>
+        <h1 className="text-lg font-semibold text-heading">Detalle Evento</h1>
       </div>
-      <CategoryDetailForm genre={genre} />
+      <EventDetailForm event={event} />
     </>
   )
 }
@@ -45,4 +45,4 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return { paths: [], fallback: 'blocking' }
 }
 
-GenreDetail.Layout = AppLayout
+EventDetail.Layout = AppLayout
