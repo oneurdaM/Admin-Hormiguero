@@ -37,9 +37,7 @@ export default function EventsTab() {
     <>
       <Card className="mb-8 flex flex-col items-center md:flex-row">
         <div className="mb-4 md:mb-0 md:w-1/4">
-          <h1 className="text-lg font-semibold text-heading">
-            {t('form:input-label-events')}
-          </h1>
+          <h1 className="text-lg font-semibold text-heading">Events</h1>
         </div>
 
         <div className="ms-auto flex w-full items-center md:w-3/4">
