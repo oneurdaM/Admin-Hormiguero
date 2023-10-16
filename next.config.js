@@ -27,6 +27,11 @@ module.exports = withPWA({
         hostname: 'kali-connect.s3.us-west-1.amazonaws.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'files.boletopolis.com',
+        pathname: '/**',
+      },
     ],
   },
   webpack(config, _options) {
