@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import pick from 'lodash/pick'
+import { useTranslation } from 'next-i18next'
+import Image from 'next/image'
 
 import { useUpdateUserMutation } from '@/data/users'
 import { UsersResponse } from '@/types/users'
@@ -18,37 +20,34 @@ import Label from '../ui/label'
 import { Role } from '@/types/users'
 import { useState } from 'react'
 
-const roleOptions = [
-  {
-    label: Role.Director, //translate each label
-    value: Role.Director,
-  },
-  {
-    label: Role.Coordination,
-    value: Role.Coordination,
-  },
-  {
-    label: Role.Communication,
-    value: Role.Communication,
-  },
-  {
-    label: Role.Cafeteria,
-    value: Role.Cafeteria,
-  },
-  {
-    label: Role.Technicalarea,
-    value: Role.Technicalarea,
-  },
-  {
-    label: Role.User,
-    value: Role.User,
-  },
-]
-
 export default function UserUpdateForm({ user }: UsersResponse | any) {
   const router = useRouter()
   const [selectedRole, setSelectedRole] = useState(user.role)
   const { mutate: updateUser, isLoading: loading } = useUpdateUserMutation()
+  const { t } = useTranslation()
+
+  const roleOptions = [
+    {
+      label: t(`common:${Role.Director}`),
+      value: Role.Director,
+    },
+    {
+      label: t(`common:${Role.Coordination}`),
+      value: Role.Coordination,
+    },
+    {
+      label: t(`common:${Role.Communication}`),
+      value: Role.Communication,
+    },
+    {
+      label: t(`common:${Role.Cafeteria}`),
+      value: Role.Cafeteria,
+    },
+    {
+      label: t(`common:${Role.Technicalarea}`),
+      value: Role.Technicalarea,
+    },
+  ]
 
   const {
     register,
@@ -67,7 +66,6 @@ export default function UserUpdateForm({ user }: UsersResponse | any) {
           'middleName',
           'lastName',
           'birthDate',
-          'registrationDate',
         ])),
     },
     resolver: yupResolver(updateUserValidationSchema),
@@ -81,7 +79,7 @@ export default function UserUpdateForm({ user }: UsersResponse | any) {
           ...values,
           role: selectedRole,
           birthDate: `${values.birthDate}T00:00:00.000Z`,
-          image: '',
+          image: values.image ?? user.image,
         },
       })
     }
@@ -100,7 +98,30 @@ export default function UserUpdateForm({ user }: UsersResponse | any) {
           className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
         />
         <Card className="w-full sm:w-8/12 md:w-2/3">
-          <FileInput name="image" control={control} />
+          <div className="container mx-auto p-4">
+            <div className="lg:flex">
+              {user.image && (
+                <div className="mb-4 p-6 text-center lg:mb-0 lg:w-1/4">
+                  <Label>Imagen actual</Label>
+                  <Image
+                    src={user.image}
+                    alt="Avatar"
+                    width={40}
+                    height={40}
+                    className="h-auto w-full"
+                  />
+                </div>
+              )}
+
+              <div className={user.image ? 'lg:w-3/4' : 'lg:w-full'}>
+                <div className="bg-gray-200 p-4">
+                  <div className="w-full p-2">
+                    <FileInput name="image" control={control} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </Card>
       </div>
       <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
@@ -174,14 +195,6 @@ export default function UserUpdateForm({ user }: UsersResponse | any) {
             </div>
           </div>
 
-          <Input
-            label="Fecha de registro"
-            {...register('registrationDate')}
-            variant="outline"
-            className="mb-5"
-            disabled={true}
-          />
-
           <Label className="mb-4">Rol de usuario</Label>
           <Select
             name="role"
@@ -192,7 +205,7 @@ export default function UserUpdateForm({ user }: UsersResponse | any) {
             placeholder="Rol del usuario"
             onChange={(value: any) => setSelectedRole(value?.value ?? null)}
             isClearable={true}
-            defaultValue={{ label: user.role, value: user.role }}
+            defaultValue={{ label: t(`common:${user.role}`), value: user.role }}
           />
         </Card>
         <div className="w-full text-end">

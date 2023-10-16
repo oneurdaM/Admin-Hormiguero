@@ -3,32 +3,32 @@ import { useCreateSpaceMutation } from '@/data/space'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 import Card from '../common/card'
 import Button from '../ui/button'
 import Description from '../ui/description'
 import Input from '../ui/input'
 import { SpaceValidationSchema } from './space-validation-schema'
+import { Autocomplete, useJsApiLoader } from '@react-google-maps/api'
 
 type FormValues = {
   name: string
-  dimensions: number
-  capacity: number
-  price: number
-  location: string
+  dimensions?: number
+  capacity?: number
+  price?: number
+  location?: string
 }
 
 const defaultValues: FormValues = {
   name: '',
-  dimensions: 0,
-  capacity: 0,
-  price: 0,
-  location: '',
 }
 
 const SpaceCreateForm = () => {
   const router = useRouter()
   const { mutate: createSpace, isLoading: loading } = useCreateSpaceMutation()
+  const [autocomplete, setAutocomplete] = useState()
+  const [inputValue, setInputValue] = useState()
 
   const {
     register,
@@ -42,7 +42,7 @@ const SpaceCreateForm = () => {
   })
 
   async function onSubmit(values: FormValues) {
-    createSpace(values, {
+    createSpace({...values, active: true}, {
       onError: (error: any) => {
         if (error.response?.data?.errors) {
           error.response.data.errors.forEach((error: any) => {
@@ -55,6 +55,22 @@ const SpaceCreateForm = () => {
       },
     })
   }
+
+  const onLoad = (autocomplete: any) => {
+    setAutocomplete(autocomplete)
+  }
+
+  const onPlaceChanged = () => {
+    if (autocomplete) {
+      setInputValue(autocomplete.getPlace().formatted_address)
+    }
+  }
+
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: 'AIzaSyCtAae1VdKZ5h7m1CmyKQldt9A0UniM3Dk',
+    libraries: ['places'],
+  })
 
   return (
     <form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -77,43 +93,52 @@ const SpaceCreateForm = () => {
 
           <Input
             label="Dimensiones del espacio en metros cuadrados"
-            placeholder="Dimensiones del espacio"
+            placeholder="m2"
             {...register('dimensions')}
             type="number"
             variant="outline"
             className="mb-4"
+            min={1}
             error={errors.dimensions?.message?.toString()}
           />
 
           <Input
-            label="Capacidad del espacio"
+            label="Aforo"
             placeholder="Aforo"
             {...register('capacity')}
             type="number"
             variant="outline"
             className="mb-4"
+            min={1}
             error={errors.capacity?.message?.toString()}
           />
 
           <Input
-            label="Precio"
-            placeholder="Precio"
+            label="Precio por día"
+            placeholder="MXN"
             {...register('price')}
             type="number"
             variant="outline"
             className="mb-4"
+            min={1}
             error={errors.price?.message?.toString()}
           />
 
-          <Input
-            label="Dirección del espacio"
-            placeholder="Dirección"
-            {...register('location')}
-            type="text"
-            variant="outline"
-            className="mb-4"
-            error={errors.location?.message?.toString()}
-          />
+          {isLoaded && (
+            <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+              <Input
+                label="Dirección del espacio"
+                placeholder="Dirección"
+                {...register('location')}
+                type="text"
+                variant="outline"
+                className="mb-4"
+                value={inputValue}
+                onChange={(e: any) => setInputValue(e.target.value)}
+                error={errors.location?.message?.toString()}
+              />
+            </Autocomplete>
+          )}
         </Card>
         <div className="w-full text-end">
           <Button

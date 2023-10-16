@@ -5,19 +5,94 @@ import { useTranslation } from 'next-i18next'
 import SidebarItem from '@/components/layout/navigation/sidebar-item'
 import Image from 'next/image'
 import logo from '../../../assets/placeholders/logo-bwb.png'
+import { useMeQuery } from '@/data/user'
+import { Role } from '@/types/users'
 
 const AdminLayout: React.FC<{ children?: React.ReactNode }> = ({
   children,
 }) => {
   const { t } = useTranslation()
+  const { data, isLoading: loading, error } = useMeQuery()
 
-  const SidebarItemMap = () => (
-    <>
-      {siteSettings.sidebarLinks.admin.map(({ href, label, icon }) => (
-        <SidebarItem href={href} label={t(label)} icon={icon} key={href} />
-      ))}
-    </>
-  )
+  const SidebarItemMap = () => {
+    if (loading) {
+      return <>Cargando...</>
+    }
+    if (error) {
+      return <>Error al cargar los items.</>
+    }
+    if (data?.role === Role.Director) {
+      return (
+        <>
+          {siteSettings.sidebarLinks.admin.map(({ href, label, icon }) => (
+            <SidebarItem href={href} label={t(label)} icon={icon} key={href} />
+          ))}
+        </>
+      )
+    } else if (data?.role === Role.Communication) {
+      return (
+        <>
+          {siteSettings.sidebarLinks.communication.map(
+            ({ href, label, icon }) => (
+              <SidebarItem
+                href={href}
+                label={t(label)}
+                icon={icon}
+                key={href}
+              />
+            )
+          )}
+        </>
+      )
+    } else if (data?.role === Role.Coordination) {
+      return (
+        <>
+          {siteSettings.sidebarLinks.communication.map(
+            ({ href, label, icon }) => (
+              <SidebarItem
+                href={href}
+                label={t(label)}
+                icon={icon}
+                key={href}
+              />
+            )
+          )}
+        </>
+      )
+    } else if (data?.role === Role.Technicalarea) {
+      return (
+        <>
+          {siteSettings.sidebarLinks.communication.map(
+            ({ href, label, icon }) => (
+              <SidebarItem
+                href={href}
+                label={t(label)}
+                icon={icon}
+                key={href}
+              />
+            )
+          )}
+        </>
+      )
+    } else if (data?.role === Role.Cafeteria) {
+      return (
+        <>
+          {siteSettings.sidebarLinks.communication.map(
+            ({ href, label, icon }) => (
+              <SidebarItem
+                href={href}
+                label={t(label)}
+                icon={icon}
+                key={href}
+              />
+            )
+          )}
+        </>
+      )
+    } else {
+      return <></>
+    }
+  }
 
   return (
     <div

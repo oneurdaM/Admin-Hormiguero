@@ -1,4 +1,4 @@
-export const CalendarIcon: React.FC<React.SVGAttributes<{}>> = (props) => (
+export const CalendarIcon = ({...props}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     {...props}

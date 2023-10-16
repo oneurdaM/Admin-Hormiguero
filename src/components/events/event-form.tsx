@@ -49,11 +49,14 @@ const EventForm = () => {
     page: 1,
     search: '',
   })
+
   const { genres, loading: loadingGenres } = useGenresQuery({
     limit: 10,
     page: 1,
     search: '',
+    type: 'Production',
   })
+
   const { casts, loading: loadingCast } = useCastsQuery({
     limit: 10,
     page: 1,
@@ -123,7 +126,7 @@ const EventForm = () => {
 
   const imageInformation = (
     <span>
-      Carga la imagen de la nota desde aquí <br />
+      Carga la imagen desde aquí <br />
       La dimensión de la imagen se recomienda sea de&nbsp;
       <span className="font-bold">1024x1024 px</span>
     </span>

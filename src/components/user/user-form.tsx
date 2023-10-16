@@ -9,12 +9,7 @@ import Description from '../ui/description'
 import Input from '../ui/input'
 import PasswordInput from '../ui/password-input'
 import { userValidationSchema } from './user-validation-schema'
-import Select from '../select/select'
-import Label from '../ui/label'
 import { useRouter } from 'next/router'
-
-import { Role } from '@/types/users'
-import { useState } from 'react'
 
 type FormValues = {
   firstName: string
@@ -22,8 +17,8 @@ type FormValues = {
   lastName: string
   email: string
   password: string
-  birthDate: string
-  role: string | null
+  birthDate?: string
+  role?: string | null
 }
 
 const defaultValues: FormValues = {
@@ -32,44 +27,13 @@ const defaultValues: FormValues = {
   lastName: '',
   email: '',
   password: '',
-  birthDate: '',
-  role: null,
 }
-
-const roleOptions = [
-  {
-    label: Role.Director, //translate each label
-    value: Role.Director,
-  },
-  {
-    label: Role.Coordination,
-    value: Role.Coordination,
-  },
-  {
-    label: Role.Communication,
-    value: Role.Communication,
-  },
-  {
-    label: Role.Cafeteria,
-    value: Role.Cafeteria,
-  },
-  {
-    label: Role.Technicalarea,
-    value: Role.Technicalarea,
-  },
-  {
-    label: Role.User,
-    value: Role.User,
-  },
-]
 
 const UserCreateForm = () => {
   const router = useRouter()
   const { mutate: registerUser, isLoading: loading } = useRegisterMutation()
-  const [selectedRole, setSelectedRole] = useState<string | null>(null)
   let currentDate = new Date()
   currentDate.setFullYear(currentDate.getFullYear() - 18)
-  const minAge = currentDate.toISOString().split('T')[0]
 
   const {
     register,
@@ -98,7 +62,6 @@ const UserCreateForm = () => {
         middleName: middleName || null,
         username: email,
         birthDate,
-        role: selectedRole,
       },
       {
         onError: (error: any) => {
@@ -171,27 +134,6 @@ const UserCreateForm = () => {
             className="mb-4"
             variant="outline"
             error={errors.password?.message?.toString()}
-          />
-          <Input
-            type="date"
-            label="Fecha de nacimiento"
-            placeholder="Fecha de nacimiento"
-            {...register('birthDate')}
-            variant="outline"
-            className="mb-5"
-            max={minAge}
-            error={errors.birthDate?.message?.toString()}
-          />
-
-          <Label className="mb-4">Rol de usuario</Label>
-          <Select
-            isLoading={loading}
-            options={roleOptions}
-            getOptionLabel={(option: any) => option?.label ?? ''}
-            getOptionValue={(option: any) => option?.value ?? ''}
-            placeholder="Rol del usuario"
-            onChange={(value: any) => setSelectedRole(value?.value ?? null)}
-            isClearable={true}
           />
         </Card>
       </div>

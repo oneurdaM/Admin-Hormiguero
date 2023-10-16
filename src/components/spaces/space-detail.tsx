@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import pick from 'lodash/pick'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 import { useUpdateSpaceMutation } from '@/data/space'
 import { Space } from '@/types/spaces'
@@ -11,6 +12,7 @@ import Button from '../ui/button'
 import Description from '../ui/description'
 import Input from '../ui/input'
 import { SpaceValidationSchema } from './space-validation-schema'
+import { Autocomplete, useJsApiLoader } from '@react-google-maps/api'
 
 type FormValues = {
   name: string
@@ -23,6 +25,8 @@ type FormValues = {
 export default function SpaceDetailForm({ space }: Space | any) {
   const router = useRouter()
   const { mutate: updateSpace, isLoading: loading } = useUpdateSpaceMutation()
+  const [autocomplete, setAutocomplete] = useState()
+  const [inputValue, setInputValue] = useState()
 
   const {
     register,
@@ -44,6 +48,22 @@ export default function SpaceDetailForm({ space }: Space | any) {
       })
     }
   }
+
+  const onLoad = (autocomplete: any) => {
+    setAutocomplete(autocomplete)
+  }
+
+  const onPlaceChanged = () => {
+    if (autocomplete) {
+      setInputValue(autocomplete.getPlace().formatted_address)
+    }
+  }
+
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: 'AIzaSyCtAae1VdKZ5h7m1CmyKQldt9A0UniM3Dk',
+    libraries: ['places'],
+  })
 
   return (
     <form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -75,7 +95,7 @@ export default function SpaceDetailForm({ space }: Space | any) {
           />
 
           <Input
-            label="Capacidad del espacio"
+            label="Aforo"
             placeholder="Aforo"
             {...register('capacity')}
             type="number"
@@ -85,8 +105,8 @@ export default function SpaceDetailForm({ space }: Space | any) {
           />
 
           <Input
-            label="Precio"
-            placeholder="Precio"
+            label="Precio por día"
+            placeholder="MXN"
             {...register('price')}
             type="number"
             variant="outline"
@@ -94,7 +114,7 @@ export default function SpaceDetailForm({ space }: Space | any) {
             error={errors.price?.message?.toString()}
           />
 
-          <Input
+          {/* <Input
             label="Dirección del espacio"
             placeholder="Dirección"
             {...register('location')}
@@ -102,7 +122,22 @@ export default function SpaceDetailForm({ space }: Space | any) {
             variant="outline"
             className="mb-4"
             error={errors.location?.message?.toString()}
-          />
+          /> */}
+          {isLoaded && (
+            <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+              <Input
+                label="Dirección del espacio"
+                placeholder="Dirección"
+                {...register('location')}
+                type="text"
+                variant="outline"
+                className="mb-4"
+                value={inputValue}
+                onChange={(e: any) => setInputValue(e.target.value)}
+                error={errors.location?.message?.toString()}
+              />
+            </Autocomplete>
+          )}
         </Card>
       </div>
       <div className="mb-4 text-end sm:mb-8">

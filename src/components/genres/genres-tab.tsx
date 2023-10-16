@@ -19,6 +19,7 @@ export default function GenresTab() {
     limit: 10,
     page,
     search: searchTerm,
+    type: 'Production',
   })
 
   function handleSearch({ searchText }: { searchText: string }) {
@@ -30,9 +31,9 @@ export default function GenresTab() {
     setPage(current)
   }
 
-  //   if (loading) return <Loader text="Cargando géneros..." />
+  if (loading) return <Loader text="Cargando géneros..." />
 
-  //   if (error) return <ErrorMessage message={error.message} />
+  if (error) return <ErrorMessage message={error.message} />
 
   return (
     <>

@@ -21,7 +21,7 @@ export const useGenresQuery = (options: Partial<GenresQueryOptions>) => {
   )
 
   return {
-    genres: data?.genders,
+    genres: data?.data,
     loading: isLoading,
     paginatorInfo: mapPaginatorData(data as any),
     error,

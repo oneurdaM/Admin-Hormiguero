@@ -32,7 +32,7 @@ export const API_ENDPOINTS = {
   CATEGORY: 'category',
   ALERTS: 'notice',
   PRODUCTS: 'product',
-  DEPARTMENTS: 'catalog-prodructs', //has a typo
+  DEPARTMENTS: 'catalog-products', //has a typo
   ORDERS: 'orders',
   SPACES: 'spaces',
   RESERVATIONS: 'reservations',
@@ -40,6 +40,6 @@ export const API_ENDPOINTS = {
   TRACKER: 'tracker',
   TRACK_USER: 'tracker/user',
 
-  CAST: '/events/casts',
-  GENRE: '/events/gender',
+  CAST: '/casts',
+  GENRE: '/genders',
 }

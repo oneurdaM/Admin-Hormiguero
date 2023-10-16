@@ -50,8 +50,8 @@
   "sidebar-nav-item-categories": "Categorías",
   "sidebar-nav-item-orders": "Pedidos",
   "sidebar-nav-item-order-status": "Estado del pedido",
-  "sidebar-nav-item-users": "Usuarios",
-  "sidebar-nav-item-customers": "Usuarios",
+  "sidebar-nav-item-users": "Usuarias",
+  "sidebar-nav-item-customers": "Clientes",
   "sidebar-nav-item-coupons": "Cupones",
   "sidebar-nav-item-taxes": "Impuestos",
   "sidebar-nav-item-shippings": "Envíos",
@@ -337,5 +337,11 @@
   "text-quantity": "Cantidad",
   "text-invoice-no": "Factura no",
   "text-date": "Fecha",
-  "text-message-sent": "Mensaje enviado"
+  "text-message-sent": "Mensaje enviado",
+
+  "DIRECTOR": "Director",
+  "COORDINATOR": "Coordinador",
+  "COMMUNICATOR": "Comunicador",
+  "TECHNICIAN": "Técnico",
+  "BARTENDER": "Barista"
 }

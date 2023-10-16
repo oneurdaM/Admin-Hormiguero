@@ -34,7 +34,7 @@ const GenreForm = () => {
 
   async function onSubmit({ name }: FormValues) {
     createGenre(
-      { name },
+      { name, type: 'Production' },
       {
         onError: (error: any) => {
           if (error.response?.data?.errors) {

@@ -11,6 +11,7 @@ import Button from '../ui/button'
 import Description from '../ui/description'
 import Input from '../ui/input'
 import { DepartmentValidationSchema } from './department-validation-schema'
+import { slug } from '@/utils/slug'
 
 type FormValues = {
   name: string
@@ -27,16 +28,19 @@ export default function DepartmentDetailForm({ department }: Department | any) {
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
-      ...(department && pick(department, ['name', 'stock', 'id', 'createdAt'])),
+      ...(department &&
+        pick(department, ['name', 'number', 'id', 'createdAt'])),
     },
     resolver: yupResolver(DepartmentValidationSchema),
   })
 
   async function onSubmit({ name }: FormValues) {
+    const slugStr = slug(name)
+
     if (department.id !== undefined) {
       updatedepartment({
         id: department.id,
-        input: { ...department, name },
+        input: { ...department, name, slug: slugStr },
       })
     }
   }

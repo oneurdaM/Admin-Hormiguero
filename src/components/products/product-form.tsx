@@ -14,6 +14,7 @@ import Select from '../select/select'
 import Label from '../ui/label'
 import FileInput from '../ui/file-input'
 import { useDepartmentsQuery } from '@/data/department'
+import { slug } from '@/utils/slug'
 
 type FormValues = {
   title: string
@@ -21,6 +22,8 @@ type FormValues = {
   thumbnail: string
   stock: number
   price: number
+
+  capacity: number
   slug: string
 }
 
@@ -30,6 +33,8 @@ const defaultValues: FormValues = {
   thumbnail: '',
   stock: 1,
   price: 20,
+
+  capacity: 0,
   slug: '',
 }
 
@@ -63,16 +68,17 @@ const ProductCreateForm = () => {
     thumbnail,
     stock,
     price,
-    slug,
   }: FormValues) {
+    const slugStr = slug(title)
     registerProduct(
       {
         title,
         description,
         thumbnail,
         stock,
+        capacity: 100,
         price,
-        slug,
+        slug: slugStr,
         catalogId: productCatalog,
       },
       {

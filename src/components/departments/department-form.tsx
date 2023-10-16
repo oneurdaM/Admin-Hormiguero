@@ -9,6 +9,7 @@ import Button from '../ui/button'
 import Description from '../ui/description'
 import Input from '../ui/input'
 import { DepartmentValidationSchema } from './department-validation-schema'
+import { slug } from '@/utils/slug'
 
 type FormValues = {
   name: string
@@ -34,9 +35,13 @@ const DepartmentCreateForm = () => {
     resolver: yupResolver(DepartmentValidationSchema),
   })
 
+  const today = new Date()
+
   async function onSubmit({ name }: FormValues) {
+    const slugStr = slug(name)
+
     registerProductCategory(
-      { name, stock: 1 },
+      { name, number: 1, createdAt: today, slug: slugStr },
       {
         onError: (error: any) => {
           if (error.response?.data?.errors) {

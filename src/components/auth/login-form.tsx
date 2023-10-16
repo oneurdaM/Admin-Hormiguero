@@ -38,7 +38,7 @@ const LoginForm = () => {
             const role = data?.role
             if (hasAccess(allowedRoles, role)) {
               setAuthCredentials(data.jwt, data.role)
-              Router.push(Routes.users.list) // redirect to "/users"
+              Router.push('/') //redirect to '/'
               return
             }
             setErrorMessage('form:error-enough-permission')

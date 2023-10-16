@@ -3,6 +3,7 @@ import pick from 'lodash/pick'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 import { useUpdateProductMutation } from '@/data/product'
 import { Product } from '@/types/products'
@@ -25,18 +26,18 @@ type FormValues = {
   stock: number
   price: number
   slug: string
+  catalog?: string
 }
 
 export default function ProductUpdateForm({ product }: Product | any) {
   const router = useRouter()
   const [productCatalog, setProductCatalog] = useState<number | null>(null)
 
-  const { departments, loading: loadingCategories } =
-    useDepartmentsQuery({
-      limit: 10,
-      page: 1,
-      search: '',
-    })
+  const { departments, loading: loadingDepartments } = useDepartmentsQuery({
+    limit: 10,
+    page: 1,
+    search: '',
+  })
 
   const { mutate: updateProduct, isLoading: loading } =
     useUpdateProductMutation()
@@ -56,6 +57,7 @@ export default function ProductUpdateForm({ product }: Product | any) {
           'stock',
           'price',
           'slug',
+          'catalog',
         ])),
     },
     resolver: yupResolver(productValidationSchema),
@@ -79,7 +81,30 @@ export default function ProductUpdateForm({ product }: Product | any) {
           className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
         />
         <Card className="w-full sm:w-8/12 md:w-2/3">
-          <FileInput name="thumbnail" control={control} />
+          <div className="container mx-auto p-4">
+            <div className="lg:flex">
+              {product.thumbnail && (
+                <div className="mb-4 p-6 text-center lg:mb-0 lg:w-1/4">
+                  <Label>Imagen actual</Label>
+                  <Image
+                    src={product.thumbnail}
+                    alt="Avatar"
+                    width={40}
+                    height={40}
+                    className="h-auto w-full"
+                  />
+                </div>
+              )}
+
+              <div className={product.thumbnail ? 'lg:w-3/4' : 'lg:w-full'}>
+                <div className="bg-gray-200 p-4">
+                  <div className="w-full p-2">
+                    <FileInput name="thumbnail" control={control} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </Card>
       </div>
       <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
@@ -90,8 +115,8 @@ export default function ProductUpdateForm({ product }: Product | any) {
         />
         <Card className="mb-5 w-full sm:w-8/12 md:w-2/3">
           <Input
-            label="Nombre del Producto"
-            placeholder="Nombre del Producto"
+            label="Nombre del producto"
+            placeholder="Nombre del producto"
             {...register('title')}
             type="text"
             variant="outline"
@@ -100,8 +125,8 @@ export default function ProductUpdateForm({ product }: Product | any) {
           />
 
           <Input
-            label="Descripción del Producto"
-            placeholder="Descripción del Producto"
+            label="Descripción del producto"
+            placeholder="Descripción del producto"
             {...register('description')}
             type="text"
             variant="outline"
@@ -113,13 +138,13 @@ export default function ProductUpdateForm({ product }: Product | any) {
           <Select
             className="mb-4"
             options={departments ?? []}
-            isLoading={loadingCategories}
+            isLoading={loadingDepartments}
             getOptionLabel={(option: any) => option?.name ?? ''}
             getOptionValue={(option: any) => option?.id ?? ''}
             placeholder="Categoría del producto"
             isClearable={true}
             onChange={(catalog: any) => setProductCatalog(catalog?.id ?? null)}
-            defaultValue={{ id: product.catalogId }} //missing data from catalog, must be like catalog: {id, name, stock}
+            defaultValue={[{ id: product.catalogId, name: product.catalog }]}
           />
 
           <Input

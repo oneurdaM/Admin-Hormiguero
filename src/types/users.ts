@@ -27,7 +27,7 @@ export interface Tracking {
 }
 
 export enum Role {
-  User = 'USER',
+  // User = 'USER',
   Director = 'DIRECTOR',
   Coordination = 'COORDINATOR',
   Communication = 'COMMUNICATOR',
@@ -49,7 +49,7 @@ export type UserRegistration = {
   password: string
   firstName: string
   middleName?: string | null
-  lastName: string
-  birthDate: string
-  role: string | null
+  lastName?: string
+  birthDate?: string
+  role?: string | null
 }

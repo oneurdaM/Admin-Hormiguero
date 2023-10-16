@@ -48,6 +48,16 @@ export const Routes = {
   genres: {
     ...routesFactory('/genres'),
   },
+  about: {
+    ...routesFactory('/about'),
+  },
+  community: {
+    ...routesFactory('/community')
+  },
+  sections: {
+    ...routesFactory('/sections')
+  }
+  
 }
 
 function routesFactory(endpoint: string) {

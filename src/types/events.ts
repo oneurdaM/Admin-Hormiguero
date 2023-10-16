@@ -15,6 +15,7 @@ export interface Event {
   gender?: number[] | []
   cast?: number[] | []
   days?: number
+  type?: string
 }
 
 export interface EventsResponse {
@@ -27,6 +28,7 @@ export interface EventsResponse {
 
 export type EventInput = {
   name: string
+  type?: string
 }
 
 export type EventPagination = {
@@ -39,6 +41,7 @@ export type EventPagination = {
 
 export interface EventsQueryOptions extends QueryOptions {
   search?: string
+  type?: string
 }
 
 export type EventsPaginator = PaginatorInfo<Event>

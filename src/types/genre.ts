@@ -3,14 +3,16 @@ import { PaginatorInfo, QueryOptions } from '.'
 export type Genre = {
   id?: number
   name: string
+  type?: string
 }
 
 export type GenreInput = {
   name: string
+  type?: string
 }
 
 export type GenrePagination = {
-  genders: Genre[]
+  data: Genre[]
   total: number
   totalPages: number
   currentPage: number
@@ -19,6 +21,7 @@ export type GenrePagination = {
 
 export interface GenresQueryOptions extends QueryOptions {
   search?: string
+  type?: string
 }
 
 export type GenresPaginator = PaginatorInfo<Genre>

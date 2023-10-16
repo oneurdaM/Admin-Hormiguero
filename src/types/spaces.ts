@@ -26,8 +26,9 @@ export type SpacePagination = {
 
 export type SpaceRegistration = {
   id?: number | string
-  dimensions: string | number
-  capacity: number
-  price: number
-  location: string
+  dimensions?: string | number
+  capacity?: number
+  price?: number
+  location?: string
+  active?: boolean
 }

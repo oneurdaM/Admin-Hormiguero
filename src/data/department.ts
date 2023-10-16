@@ -52,7 +52,7 @@ export const useCreateDepartmentMutation = () => {
 
   return useMutation(DepartmentClient.register, {
     onSuccess() {
-      toast.success('Se creó una nueva categoría')
+      toast.success('Se creó un nuevo departamento')
       router.back()
     },
     onSettled: () => {
@@ -67,7 +67,7 @@ export const useUpdateDepartmentMutation = () => {
 
   return useMutation(DepartmentClient.update, {
     onSuccess() {
-      toast.success('Category updated successfully')
+      toast.success('Se actualizó el departamento')
       router.back()
     },
     onSettled: () => {
@@ -80,7 +80,7 @@ export const useDeleteDepartmentMutation = () => {
   const queryClient = useQueryClient()
   return useMutation(DepartmentClient.delete, {
     onSuccess: () => {
-      toast.success('Category deleted successfully')
+      toast.success('Se eliminó el departamento')
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.DEPARTMENTS)

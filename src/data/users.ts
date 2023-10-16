@@ -48,7 +48,7 @@ export const useUpdatePasswordMutation = () => {
 
   return useMutation(userClient.changePassword, {
     onSuccess() {
-      toast.success('Password updated successfully')
+      toast.success('Se actualizó la contraseña')
       router.back()
     },
     onSettled: () => {
@@ -64,7 +64,7 @@ export const useRegisterMutation = () => {
 
   return useMutation(userClient.register, {
     onSuccess() {
-      toast.success('User created successfully')
+      toast.success('Se creó un nuevo usuario')
       router.back()
     },
     onSettled: () => {

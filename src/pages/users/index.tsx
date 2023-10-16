@@ -22,9 +22,11 @@ export default function Users() {
     search: searchTerm,
   })
 
-  // if (loading) return <Loader text="Cargando usuarios..." />
+  console.log(users)
 
-  // if (error) return <ErrorMessage message={error.message} />
+  if (loading) return <Loader text="Cargando usuarios..." />
+
+  if (error) return <ErrorMessage message={error.message} />
 
   function handleSearch({ searchText }: { searchText: string }) {
     setSearchTerm(searchText)
@@ -55,13 +57,11 @@ export default function Users() {
         </div>
       </Card>
 
-      {loading ? null : (
-        <UserList
-          users={users ?? []}
-          paginatorInfo={paginatorInfo}
-          onPagination={handlePagination}
-        />
-      )}
+      <UserList
+        users={users ?? []}
+        paginatorInfo={paginatorInfo}
+        onPagination={handlePagination}
+      />
     </>
   )
 }

@@ -57,39 +57,75 @@ export const siteSettings = {
       {
         href: Routes.spaces.list,
         label: 'Espacios',
-        icon: 'Bell',
+        icon: 'Pin',
       },
       {
         href: Routes.events.list,
         label: 'Eventos',
-        icon: 'Bell',
+        icon: 'CalendarIcon',
       },
       {
-        href: Routes.users.list,
+        href: Routes.about.list,
         label: 'Impacto social',
-        icon: 'Bell',
+        icon: 'ReviewIcon',
       },
       {
         href: Routes.blog.list,
         label: 'Blog',
+        icon: 'ChatIcon',
+      },
+    ],
+    communication: [
+      {
+        href: Routes.about.list,
+        label: 'Impacto social',
         icon: 'ReviewIcon',
       },
-
-      // {
-      //   href: Routes.modules.list,
-      //   label: 'Modulos y Tareas',
-      //   icon: 'Bell',
-      // },
-      // {
-      //   href: Routes.casts.list,
-      //   label: 'Elencos',
-      //   icon: 'UsersIcon',
-      // },
-      // {
-      //   href: Routes.genders.list,
-      //   label: 'Genres',
-      //   icon: 'UsersIcon',
-      // },
+      {
+        href: Routes.blog.list,
+        label: 'Blog',
+        icon: 'ChatIcon',
+      },
+    ],
+    coordination: [
+      {
+        href: Routes.orders.list,
+        label: 'Pedidos',
+        icon: 'ProductsIcon',
+      },
+      {
+        href: Routes.products.list,
+        label: 'Productos',
+        icon: 'DashboardIcon',
+      },
+      {
+        href: Routes.alerts.list,
+        label: 'Alertas',
+        icon: 'Bell',
+      },
+      {
+        href: Routes.spaces.list,
+        label: 'Espacios',
+        icon: 'Pin',
+      },
+      {
+        href: Routes.events.list,
+        label: 'Eventos',
+        icon: 'CalendarIcon',
+      },
+    ],
+    technicalarea: [{}],
+    cafeteria: [
+      {
+        href: Routes.orders.list,
+        label: 'Pedidos',
+        icon: 'ProductsIcon',
+      },
+      {
+        href: Routes.products.list,
+        label: 'Productos',
+        icon: 'DashboardIcon',
+      },
     ],
   },
   avatar: {

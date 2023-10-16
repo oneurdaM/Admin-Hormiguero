@@ -6,5 +6,8 @@
   "sticker-card-title-customer": "Nuevo cliente",
   "sticker-card-subtitle-customer": "(Últimos 30 días)",
   "sticker-card-title-today-rev": "Usuarios",
-  "sticker-card-title-total-shops": "Ambientes Totales"
+  "sticker-card-title-total-shops": "Ambientes Totales",
+
+  "sticker-card-title-attend": "Alertas atendidas",
+  "sticker-card-subtitle-attend": "(Últimos 30 días)"
 }

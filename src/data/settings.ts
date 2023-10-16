@@ -37,7 +37,7 @@ export const useSettingsQuery = () => {
   )
 
   return {
-    settings: data ?? {},
+    settings: data?.data ?? {},
     error,
     loading: isLoading,
   }

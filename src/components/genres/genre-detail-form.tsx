@@ -49,7 +49,7 @@ const GenreDetailForm = ({ genre }: Genre | any) => {
       <div className="my-5 flex flex-wrap sm:my-8">
         <Description
           title="Categoría"
-          details="Esta categoría podrá ser utilizada para clasificar los articulos de tu blog."
+          details="Esta categoría podrá ser utilizada para clasificar los eventos."
           className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
         />
 

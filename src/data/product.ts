@@ -52,7 +52,7 @@ export const useCreateProductMutation = () => {
 
   return useMutation(productClient.register, {
     onSuccess() {
-      toast.success('Product created successfully')
+      toast.success('Se agregó un nuevo producto')
       router.back()
     },
     onSettled: () => {
@@ -67,7 +67,7 @@ export const useUpdateProductMutation = () => {
 
   return useMutation(productClient.update, {
     onSuccess() {
-      toast.success('Product updated successfully')
+      toast.success('Se actualizó el producto')
       router.back()
     },
     onSettled: () => {
@@ -80,7 +80,7 @@ export const useDeleteProductMutation = () => {
   const queryClient = useQueryClient()
   return useMutation(productClient.delete, {
     onSuccess: () => {
-      toast.success('Product deleted successfully')
+      toast.success('Se eliminó el producto')
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.PRODUCTS)

@@ -24,6 +24,7 @@ export type DepartmentRegistration = {
   Id?: number
   number?: number
   name: string
-  createdAt?: string
-  stock?: number
+  createdAt?: string | Date
+  stock?: number,
+  slug?: string
 }

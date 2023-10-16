@@ -1,6 +1,6 @@
 export interface Product {
   id: number
-  stock: number
+  capacity?: number
   thumbnail: string
   title: string
   description: string
@@ -27,7 +27,8 @@ export type ProductRegistration = {
   title: string
   description: string
   thumbnail: string
-  stock: number
+  capacity?: number
+  stock?: number
   price: number
   slug: string
   catalogId: number | null

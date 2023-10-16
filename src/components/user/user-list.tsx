@@ -24,12 +24,12 @@ const UserList = ({ users, paginatorInfo, onPagination }: UserListProps) => {
   const columns = [
     {
       title: 'Avatar',
-      dataIndex: 'users',
-      key: 'users',
+      dataIndex: 'image',
+      key: 'image',
       align: 'center' as AlignType,
       render: (image: string) => (
         <Image
-          src={image ?? siteSettings.logo.url}
+          src={image ? image : siteSettings.logo.url}
           alt="Avatar"
           width={40}
           height={40}
@@ -76,7 +76,7 @@ const UserList = ({ users, paginatorInfo, onPagination }: UserListProps) => {
         return (
           <ActionButtons
             id={id}
-            userStatus={true}
+            userStatus={me?.id !== parseInt(id) ? true : false}
             isUserActive={!banned}
             detailsUrl={
               me?.id !== parseInt(id)
