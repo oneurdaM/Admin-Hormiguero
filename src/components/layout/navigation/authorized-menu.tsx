@@ -22,13 +22,16 @@ export default function AuthorizedMenu() {
       ? data?.image
       : siteSettings?.avatar?.placeholder
 
+  //removed menu because of z-index library insidence, check later
   return (
-    <Menu as="div" className="relative z-50 inline-block text-left">
+    <Menu as="div" className="relative inline-block text-left">
       <Menu.Button className="flex items-center focus:outline-none">
-        <Avatar src={image} alt="avatar" alerts={unattendedAlerts} />
+        <Link href={'/'}>
+          <Avatar src={image} alt="avatar" alerts={unattendedAlerts} />
+        </Link>
       </Menu.Button>
 
-      <Transition
+      {/* <Transition
         as={Fragment}
         enter="transition ease-out duration-100"
         enterFrom="transform opacity-0 scale-95"
@@ -71,7 +74,7 @@ export default function AuthorizedMenu() {
             </Menu.Item>
           ))}
         </Menu.Items>
-      </Transition>
+      </Transition> */}
     </Menu>
   )
 }

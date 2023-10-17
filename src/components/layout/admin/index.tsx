@@ -101,11 +101,24 @@ const AdminLayout: React.FC<{ children?: React.ReactNode }> = ({
     >
       <Navbar />
       <MobileNavigation>
+        <SidebarItem
+          href="/profile-update"
+          label="Editar perfil"
+          key="/profile-update"
+          icon="SettingsIcon"
+        />
         <SidebarItemMap />
+        <SidebarItem
+          color="text-red-700"
+          href="/logout"
+          label="Cerrar sesión"
+          key="/logout"
+          icon="BanUser"
+        />
       </MobileNavigation>
       <div className="flex flex-1 pt-20">
         <aside className="xl:w-76 fixed bottom-0 hidden h-full w-72 overflow-y-auto bg-dark px-4 pt-5 shadow ltr:left-0 ltr:right-auto rtl:left-auto rtl:right-0 lg:block">
-          <div className=" flex justify-center">
+          <div className="flex justify-center">
             <span
               className="relative overflow-hidden"
               style={{
@@ -116,8 +129,21 @@ const AdminLayout: React.FC<{ children?: React.ReactNode }> = ({
               <Image src={logo} alt="logo-bw" loading="eager" />
             </span>
           </div>
-          <div className="flex flex-col space-y-6 py-10">
+          <div className="flex flex-grow flex-col space-y-6 py-10">
+            <SidebarItem
+              href="/profile-update"
+              label="Editar perfil"
+              key="/profile-update"
+              icon="SettingsIcon"
+            />
             <SidebarItemMap />
+            <SidebarItem
+              color="text-red-700"
+              href="/logout"
+              label="Cerrar sesión"
+              key="/logout"
+              icon="BanUser"
+            />
           </div>
         </aside>
         <main className="ltr:xl:pl-76 rtl:xl:pr-76 w-full ltr:lg:pl-72 rtl:lg:pl-0 rtl:lg:pr-72">

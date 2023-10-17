@@ -18,9 +18,9 @@ const DrawerWrapper: React.FunctionComponent<DrawerWrapperProps> = ({
   onClose,
 }) => {
   return (
-    <div className="relative flex h-full flex-col bg-white">
+    <div className="relative flex h-full flex-col bg-black">
       {!hideTopBar && (
-        <div className="absolute start-0 top-0 z-30 mb-4 flex h-16 w-full items-center justify-between border-b border-border-200 border-opacity-75 px-5 md:mb-6 md:px-8 md:py-5">
+        <div className="absolute start-0 top-0 z-30 mb-4 flex h-16 w-full items-center justify-between  px-5 md:mb-6 md:px-8 md:py-5">
           {/* <Logo className="w-24 md:w-auto" /> */}
           <span
             className="relative overflow-hidden"

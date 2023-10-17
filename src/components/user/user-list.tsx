@@ -10,6 +10,7 @@ import ActionButtons from '../common/action-buttons'
 import Pagination from '../ui/pagination'
 import { useRouter } from 'next/router'
 import { useMeQuery } from '@/data/user'
+import { useTranslation } from 'react-i18next'
 
 type UserListProps = {
   users: UsersResponse[]
@@ -20,6 +21,7 @@ type UserListProps = {
 const UserList = ({ users, paginatorInfo, onPagination }: UserListProps) => {
   const router = useRouter()
   const { data: me } = useMeQuery()
+  const { t } = useTranslation()
 
   const columns = [
     {
@@ -54,6 +56,13 @@ const UserList = ({ users, paginatorInfo, onPagination }: UserListProps) => {
       dataIndex: 'email',
       key: 'email',
       align: 'center' as AlignType,
+    },
+    {
+      title: 'Rol',
+      dataIndex: 'role',
+      key: 'role',
+      align: 'center' as AlignType,
+      render: (rol: string) => (t(`common:${rol}`)),
     },
     {
       title: 'Estatus',
@@ -93,7 +102,7 @@ const UserList = ({ users, paginatorInfo, onPagination }: UserListProps) => {
   return (
     <>
       <div className="mb-6 overflow-hidden overflow-x-auto rounded shadow">
-        <Table columns={columns} data={users} rowKey={'username'} />
+        <Table className='' columns={columns} data={users} rowKey={'username'} />
       </div>
       {!!paginatorInfo?.total && (
         <div className="flex items-center justify-end">

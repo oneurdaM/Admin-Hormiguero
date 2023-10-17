@@ -17,20 +17,20 @@ export const siteSettings = {
     address: '',
   },
   headerLinks: [],
-  authorizedLinks: [
-    {
-      href: Routes.profileUpdate,
-      labelTransKey: 'Perfil',
-    },
-    {
-      href: Routes.userNotifications.list,
-      labelTransKey: 'Notificaciones',
-    },
-    {
-      href: Routes.logout,
-      labelTransKey: 'Salir',
-    },
-  ],
+  // authorizedLinks: [
+  //   {
+  //     href: Routes.profileUpdate,
+  //     labelTransKey: 'Perfil',
+  //   },
+  //   {
+  //     href: Routes.userNotifications.list,
+  //     labelTransKey: 'Notificaciones',
+  //   },
+  //   {
+  //     href: Routes.logout,
+  //     labelTransKey: 'Salir',
+  //   },
+  // ],
   currencyCode: 'MXN',
   sidebarLinks: {
     admin: [

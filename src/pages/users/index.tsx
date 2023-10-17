@@ -22,8 +22,6 @@ export default function Users() {
     search: searchTerm,
   })
 
-  console.log(users)
-
   if (loading) return <Loader text="Cargando usuarios..." />
 
   if (error) return <ErrorMessage message={error.message} />

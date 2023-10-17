@@ -4,13 +4,13 @@ import AuthorizedMenu from './authorized-menu'
 import { NavbarIcon } from '@/components/icons/navbar-icon'
 import { motion } from 'framer-motion'
 
-import LanguageSwitcher from './language-switcher'
-import { Config } from '@/config'
+// import LanguageSwitcher from './language-switcher'
+// import { Config } from '@/config'
 
 const Navbar = () => {
   const { toggleSidebar } = useUI()
 
-  const { enableMultiLang } = Config
+  // const { enableMultiLang } = Config
 
   return (
     <header className="fixed w-full bg-white shadow">
@@ -27,7 +27,7 @@ const Navbar = () => {
         <div className="me-auto ms-5 hidden md:flex">{/* <Logo /> */}</div>
 
         <div className="flex items-center space-s-8">
-          {enableMultiLang ? <LanguageSwitcher /> : null}
+          {/* {enableMultiLang ? <LanguageSwitcher /> : null} */}
           <AuthorizedMenu />
         </div>
       </nav>
