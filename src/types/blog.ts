@@ -16,7 +16,7 @@ export interface Note {
   createdBy: number
   is_approved: boolean
   slug: string
-  categoryId: number
+  category_id?: number
 }
 
 export interface CreateNote {

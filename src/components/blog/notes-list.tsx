@@ -7,6 +7,7 @@ import Image from 'next/image'
 import LanguageSwitcher from '../ui/lang-action/action'
 import Pagination from '../ui/pagination'
 import TitleWithSort from '../ui/title-with-sort'
+import { formatDate } from '@/utils/format-date'
 
 type NotesListProps = {
   notes: Note[] | null | undefined
@@ -45,38 +46,40 @@ const NotesList = ({ notes, paginatorInfo, onPagination }: NotesListProps) => {
       key: 'title',
       align: 'center' as AlignType,
       width: 170,
+      render: (title: string) => <span className="line-clamp-2">{title}</span>,
     },
     {
       title: 'Contenido',
       dataIndex: 'content',
       key: 'content',
       align: 'center' as AlignType,
+      render: (content: string) => (
+        <span className="line-clamp-2">{content}</span>
+      ),
     },
-    // {
-    //   title: 'Aprobado',
-    //   dataIndex: 'is_approved',
-    //   key: 'is_approved',
-    //   align: 'center' as AlignType,
-
-    //   render: function Render(is_approved: boolean, record: any) {
-    //     return (
-    //       <Switch
-    //         checked={is_approved}
-    //         onChange={() => console.log('Updated', record)}
-    //         className={`${
-    //           is_approved ? 'bg-accent' : 'bg-gray-300'
-    //         } relative inline-flex h-6 w-11 items-center rounded-full focus:outline-none`}
-    //       >
-    //         <span className="sr-only">Enable</span>
-    //         <span
-    //           className={`${
-    //             is_approved ? 'translate-x-6' : 'translate-x-1'
-    //           } inline-block h-4 w-4 transform rounded-full bg-light`}
-    //         />
-    //       </Switch>
-    //     )
-    //   },
-    // },
+    {
+      title: 'Autor',
+      dataIndex: 'createdBy',
+      key: 'createdBy',
+      align: 'center' as AlignType,
+      width: 100,
+    },
+    {
+      title: 'Creado',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      align: 'center' as AlignType,
+      width: 100,
+      render: (date: string) => formatDate(date),
+    },
+    {
+      title: 'Actualizado',
+      dataIndex: 'updatedAt',
+      key: 'updatedAt',
+      align: 'center' as AlignType,
+      width: 100,
+      render: (date: string) => formatDate(date),
+    },
     {
       title: 'Acciones',
       dataIndex: 'id',

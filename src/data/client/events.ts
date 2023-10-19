@@ -16,7 +16,6 @@ export const eventsClient = {
   },
 
   register: (variables: Event) => {
-    // console.log(variables)
     return HttpClient.post(API_ENDPOINTS.EVENTS, variables)
   },
 

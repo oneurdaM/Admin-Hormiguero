@@ -6,5 +6,5 @@ export const userValidationSchema = yup.object().shape({
   firstName: yup.string().required('Nombre es requerido'),
   middleName: yup.string().nullable(),
   lastName: yup.string().required('Apellido es requerido'),
-  birthDate: yup.string().required('Fecha de nacimiento requerida'),
+  // birthDate: yup.string().required('Fecha de nacimiento requerida'),
 })

@@ -63,10 +63,15 @@ const EventForm = () => {
     search: '',
   })
 
+  interface CastItem {
+    id: number;
+    name: string;
+  }
+
   const [days, setDays] = useState<number | null>(null)
   const [selectedSpace, setSelectedSpace] = useState<number | null>(null)
   const [selectedGenres, setSelectedGenres] = useState([])
-  const [selectedCast, setSelectedCast] = useState([])
+  const [selectedCast, setSelectedCast] = useState<CastItem[]>([])
 
   const {
     register,
@@ -88,21 +93,27 @@ const EventForm = () => {
         return combinedDateTime
       })
 
-    const thumbnailUrl = values?.image.length !== 0 ? values.image : null
+    const cast: number[] = selectedCast.map((item) => item.id)
 
+    const thumbnailUrl = values?.image.length !== 0 ? values.image : null
+    const input = {
+      title: values?.title ?? '',
+      synopsis: values?.synopsis ?? '',
+      type: 'Production',
+      company: values?.company ?? '',
+      dramaturgy: values?.dramaturgy ?? '',
+      director: values?.director ?? '',
+      thumbnailUrl,
+      public: true,
+      spaceId: selectedSpace ?? 1,
+      schedules: isoDateTimes,
+      video: values?.video ?? null,
+      gender: selectedGenres.length !== 0 ? selectedGenres : [1],
+      cast,
+    }
     createEvent(
       {
-        title: values?.title ?? '',
-        synopsis: values?.synopsis ?? '',
-        company: values?.company ?? '',
-        dramaturgy: values?.dramaturgy ?? '',
-        director: values?.director ?? '',
-        thumbnailUrl,
-        video: values?.video ?? '',
-        public: true,
-        schedules: isoDateTimes,
-        gender: selectedGenres.length !== 0 ? selectedGenres : [1],
-        cast: selectedCast,
+        ...input,
       },
       {
         onError: (error: any) => {
@@ -216,7 +227,7 @@ const EventForm = () => {
             getOptionLabel={(option: any) => option?.name ?? ''}
             getOptionValue={(option: any) => option?.id ?? ''}
             placeholder="Selecciona una opción"
-            onChange={(value: any) => console.log(value)}
+            onChange={(value: any) => setSelectedGenres(value.id)}
             isClearable={true}
           />
           {/* <Label className="mb-4">Público apto para el evento</Label>
@@ -237,7 +248,7 @@ const EventForm = () => {
             getOptionLabel={(option: any) => option?.name ?? ''}
             getOptionValue={(option: any) => option?.id ?? ''}
             placeholder="Selecciona una opción"
-            onChange={(value: any) => console.log(value)}
+            onChange={(value: any) => setSelectedCast(value)}
             isClearable={true}
             isMulti={true}
           />

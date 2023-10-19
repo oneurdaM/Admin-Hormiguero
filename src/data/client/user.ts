@@ -25,6 +25,7 @@ export const userClient = {
     )
   },
   register: (variables: UserRegistration) => {
+    console.log(variables)
     return HttpClient.post(API_ENDPOINTS.REGISTER, variables)
   },
   login: (variables: LoginInput) => {
@@ -61,8 +62,11 @@ export const userClient = {
   changePassword: (variables: { newPassword: string }) => {
     return HttpClient.post(`${API_ENDPOINTS.UPDATE_PASSWORD}`, variables)
   },
-  forgetPassword: (variables: ForgetPasswordInput) => {
-    return HttpClient.post<any>(API_ENDPOINTS.FORGET_PASSWORD, variables)
+  forgetPassword: (values: ForgetPasswordInput) => {
+    return HttpClient.post<any>(
+      `${API_ENDPOINTS.FORGET_PASSWORD}/${values.email}`,
+      values
+    )
   },
   get: ({ id }: { id: number }) => {
     return HttpClient.get<UsersResponse>(`${API_ENDPOINTS.USERS}/${id}`)

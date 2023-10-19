@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { useState } from 'react'
+import Image from 'next/image'
 
 import Select from '../select/select'
 import Label from '../ui/label'
@@ -26,6 +27,7 @@ type FormValues = {
   is_approved: boolean
   slug?: string
   image?: string
+  category_id?: number
 }
 
 type IProps = {
@@ -34,9 +36,7 @@ type IProps = {
 
 export default function CreateOrUpdateNoteForm({ initialValues }: IProps) {
   const router = useRouter()
-  const [selectedCategory, setSelectedCategory] = useState(
-    initialValues?.categoryId ?? null
-  )
+  const [selectedCategory, setSelectedCategory] = useState(null)
 
   const {
     register,
@@ -69,7 +69,8 @@ export default function CreateOrUpdateNoteForm({ initialValues }: IProps) {
       content,
       slug: slugglify(title),
       image: image ?? initialValues?.image ?? '',
-      categoryId: selectedCategory,
+      category_id: selectedCategory ?? initialValues?.category_id,
+      is_approved: true,
     }
 
     try {
@@ -109,7 +110,30 @@ export default function CreateOrUpdateNoteForm({ initialValues }: IProps) {
           className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
         />
         <Card className="w-full sm:w-8/12 md:w-2/3">
-          <FileInput name="image" control={control} multiple={false} />
+          <div className="container mx-auto p-4">
+            <div className="lg:flex">
+              {initialValues?.image && (
+                <div className="mb-4 p-6 text-center lg:mb-0 lg:w-1/4">
+                  <Label>Imagen actual</Label>
+                  <Image
+                    src={initialValues.image}
+                    alt="Avatar"
+                    width={40}
+                    height={40}
+                    className="h-auto w-full"
+                  />
+                </div>
+              )}
+
+              <div className={initialValues?.image ? 'lg:w-3/4' : 'lg:w-full'}>
+                <div className="bg-gray-200 p-4">
+                  <div className="w-full p-2">
+                    <FileInput name="image" control={control} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </Card>
       </div>
       <div className="my-5 flex flex-wrap sm:my-8">
@@ -148,7 +172,10 @@ export default function CreateOrUpdateNoteForm({ initialValues }: IProps) {
             placeholder="Categoría de nota"
             onChange={(value: any) => setSelectedCategory(value?.id ?? null)}
             isClearable={true}
-            // defaultValue={{ label: initi.role, value: user.role }}
+            defaultValue={{
+              // label: initialValues?.category,
+              id: initialValues?.category_id,
+            }}
           />
         </Card>
       </div>

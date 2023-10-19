@@ -9,6 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useCreateCategoryMutation } from '@/data/category'
 import FileInput from '../ui/file-input'
 import { categoryValidationSchema } from './category-validation-schema'
+import { slug } from '@/utils/slug'
 
 type FormValues = {
   name: string
@@ -41,8 +42,10 @@ const CategoryForm = () => {
   })
 
   async function onSubmit({ name, image }: FormValues) {
+    const slugStr = slug(name)
+
     createCategory(
-      { name, image, thumbnail: image, slug: '' },
+      { name, image, thumbnail: image, slug: slugStr },
       {
         onError: (error: any) => {
           if (error.response?.data?.errors) {

@@ -16,6 +16,7 @@ export interface Event {
   cast?: number[] | []
   days?: number
   type?: string
+  spaceId?: number
 }
 
 export interface EventsResponse {

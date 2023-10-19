@@ -62,7 +62,7 @@ const UserList = ({ users, paginatorInfo, onPagination }: UserListProps) => {
       dataIndex: 'role',
       key: 'role',
       align: 'center' as AlignType,
-      render: (rol: string) => (t(`common:${rol}`)),
+      render: (rol: string) => (rol === 'USER' ? 'Pendiente de asignar' : t(`common:${rol}`)),
     },
     {
       title: 'Estatus',
@@ -102,7 +102,12 @@ const UserList = ({ users, paginatorInfo, onPagination }: UserListProps) => {
   return (
     <>
       <div className="mb-6 overflow-hidden overflow-x-auto rounded shadow">
-        <Table className='' columns={columns} data={users} rowKey={'username'} />
+        <Table
+          className=""
+          columns={columns}
+          data={users}
+          rowKey={'username'}
+        />
       </div>
       {!!paginatorInfo?.total && (
         <div className="flex items-center justify-end">

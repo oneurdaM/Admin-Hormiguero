@@ -27,7 +27,7 @@ export const API_ENDPOINTS = {
   CREATE_CONVERSION: '/chat/conversation',
 
   CHANGE_PASSWORD: 'change-password',
-  FORGET_PASSWORD: 'forget-password',
+  FORGET_PASSWORD: '/auth/forgot-password',
   ENVIRONMENTS: 'configuration/environments',
   CATEGORY: 'category',
   ALERTS: 'notice',

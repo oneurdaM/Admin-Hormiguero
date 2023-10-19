@@ -46,7 +46,11 @@ export const useUpdateUserMutation = () => {
 }
 
 export const useForgetPasswordMutation = () => {
-  return useMutation(userClient.forgetPassword)
+  return useMutation(userClient.forgetPassword, {
+    onSuccess() {
+      toast.success('Se envió el enlace a su e-mail')
+    },
+  })
 }
 
 export const useResetPasswordMutation = () => {
@@ -59,7 +63,7 @@ export const useVerifyForgetPasswordTokenMutation = () => {
 
 export const useUserQuery = ({ id }: { id: number }) => {
   const { data, isLoading, error } = useQuery<UsersResponse, Error>(
-    [API_ENDPOINTS.NOTICE, id],
+    [API_ENDPOINTS.USERS, id],
     () => userClient.get({ id }),
     {
       keepPreviousData: true,

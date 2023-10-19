@@ -14,7 +14,7 @@ export const useCreateNoteMutation = () => {
 
   return useMutation(blogClient.create, {
     onSuccess: () => {
-      toast.success('Note created successfully')
+      toast.success('Se creó una nueva nota')
       router.back()
     },
     onSettled: () => {
@@ -51,7 +51,7 @@ export const useUpdateNoteMutation = () => {
   const router = useRouter()
   return useMutation(blogClient.update, {
     onSuccess: () => {
-      toast.success('Note updated successfully')
+      toast.success('Se actualizó la nota.')
       router.back()
     },
     onSettled: () => {
@@ -64,7 +64,7 @@ export const useDeleteNoteMutation = () => {
   const queryClient = useQueryClient()
   return useMutation(blogClient.delete, {
     onSuccess: () => {
-      toast.success('Note deleted successfully')
+      toast.success('Se eliminó la nota')
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.BLOG)

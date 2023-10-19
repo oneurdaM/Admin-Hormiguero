@@ -1,6 +1,7 @@
 import pick from 'lodash/pick'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 import Card from '../common/card'
 import Button from '../ui/button'
@@ -11,6 +12,8 @@ import { useUpdateCategoryMutation } from '@/data/category'
 import FileInput from '../ui/file-input'
 import { categoryValidationSchema } from './category-validation-schema'
 import { Category } from '@/types/category'
+import Label from '../ui/label'
+import { slug } from '@/utils/slug'
 
 type FormValues = {
   name: string
@@ -38,9 +41,10 @@ const CategoryDetailForm = ({ category }: Category | any) => {
 
   async function onSubmit(values: FormValues) {
     if (category.id !== undefined) {
+      const slugStr = slug(values.name)
       updateCategory({
         id: category.id,
-        input: { ...values },
+        input: { ...values, slug: slugStr, image: values.image ?? category.image, },
       })
     }
   }
@@ -54,7 +58,30 @@ const CategoryDetailForm = ({ category }: Category | any) => {
           className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
         />
         <Card className="w-full sm:w-8/12 md:w-2/3">
-          <FileInput name="image" control={control} multiple={false} />
+          <div className="container mx-auto p-4">
+            <div className="lg:flex">
+              {category.image && (
+                <div className="mb-4 p-6 text-center lg:mb-0 lg:w-1/4">
+                  <Label>Imagen actual</Label>
+                  <Image
+                    src={category.image}
+                    alt="Avatar"
+                    width={40}
+                    height={40}
+                    className="h-auto w-full"
+                  />
+                </div>
+              )}
+
+              <div className={category.image ? 'lg:w-3/4' : 'lg:w-full'}>
+                <div className="bg-gray-200 p-4">
+                  <div className="w-full p-2">
+                    <FileInput name="image" control={control} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </Card>
       </div>
       <div className="my-5 flex flex-wrap sm:my-8">

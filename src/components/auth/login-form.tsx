@@ -49,7 +49,11 @@ const LoginForm = () => {
         onError: () => {
           const messages = error as any
           if (messages?.response?.data?.message) {
-            setErrorMessage(messages?.response?.data?.message[0])
+            setErrorMessage(
+              messages?.response?.data?.message !== 'Unauthorized'
+                ? messages?.response?.data?.message
+                : 'Usuario no registrado.'
+            )
           } else {
             setErrorMessage('form:error-credential-wrong')
           }

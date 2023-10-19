@@ -44,8 +44,8 @@ export const useEventQuery = ({ id }: { id: number }) => {
   const transformedDates: Record<string, { day: string; time: string }> = {}
 
   if (data) {
-    for (let i = 0; i < data.schedules.length; i++) {
-      const date = new Date(data.schedules[i])
+    for (let i = 0; i < data?.schedules.length; i++) {
+      const date = new Date(data?.schedules[i])
       const day = date.toISOString().slice(0, 10)
       const time = date.toISOString().slice(11, 16)
 
