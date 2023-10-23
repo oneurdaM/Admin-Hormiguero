@@ -69,6 +69,7 @@ const ChangePasswordForm = () => {
         <Card className="mb-5 w-full sm:w-8/12 md:w-2/3">
           <PasswordInput
             label="Contraseña actual"
+            placeholder="Contraseña"
             {...register('oldPassword')}
             variant="outline"
             className="mb-5"
@@ -77,6 +78,7 @@ const ChangePasswordForm = () => {
 
           <PasswordInput
             label="Nueva contraseña"
+            placeholder="Contraseña"
             {...register('newPassword')}
             variant="outline"
             className="mb-5"
@@ -85,6 +87,7 @@ const ChangePasswordForm = () => {
 
           <PasswordInput
             label="Confirmar contraseña"
+            placeholder="Contraseña"
             {...register('passwordConfirmation')}
             variant="outline"
             className="mb-5"

@@ -20,6 +20,9 @@ export const useCreateNoteMutation = () => {
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.BLOG)
     },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message ?? 'Error: no se pudo crear')
+    },
   })
 }
 
@@ -57,6 +60,11 @@ export const useUpdateNoteMutation = () => {
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.BLOG)
     },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo actualizar'
+      )
+    },
   })
 }
 
@@ -68,6 +76,11 @@ export const useDeleteNoteMutation = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.BLOG)
+    },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo eliminar'
+      )
     },
   })
 }

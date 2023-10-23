@@ -53,6 +53,9 @@ export const useCreateSpaceMutation = () => {
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.SPACES)
     },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message ?? 'Error: no se pudo crear')
+    },
   })
 }
 
@@ -68,34 +71,13 @@ export const useUpdateSpaceMutation = () => {
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.SPACES)
     },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo actualzar'
+      )
+    },
   })
 }
-
-// export const useUnblockUserMutation = () => {
-//   const queryClient = useQueryClient()
-
-//   return useMutation(spaceClient.unblock, {
-//     onSuccess() {
-//       toast.success('Usuario desbloqueado')
-//     },
-//     onSettled: () => {
-//       queryClient.invalidateQueries(API_ENDPOINTS.USERS)
-//     },
-//   })
-// }
-
-// export const useBlockUserMutation = () => {
-//   const queryClient = useQueryClient()
-
-//   return useMutation(spaceClient.block, {
-//     onSuccess() {
-//       toast.success('Usuario bloqueado')
-//     },
-//     onSettled: () => {
-//       queryClient.invalidateQueries(API_ENDPOINTS.USERS)
-//     },
-//   })
-// }
 
 export const useDeleteSpaceMutation = () => {
   const queryClient = useQueryClient()
@@ -105,6 +87,11 @@ export const useDeleteSpaceMutation = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.SPACES)
+    },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo eliminar'
+      )
     },
   })
 }

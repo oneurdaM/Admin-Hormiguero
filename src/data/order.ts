@@ -15,7 +15,7 @@ export type OrderQueryResponse = {
 
 export const useOrdersQuery = (options: Partial<QueryOptionsType>) => {
   const { data, isLoading, error } = useQuery<OrderResponse, Error>(
-    [API_ENDPOINTS, options],
+    [API_ENDPOINTS.ORDERS, options],
     () => orderClient.paginated(options),
     {
       keepPreviousData: true,
@@ -33,7 +33,7 @@ export const useOrdersQuery = (options: Partial<QueryOptionsType>) => {
 
 export const useOrderQuery = ({ id }: { id: number }) => {
   const { data, isLoading, error } = useQuery<OrderQueryResponse, Error>(
-    [API_ENDPOINTS.NOTICE, id],
+    [API_ENDPOINTS.ORDERS, id],
     () => orderClient.byId({ id }),
     {
       keepPreviousData: true,
@@ -52,11 +52,16 @@ export const useUpdateOrderMutation = () => {
 
   return useMutation(orderClient.update, {
     onSuccess() {
-      toast.success('Notice updated successfully')
+      toast.success('Se actualizó el pedido')
       router.back()
     },
     onSettled: () => {
-      queryClient.invalidateQueries(API_ENDPOINTS.NOTICE)
+      queryClient.invalidateQueries(API_ENDPOINTS.ORDERS)
+    },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo actualizar'
+      )
     },
   })
 }

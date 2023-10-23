@@ -39,6 +39,11 @@ export const useUpdateUserMutation = () => {
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.USERS)
     },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo actualizar'
+      )
+    },
   })
 }
 
@@ -55,6 +60,11 @@ export const useUpdatePasswordMutation = () => {
       queryClient.invalidateQueries(API_ENDPOINTS.ME)
       queryClient.invalidateQueries(API_ENDPOINTS.USERS)
     },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo actalizar'
+      )
+    },
   })
 }
 
@@ -69,6 +79,9 @@ export const useRegisterMutation = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.REGISTER)
+    },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message ?? 'Error: no se pudo crear')
     },
   })
 }

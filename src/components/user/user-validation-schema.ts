@@ -1,10 +1,12 @@
 import * as yup from 'yup'
 
 export const userValidationSchema = yup.object().shape({
-  email: yup.string().email('Email invalido').required('Email es requerido'),
-  password: yup.string().required('Password es requerido'),
-  firstName: yup.string().required('Nombre es requerido'),
+  email: yup
+    .string()
+    .email('Email invalido')
+    .required('Este campo es obligatorio'),
+  password: yup.string().required('Este campo es obligatorio'),
+  firstName: yup.string().required('Este campo es obligatorio'),
   middleName: yup.string().nullable(),
-  lastName: yup.string().required('Apellido es requerido'),
-  // birthDate: yup.string().required('Fecha de nacimiento requerida'),
+  lastName: yup.string().required('Este campo es obligatorio'),
 })

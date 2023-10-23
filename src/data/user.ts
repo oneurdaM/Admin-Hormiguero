@@ -35,12 +35,17 @@ export const useUpdateUserMutation = () => {
 
   return useMutation(userClient.update, {
     onSuccess() {
-      toast.success('User updated successfully')
+      toast.success('Se actualizó la información de usuario')
       router.back()
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.ME)
       queryClient.invalidateQueries(API_ENDPOINTS.USERS)
+    },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo actualizar'
+      )
     },
   })
 }
@@ -49,6 +54,9 @@ export const useForgetPasswordMutation = () => {
   return useMutation(userClient.forgetPassword, {
     onSuccess() {
       toast.success('Se envió el enlace a su e-mail')
+    },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message ?? 'Error: no se pudo enviar')
     },
   })
 }

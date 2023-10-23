@@ -58,6 +58,9 @@ export const useCreateDepartmentMutation = () => {
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.DEPARTMENTS)
     },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message ?? 'Error: no se pudo crear')
+    },
   })
 }
 
@@ -73,6 +76,11 @@ export const useUpdateDepartmentMutation = () => {
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.DEPARTMENTS)
     },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo actualizar'
+      )
+    },
   })
 }
 
@@ -84,6 +92,11 @@ export const useDeleteDepartmentMutation = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.DEPARTMENTS)
+    },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo eliminar'
+      )
     },
   })
 }

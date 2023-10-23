@@ -56,6 +56,9 @@ export const useCreateCastMutation = () => {
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.CAST)
     },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message ?? 'Error: no se pudo crear')
+    },
   })
 }
 
@@ -71,6 +74,11 @@ export const useUpdateCastMutation = () => {
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.CAST)
     },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo actualizar'
+      )
+    },
   })
 }
 
@@ -82,6 +90,11 @@ export const useDeleteCastMutation = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.CAST)
+    },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo eliminar'
+      )
     },
   })
 }

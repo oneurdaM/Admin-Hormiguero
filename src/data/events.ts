@@ -72,6 +72,9 @@ export const useCreateEventMutation = () => {
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.EVENTS)
     },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message ?? 'Error: no se pudo crear')
+    },
   })
 }
 
@@ -87,6 +90,11 @@ export const useUpdateEventMutation = () => {
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.EVENTS)
     },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo actualizar'
+      )
+    },
   })
 }
 
@@ -98,6 +106,11 @@ export const useDeleteEventMutation = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.EVENTS)
+    },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo eliminar'
+      )
     },
   })
 }

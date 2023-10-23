@@ -27,9 +27,9 @@ export type ProductRegistration = {
   title: string
   description: string
   thumbnail: string
-  capacity?: number
-  stock?: number
-  price: number
+  capacity?: number | null
+  stock?: number | null
+  price?: number | null
   slug: string
   catalogId: number | null
 }

@@ -52,11 +52,14 @@ export const useCreateAlertMutation = () => {
 
   return useMutation(alertClient.register, {
     onSuccess() {
-      toast.success('Alert created successfully')
+      toast.success('Se creó una nueva alerta')
       router.back()
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.ALERTS)
+    },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message ?? 'Error: no se pudo crear')
     },
   })
 }
@@ -67,11 +70,16 @@ export const useUpdateAlertMutation = () => {
 
   return useMutation(alertClient.update, {
     onSuccess() {
-      toast.success('Alert updated successfully')
+      toast.success('Se actualizó la información de la alerta')
       router.back()
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.ALERTS)
+    },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo actualizar'
+      )
     },
   })
 }
@@ -82,11 +90,16 @@ export const useDeleteAlertMutation = () => {
 
   return useMutation(alertClient.delete, {
     onSuccess: () => {
-      toast.success('Alert deleted successfully')
+      toast.success('Se eliminó la alerta')
       router.reload()
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.ALERTS)
+    },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo eliminar'
+      )
     },
   })
 }

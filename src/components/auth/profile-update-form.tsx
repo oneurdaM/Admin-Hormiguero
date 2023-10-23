@@ -204,7 +204,11 @@ export default function ProfileUpdateForm({ user }: UsersResponse | any) {
             placeholder="Rol del usuario"
             onChange={(value: any) => setSelectedRole(value?.value ?? null)}
             isClearable={true}
-            defaultValue={{ label: t(`common:${user.role}`), value: user.role }}
+            defaultValue={
+              user?.role === 'USER'
+                ? { label: t(`common:${user.role}`), value: user.role }
+                : { label: 'Sin rol asignado', value: user.role }
+            }
           />
         </Card>
         <div className="w-full text-end">

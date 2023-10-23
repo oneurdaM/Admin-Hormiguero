@@ -62,7 +62,7 @@ export const useCreateCategoryMutation = () => {
       queryClient.invalidateQueries(API_ENDPOINTS.CATEGORY)
     },
     onError: (error: any) => {
-      toast.error(error?.response?.data.message)
+      toast.error(error?.response?.data?.message ?? 'Error: no se pudo crear')
     },
   })
 }
@@ -73,14 +73,16 @@ export const useUpdateCategoryMutation = () => {
 
   return useMutation(categoryClient.update, {
     onSuccess: () => {
-      toast.success('Category updated successfully')
+      toast.success('Se actualizó la categoría')
       router.back()
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.CATEGORY)
     },
     onError: (error: any) => {
-      toast.error(error?.response?.data.message)
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo actualizar'
+      )
     },
   })
 }
@@ -91,10 +93,15 @@ export const useDeleteCategoryMutation = () => {
 
   return useMutation(categoryClient.delete, {
     onSuccess: () => {
-      toast.success('Category deleted successfully')
+      toast.success('Se eliminó la cateogría')
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.CATEGORY)
+    },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo eliminar'
+      )
     },
   })
 }

@@ -15,15 +15,16 @@ import Label from '../ui/label'
 import FileInput from '../ui/file-input'
 import { useDepartmentsQuery } from '@/data/department'
 import { slug } from '@/utils/slug'
+import { toast } from 'react-toastify'
 
 type FormValues = {
   title: string
   description: string
   thumbnail: string
-  stock: number
-  price: number
+  stock?: number | null
+  price?: number | null
 
-  capacity: number
+  capacity?: number | null
   slug: string
 }
 
@@ -31,16 +32,19 @@ const defaultValues: FormValues = {
   title: '',
   description: '',
   thumbnail: '',
-  stock: 1,
-  price: 20,
+  stock: null,
+  price: null,
 
-  capacity: 0,
+  capacity: null,
   slug: '',
 }
 
 const ProductCreateForm = () => {
   const router = useRouter()
   const [productCatalog, setProductCatalog] = useState<number | null>(null)
+  const [selectedFields, setSelectedFields] = useState({
+    isCategorySelected: false,
+  })
 
   const { departments, loading: loadingCategories } = useDepartmentsQuery({
     limit: 10,
@@ -70,6 +74,9 @@ const ProductCreateForm = () => {
     price,
   }: FormValues) {
     const slugStr = slug(title)
+    if (thumbnail === '' || thumbnail === null) {
+      toast.error('La imagen del producto es un campo obligatorio')
+    }
     registerProduct(
       {
         title,
@@ -121,7 +128,7 @@ const ProductCreateForm = () => {
             {...register('title')}
             type="text"
             variant="outline"
-            className="mb-4"
+            className="my-4"
             error={errors.title?.message?.toString()}
           />
 
@@ -131,21 +138,27 @@ const ProductCreateForm = () => {
             {...register('description')}
             type="text"
             variant="outline"
-            className="mb-4"
+            className="my-4"
             error={errors.description?.message?.toString()}
           />
 
-          <Label className="mb-4">Selecciona la categoría del producto</Label>
+          <Label className="my-4">Selecciona la categoría del producto</Label>
           <Select
-            className="mb-4"
+            className="my-4"
             options={departments ?? []}
             isLoading={loadingCategories}
             getOptionLabel={(option: any) => option?.name ?? ''}
             getOptionValue={(option: any) => option?.id ?? ''}
             placeholder="Categoría del producto"
             isClearable={true}
-            onChange={(catalog: any) => setProductCatalog(catalog?.id ?? null)}
+            onChange={(catalog: any) => {
+              setProductCatalog(catalog?.id ?? null)
+              setSelectedFields({ ...selectedFields, isCategorySelected: true })
+            }}
           />
+          {selectedFields.isCategorySelected === false && (
+            <span className="my-4 text-red-500">Campo obligatorio</span>
+          )}
 
           <Input
             label="Precio"
@@ -153,7 +166,7 @@ const ProductCreateForm = () => {
             {...register('price')}
             type="number"
             variant="outline"
-            className="mb-4"
+            className="my-4"
             min={20}
             max={999}
             error={errors.price?.message?.toString()}
@@ -165,7 +178,7 @@ const ProductCreateForm = () => {
             {...register('stock')}
             type="number"
             variant="outline"
-            className="mb-4"
+            className="my-4"
             min={1}
             max={999}
             error={errors.stock?.message?.toString()}

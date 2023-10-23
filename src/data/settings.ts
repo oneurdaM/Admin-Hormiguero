@@ -11,9 +11,6 @@ export const useUpdateSettingsMutation = () => {
   const { updateSettings } = useSettings()
 
   return useMutation(settingsClient.update, {
-    onError: (error) => {
-      console.log(error)
-    },
     onSuccess: (data) => {
       updateSettings(data?.options)
       toast.success(t('common:successfully-updated'))
@@ -21,6 +18,11 @@ export const useUpdateSettingsMutation = () => {
     // Always refetch after error or success:
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.SETTINGS)
+    },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo actualizar'
+      )
     },
   })
 }

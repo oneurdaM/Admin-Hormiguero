@@ -52,11 +52,14 @@ export const useCreateProductMutation = () => {
 
   return useMutation(productClient.register, {
     onSuccess() {
-      toast.success('Se agregó un nuevo producto')
+      toast.success('Se creó un nuevo producto')
       router.back()
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.PRODUCTS)
+    },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message ?? 'Error: no se pudo crear')
     },
   })
 }
@@ -73,6 +76,11 @@ export const useUpdateProductMutation = () => {
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.PRODUCTS)
     },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo actualizar'
+      )
+    },
   })
 }
 
@@ -84,6 +92,11 @@ export const useDeleteProductMutation = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.PRODUCTS)
+    },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo eliminar'
+      )
     },
   })
 }

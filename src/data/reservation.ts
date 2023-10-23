@@ -56,6 +56,9 @@ export const useCreateReservationMutation = () => {
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.RESERVATIONS)
     },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message ?? 'Error: no se pudo crear')
+    },
   })
 }
 
@@ -71,6 +74,11 @@ export const useUpdateReservationMutation = () => {
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.RESERVATIONS)
     },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo actualizar'
+      )
+    },
   })
 }
 
@@ -78,10 +86,15 @@ export const useDeleteReservationMutation = () => {
   const queryClient = useQueryClient()
   return useMutation(reservationClient.cancelReservation, {
     onSuccess: () => {
-      toast.success('Se canceló la reservación')
+      toast.success('Se eliminó la reservación')
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.RESERVATIONS)
+    },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo eliminar'
+      )
     },
   })
 }
