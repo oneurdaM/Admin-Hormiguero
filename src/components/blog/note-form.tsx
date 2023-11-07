@@ -69,7 +69,7 @@ export default function CreateOrUpdateNoteForm({ initialValues }: IProps) {
       content,
       slug: slugglify(title),
       image: image ?? initialValues?.image ?? '',
-      category_id: selectedCategory ?? initialValues?.category_id,
+      categoryId: selectedCategory ?? initialValues?.category_id,
       is_approved: true,
     }
 
@@ -173,8 +173,8 @@ export default function CreateOrUpdateNoteForm({ initialValues }: IProps) {
             onChange={(value: any) => setSelectedCategory(value?.id ?? null)}
             isClearable={true}
             defaultValue={{
-              // label: initialValues?.category,
-              id: initialValues?.category_id,
+              name: initialValues?.category?.name,
+              id: initialValues?.category?.id,
             }}
           />
         </Card>

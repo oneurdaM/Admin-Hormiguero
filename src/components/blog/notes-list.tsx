@@ -18,13 +18,6 @@ type NotesListProps = {
 const NotesList = ({ notes, paginatorInfo, onPagination }: NotesListProps) => {
   const columns = [
     {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
-      align: 'center' as AlignType,
-      width: 64,
-    },
-    {
       title: 'Imágen',
       dataIndex: 'image',
       key: 'image',
@@ -39,6 +32,13 @@ const NotesList = ({ notes, paginatorInfo, onPagination }: NotesListProps) => {
           height={42}
         />
       ),
+    },
+    {
+      title: 'Categoría',
+      dataIndex: ['category', 'name'],
+      key: 'category',
+      align: 'center' as AlignType,
+      width: 64,
     },
     {
       title: <TitleWithSort title="Título" ascending={true} isActive={false} />,

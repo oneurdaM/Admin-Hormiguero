@@ -35,10 +35,17 @@ export const useNotesQuery = (options: Partial<QueryOptionsType>) => {
     }
   )
 
+  const pagination = {
+    total: data?.total ? parseInt(data.total.toString()) : 0,
+    currentPage: data?.currentPage ? parseInt(data.currentPage.toString()) : 1,
+    totalPages: data?.totalPages ? parseInt(data.totalPages.toString()) : 0,
+    perPage: data?.perPage ? parseInt(data.perPage.toString()) : 0,
+  }
+
   return {
     notes: data?.notes as Note[],
     loading: isLoading,
-    paginatorInfo: mapPaginatorData(data as any),
+    paginatorInfo: mapPaginatorData(pagination as any),
     error,
   }
 }

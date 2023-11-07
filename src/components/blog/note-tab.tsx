@@ -20,13 +20,13 @@ function NoteTab() {
     search: searchTerm,
   })
 
-  // if (loading) {
-  //   return <Loader text="Cargando notas..." />
-  // }
+  if (loading) {
+    return <Loader text="Cargando notas..." />
+  }
 
-  // if (error) {
-  //   return <ErrorMessage message={error.message} />
-  // }
+  if (error) {
+    return <ErrorMessage message={error.message} />
+  }
 
   function handleSearch({ searchText }: { searchText: string }) {
     setSearchTerm(searchText)

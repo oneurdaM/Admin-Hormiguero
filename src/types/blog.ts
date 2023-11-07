@@ -17,6 +17,13 @@ export interface Note {
   is_approved: boolean
   slug: string
   category_id?: number
+  categoryId?: number
+  category: {
+    id: number | string
+    name: string
+    slug: string
+    createdAt: string | Date
+  }
 }
 
 export interface CreateNote {
@@ -28,5 +35,4 @@ export interface CreateNote {
   // createdAt?: string
   // updatedAt?: string
   slug: string
-
 }
