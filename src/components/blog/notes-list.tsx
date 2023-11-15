@@ -59,10 +59,15 @@ const NotesList = ({ notes, paginatorInfo, onPagination }: NotesListProps) => {
     },
     {
       title: 'Autor',
-      dataIndex: 'createdBy',
-      key: 'createdBy',
+      dataIndex: 'user',
+      key: 'author',
       align: 'center' as AlignType,
       width: 100,
+      render: (user: any) => (
+        <span className="line-clamp-2">
+          {user.firstName} {user.lastName}
+        </span>
+      ),
     },
     {
       title: 'Creado',

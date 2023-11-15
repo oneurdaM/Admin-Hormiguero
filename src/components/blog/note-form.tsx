@@ -172,10 +172,12 @@ export default function CreateOrUpdateNoteForm({ initialValues }: IProps) {
             placeholder="Categoría de nota"
             onChange={(value: any) => setSelectedCategory(value?.id ?? null)}
             isClearable={true}
-            defaultValue={{
-              name: initialValues?.category?.name,
-              id: initialValues?.category?.id,
-            }}
+            defaultValue={
+              initialValues && {
+                name: initialValues?.category?.name,
+                id: initialValues?.category?.id,
+              }
+            }
           />
         </Card>
       </div>
