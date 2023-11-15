@@ -27,6 +27,28 @@ export const useUpdateSettingsMutation = () => {
   })
 }
 
+export const usePostSettingsMutation = () => {
+  const { t } = useTranslation()
+  const queryClient = useQueryClient()
+  const { updateSettings } = useSettings()
+
+  return useMutation(settingsClient.create, {
+    onSuccess: (data) => {
+      updateSettings(data?.options)
+      toast.success(t('common:successfully-updated'))
+    },
+    // Always refetch after error or success:
+    onSettled: () => {
+      queryClient.invalidateQueries(API_ENDPOINTS.SETTINGS)
+    },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo actualizar'
+      )
+    },
+  })
+}
+
 export const useSettingsQuery = () => {
   const { data, error, isLoading } = useQuery<any, Error>(
     API_ENDPOINTS.SETTINGS,

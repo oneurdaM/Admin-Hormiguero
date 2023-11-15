@@ -28,10 +28,12 @@ export interface CreateSettings {
   whoWeAre?: string
   whatWeAre?: string
   whyCommunity?: string
-  anniversary?: string | Date
+  createdAt?: string | Date
   artists?: number
   people?: number
   communities?: number
+  mision?: string
+  vision?: string
 }
 
 export interface Settings extends CreateSettings {

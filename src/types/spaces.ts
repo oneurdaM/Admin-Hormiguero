@@ -5,6 +5,7 @@ export interface Space {
   price: number
   active: boolean
   location: string
+  image: string
 }
 
 export interface SpacesResponse {
@@ -14,6 +15,7 @@ export interface SpacesResponse {
   price: number
   active: boolean
   location: string
+  image: string
 }
 
 export type SpacePagination = {
