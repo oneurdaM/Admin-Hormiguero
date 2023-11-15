@@ -21,9 +21,9 @@ function ProductsTab() {
     search: searchTerm,
   })
 
-  // if (loading) return <Loader text="Cargando productos..." />
+  if (loading) return <Loader text="Cargando productos..." />
 
-  // if (error) return <ErrorMessage message={error.message} />
+  if (error) return <ErrorMessage message={error.message} />
 
   function handlePagination(current: number) {
     setPage(current)

@@ -3,6 +3,7 @@ import { useCreateDepartmentMutation } from '@/data/department'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useRouter } from 'next/router'
+import { toast } from 'react-toastify'
 
 import Card from '../common/card'
 import Button from '../ui/button'
@@ -52,6 +53,10 @@ const DepartmentCreateForm = () => {
               })
             })
           }
+        },
+        onSuccess() {
+          toast.success('Se creó un nuevo departamento')
+          router.push('/products')
         },
       }
     )

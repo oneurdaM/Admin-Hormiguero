@@ -31,7 +31,9 @@ type FormValues = {
 
 export default function ProductUpdateForm({ product }: Product | any) {
   const router = useRouter()
-  const [productCatalog, setProductCatalog] = useState<number | null>(null)
+  const [productCatalog, setProductCatalog] = useState<number | null>(
+    product.catalog.id
+  )
 
   const { departments, loading: loadingDepartments } = useDepartmentsQuery({
     limit: 10,
@@ -144,7 +146,9 @@ export default function ProductUpdateForm({ product }: Product | any) {
             placeholder="Categoría del producto"
             isClearable={true}
             onChange={(catalog: any) => setProductCatalog(catalog?.id ?? null)}
-            defaultValue={[{ id: product.catalogId, name: product.catalog }]}
+            defaultValue={[
+              { id: product.catalog.id, name: product.catalog.name },
+            ]}
           />
 
           <Input

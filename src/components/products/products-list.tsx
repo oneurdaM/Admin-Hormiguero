@@ -78,7 +78,7 @@ const ProductsList = ({
         return (
           <ActionButtons
             id={id}
-            deleteModalView='DELETE_PRODUCT'
+            deleteModalView="DELETE_PRODUCT"
             detailsUrl={Routes.products.details({ id })}
           />
         )

@@ -144,7 +144,7 @@ const ProductCreateForm = () => {
 
           <Label className="my-4">Selecciona la categoría del producto</Label>
           <Select
-            className="my-4"
+            className="mt-4"
             options={departments ?? []}
             isLoading={loadingCategories}
             getOptionLabel={(option: any) => option?.name ?? ''}
@@ -157,7 +157,7 @@ const ProductCreateForm = () => {
             }}
           />
           {selectedFields.isCategorySelected === false && (
-            <span className="my-4 text-red-500">Campo obligatorio</span>
+            <small className="text-xs text-red-500">Campo obligatorio</small>
           )}
 
           <Input

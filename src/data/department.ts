@@ -56,6 +56,7 @@ export const useCreateDepartmentMutation = () => {
       router.back()
     },
     onSettled: () => {
+      queryClient.invalidateQueries(API_ENDPOINTS.PRODUCTS)
       queryClient.invalidateQueries(API_ENDPOINTS.DEPARTMENTS)
     },
     onError: (error: any) => {
@@ -75,6 +76,7 @@ export const useUpdateDepartmentMutation = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.DEPARTMENTS)
+      queryClient.invalidateQueries(API_ENDPOINTS.PRODUCTS)
     },
     onError: (error: any) => {
       toast.error(
@@ -86,11 +88,13 @@ export const useUpdateDepartmentMutation = () => {
 
 export const useDeleteDepartmentMutation = () => {
   const queryClient = useQueryClient()
+
   return useMutation(DepartmentClient.delete, {
     onSuccess: () => {
       toast.success('Se eliminó el departamento')
     },
     onSettled: () => {
+      queryClient.invalidateQueries(API_ENDPOINTS.PRODUCTS)
       queryClient.invalidateQueries(API_ENDPOINTS.DEPARTMENTS)
     },
     onError: (error: any) => {

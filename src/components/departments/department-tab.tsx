@@ -19,9 +19,9 @@ function ProductsCatalogTab() {
     search: searchTerm,
   })
 
-  // if (loading) return <Loader text="Cargando categorías..." />
+  if (loading) return <Loader text="Cargando categorías..." />
 
-  // if (error) return <ErrorMessage message={error.message} />
+  if (error) return <ErrorMessage message={error.message} />
 
   function handlePagination(current: number) {
     setPage(current)
