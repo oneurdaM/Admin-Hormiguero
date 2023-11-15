@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from 'react'
 import { useRegisterMutation } from '@/data/users'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useTranslation } from 'next-i18next'
 
 import Card from '../common/card'
 import Button from '../ui/button'
@@ -10,6 +12,9 @@ import Input from '../ui/input'
 import PasswordInput from '../ui/password-input'
 import { userValidationSchema } from './user-validation-schema'
 import { useRouter } from 'next/router'
+import Label from '../ui/label'
+import Select from '../select/select'
+import { Role } from '@/types/users'
 
 type FormValues = {
   firstName: string
@@ -30,6 +35,9 @@ const defaultValues: FormValues = {
 }
 
 const UserCreateForm = () => {
+  const [selectedRole, setSelectedRole] = useState()
+  const { t } = useTranslation()
+
   const router = useRouter()
   const { mutate: registerUser, isLoading: loading } = useRegisterMutation()
   let currentDate = new Date()
@@ -62,6 +70,7 @@ const UserCreateForm = () => {
         middleName: middleName || null,
         username: email,
         birthDate,
+        role: selectedRole,
       },
       {
         onError: (error: any) => {
@@ -77,6 +86,29 @@ const UserCreateForm = () => {
       }
     )
   }
+
+  const roleOptions = [
+    {
+      label: t(`common:${Role.Director}`),
+      value: Role.Director,
+    },
+    {
+      label: t(`common:${Role.Coordination}`),
+      value: Role.Coordination,
+    },
+    {
+      label: t(`common:${Role.Communication}`),
+      value: Role.Communication,
+    },
+    {
+      label: t(`common:${Role.Cafeteria}`),
+      value: Role.Cafeteria,
+    },
+    {
+      label: t(`common:${Role.Technicalarea}`),
+      value: Role.Technicalarea,
+    },
+  ]
 
   return (
     <form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -134,6 +166,18 @@ const UserCreateForm = () => {
             className="mb-4"
             variant="outline"
             error={errors.password?.message?.toString()}
+          />
+          <Label className="mb-4">Rol de usuario</Label>
+          <Select
+            name="role"
+            isLoading={loading}
+            options={roleOptions}
+            getOptionLabel={(option: any) => option?.label ?? ''}
+            getOptionValue={(option: any) => option?.value ?? ''}
+            placeholder="Rol del usuario"
+            onChange={(value: any) => setSelectedRole(value?.value ?? null)}
+            isClearable={true}
+            // defaultValue={{ label: t(`common:${user.role}`), value: user.role }}
           />
         </Card>
       </div>

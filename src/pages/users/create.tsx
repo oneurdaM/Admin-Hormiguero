@@ -1,14 +1,15 @@
-import { GetServerSideProps } from "next";
+import { GetServerSideProps } from 'next'
 import {
   allowedRoles,
   getAuthCredentials,
   hasAccess,
   isAuthenticated,
-} from "@/utils/auth-utils";
-import { Routes } from "@/config/routes";
+} from '@/utils/auth-utils'
+import { Routes } from '@/config/routes'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-import Layout from "@/components/layout/admin";
-import UserCreateForm from "@/components/user/user-form";
+import Layout from '@/components/layout/admin'
+import UserCreateForm from '@/components/user/user-form'
 
 export default function CreateUser() {
   return (
@@ -19,27 +20,13 @@ export default function CreateUser() {
 
       <UserCreateForm />
     </>
-  );
+  )
 }
 
-CreateUser.Layout = Layout;
+CreateUser.Layout = Layout
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { token, permissions } = getAuthCredentials(ctx);
-  if (
-    !isAuthenticated({ token, permissions }) ||
-    !hasAccess(allowedRoles, permissions)
-  ) {
-    return {
-      redirect: {
-        destination: Routes.login,
-        permanent: false,
-      },
-    };
-  }
-  return {
-    props: {
-      userPermissions: permissions,
-    },
-  };
-};
+export const getServerSideProps = async ({ locale }: any) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['form', 'common'])),
+  },
+})

@@ -205,7 +205,7 @@ export default function ProfileUpdateForm({ user }: UsersResponse | any) {
             onChange={(value: any) => setSelectedRole(value?.value ?? null)}
             isClearable={true}
             defaultValue={
-              user?.role === 'USER'
+              user?.role !== 'USER'
                 ? { label: t(`common:${user.role}`), value: user.role }
                 : { label: 'Sin rol asignado', value: user.role }
             }
