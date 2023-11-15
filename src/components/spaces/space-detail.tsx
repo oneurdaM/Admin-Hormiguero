@@ -4,7 +4,10 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import pick from 'lodash/pick'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import Image from 'next/image'
 
+import FileInput from '../ui/file-input'
+import Label from '../ui/label'
 import { useUpdateSpaceMutation } from '@/data/space'
 import { Space } from '@/types/spaces'
 import Card from '../common/card'
@@ -20,22 +23,31 @@ type FormValues = {
   capacity: number
   price: number
   location: string
+  image: string
 }
 
 export default function SpaceDetailForm({ space }: Space | any) {
   const router = useRouter()
   const { mutate: updateSpace, isLoading: loading } = useUpdateSpaceMutation()
-  const [autocomplete, setAutocomplete] = useState()
+  const [autocomplete, setAutocomplete] = useState<any>()
   const [inputValue, setInputValue] = useState()
 
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
       ...(space &&
-        pick(space, ['name', 'dimensions', 'capacity', 'price', 'location'])),
+        pick(space, [
+          'name',
+          'dimensions',
+          'capacity',
+          'price',
+          'location',
+          'image',
+        ])),
     },
     resolver: yupResolver(SpaceValidationSchema),
   })
@@ -44,7 +56,11 @@ export default function SpaceDetailForm({ space }: Space | any) {
     if (space.id !== undefined) {
       updateSpace({
         id: space.id,
-        input: { ...values, active: space.active },
+        input: {
+          ...values,
+          active: space.active,
+          image: values?.image ?? space.image,
+        },
       })
     }
   }
@@ -67,6 +83,39 @@ export default function SpaceDetailForm({ space }: Space | any) {
 
   return (
     <form noValidate onSubmit={handleSubmit(onSubmit)}>
+      <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
+        <Description
+          title="Imagen"
+          details="Imagen del espacio"
+          className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
+        />
+        <Card className="w-full sm:w-8/12 md:w-2/3">
+          <div className="container mx-auto p-4">
+            <div className="lg:flex">
+              {space.image !== 'string' && (
+                <div className="mb-4 p-6 text-center lg:mb-0 lg:w-1/4">
+                  <Label>Imagen actual</Label>
+                  <Image
+                    src={space.image}
+                    alt="Avatar"
+                    width={40}
+                    height={40}
+                    className="h-auto w-full"
+                  />
+                </div>
+              )}
+
+              <div className={space.image ? 'lg:w-3/4' : 'lg:w-full'}>
+                <div className="bg-gray-200 p-4">
+                  <div className="w-full p-2">
+                    <FileInput name="image" control={control} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </div>
       <div className="my-5 flex flex-wrap sm:my-8">
         <Description
           title="Espacio"
@@ -113,16 +162,6 @@ export default function SpaceDetailForm({ space }: Space | any) {
             className="mb-4"
             error={errors.price?.message?.toString()}
           />
-
-          {/* <Input
-            label="Dirección del espacio"
-            placeholder="Dirección"
-            {...register('location')}
-            type="text"
-            variant="outline"
-            className="mb-4"
-            error={errors.location?.message?.toString()}
-          /> */}
           {isLoaded && (
             <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
               <Input

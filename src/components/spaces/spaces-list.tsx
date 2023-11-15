@@ -28,12 +28,20 @@ const SpacesList = ({ spaces, paginatorInfo, onPagination }: SpacesProps) => {
       dataIndex: 'location',
       key: 'location',
       align: 'center',
+      render: (location: string) => (
+        <span className="line-clamp-2">{location}</span>
+      ),
     },
     {
       title: 'Espacio',
       dataIndex: 'dimensions',
       key: 'dimensions',
       align: 'center',
+      render: (dimensions: number) => (
+        <span className="line-clamp-2">
+          {dimensions} m<sup>2</sup>
+        </span>
+      ),
     },
     {
       title: 'Aforo',

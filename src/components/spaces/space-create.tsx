@@ -5,12 +5,14 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
+import FileInput from '../ui/file-input'
 import Card from '../common/card'
 import Button from '../ui/button'
 import Description from '../ui/description'
 import Input from '../ui/input'
 import { SpaceValidationSchema } from './space-validation-schema'
 import { Autocomplete, useJsApiLoader } from '@react-google-maps/api'
+import { toast } from 'react-toastify'
 
 type FormValues = {
   name: string
@@ -18,16 +20,18 @@ type FormValues = {
   capacity?: number
   price?: number
   location?: string
+  image: string | null
 }
 
 const defaultValues: FormValues = {
   name: '',
+  image: null,
 }
 
 const SpaceCreateForm = () => {
   const router = useRouter()
   const { mutate: createSpace, isLoading: loading } = useCreateSpaceMutation()
-  const [autocomplete, setAutocomplete] = useState()
+  const [autocomplete, setAutocomplete] = useState<any>()
   const [inputValue, setInputValue] = useState()
 
   const {
@@ -42,18 +46,25 @@ const SpaceCreateForm = () => {
   })
 
   async function onSubmit(values: FormValues) {
-    createSpace({...values, active: true}, {
-      onError: (error: any) => {
-        if (error.response?.data?.errors) {
-          error.response.data.errors.forEach((error: any) => {
-            setError(error.field, {
-              type: 'manual',
-              message: error.message,
-            })
-          })
+    if (!values.image) {
+      toast.warning('Es obligatorio agregar una imagen del espacio.')
+    } else {
+      createSpace(
+        { ...values, active: true },
+        {
+          onError: (error: any) => {
+            if (error.response?.data?.errors) {
+              error.response.data.errors.forEach((error: any) => {
+                setError(error.field, {
+                  type: 'manual',
+                  message: error.message,
+                })
+              })
+            }
+          },
         }
-      },
-    })
+      )
+    }
   }
 
   const onLoad = (autocomplete: any) => {
@@ -74,6 +85,16 @@ const SpaceCreateForm = () => {
 
   return (
     <form noValidate onSubmit={handleSubmit(onSubmit)}>
+      <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
+        <Description
+          title="Imagen"
+          details="Imagen del espacio"
+          className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
+        />
+        <Card className="w-full sm:w-8/12 md:w-2/3">
+          <FileInput name="image" control={control} />
+        </Card>
+      </div>
       <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
         <Description
           title="Espacio"

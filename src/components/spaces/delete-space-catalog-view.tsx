@@ -4,12 +4,12 @@ import { useModalAction, useModalState } from '../ui/modal/modal.context'
 
 const DeleteSpaceCatalogView = () => {
   const { data } = useModalState()
-  const { mutate: deleteCatalog, isLoading: loading } = useDeleteSpaceMutation()
+  const { mutate: deleteSpace, isLoading: loading } = useDeleteSpaceMutation()
 
   const { closeModal } = useModalAction()
 
   async function handleDelete() {
-    deleteCatalog(data)
+    deleteSpace(data)
     closeModal()
   }
 

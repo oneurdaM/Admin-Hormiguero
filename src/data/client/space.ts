@@ -26,8 +26,8 @@ export const spaceClient = {
     return HttpClient.put(`${API_ENDPOINTS.SPACES}/${id}`, input)
   },
 
-  deleteSpace: ({ id }: { id: string }) => {
-    return HttpClient.delete(`${API_ENDPOINTS.SPACES}/${id}`)
+  deleteSpace: (id: string) => {
+    return HttpClient.delete(`${API_ENDPOINTS.SPACES}/spaces/${id}`)
   },
 
   // toggleSpace: (variables: ReserveSpace) => {
