@@ -15,12 +15,12 @@ const Map = ({ data }: { data: { lat: number; lng: number } }) => {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: 'AIzaSyCtAae1VdKZ5h7m1CmyKQldt9A0UniM3Dk',
+    googleMapsApiKey: '',
     libraries: ['places'],
   })
 
   if (!isLoaded) {
-    <>Loading</>
+    ;<>Loading</>
   }
 
   return (

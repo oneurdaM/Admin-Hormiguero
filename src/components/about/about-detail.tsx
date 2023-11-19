@@ -129,7 +129,7 @@ const AboutDetailForm = ({ settings, error, loading }: Settings | any) => {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: 'AIzaSyCtAae1VdKZ5h7m1CmyKQldt9A0UniM3Dk',
+    googleMapsApiKey: '',
     libraries: ['places'],
   })
 
