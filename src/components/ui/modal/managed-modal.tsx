@@ -10,6 +10,10 @@ const ComposerMessage = dynamic(
 const DeleteProduct = dynamic(
   () => import('@/components/products/delete-product-view')
 )
+
+const DeleteEvent = dynamic(
+  () => import('@/components/events/delete-event-view')
+)
 const DeleteDepartment = dynamic(
   () => import('@/components/departments/delete-department-view')
 )
@@ -37,6 +41,8 @@ const DeleteCast = dynamic(() => import('@/components/casts/delete-cast-view'))
 
 function renderModal(view: MODAL_VIEWS | undefined, data: any) {
   switch (view) {
+    case 'DELETE_EVENT':
+      return <DeleteEvent />
     case 'BAN_CUSTOMER':
       return <BanCustomerView />
     case 'MAKE_ADMIN':

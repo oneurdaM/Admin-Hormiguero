@@ -26,4 +26,11 @@ export const eventsClient = {
   delete: (id: number) => {
     return HttpClient.delete(`${API_ENDPOINTS.EVENTS}/${id}`)
   },
+
+  spaceEvent: (variables: Event) => {
+    return HttpClient.post(API_ENDPOINTS.SPACE_EVENT, variables)
+  },
+  validateDateSpace: (variables: Event) => {
+    return HttpClient.post(API_ENDPOINTS.VALIDATE_DATE, variables)
+  },
 }

@@ -51,3 +51,13 @@ code {
   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace;
 }
+
+.ant-btn.ant-btn-primary {
+  background-color: #0c5c6e !important;
+  color: white !important;
+}
+
+.ant-btn.ant-btn-primary:hover {
+  background-color: #04242b !important;
+  color: white !important;
+}

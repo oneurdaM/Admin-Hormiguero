@@ -42,4 +42,7 @@ export const API_ENDPOINTS = {
 
   CAST: '/casts',
   GENRE: '/genders',
+
+  SPACE_EVENT: '/events-spaces',
+  VALIDATE_DATE: '/events-spaces/validate-schendule',
 }

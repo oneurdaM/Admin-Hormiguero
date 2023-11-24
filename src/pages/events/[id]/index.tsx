@@ -8,7 +8,7 @@ import { useEventQuery } from '@/data/events'
 
 import Loader from '@/components/ui/loader/loader'
 import ErrorMessage from '@/components/ui/error-message'
-import EventDetailForm from '@/components/events/event-detail'
+import EventDetailForm from '@/components/events/event-form'
 
 export default function EventDetail() {
   const router = useRouter()
@@ -30,7 +30,7 @@ export default function EventDetail() {
       <div className="flex border-b border-dashed border-border-base py-5 sm:py-8">
         <h1 className="text-lg font-semibold text-heading">Detalle Evento</h1>
       </div>
-      <EventDetailForm event={event} />
+      <EventDetailForm eventos={event} />
     </>
   )
 }

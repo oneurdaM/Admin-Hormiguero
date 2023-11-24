@@ -18,7 +18,6 @@ export default function EventsTab() {
     limit: 10,
     page,
     search: searchTerm,
-    type: 'Production'
   })
 
   function handleSearch({ searchText }: { searchText: string }) {

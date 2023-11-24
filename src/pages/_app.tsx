@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { Hydrate } from 'react-query/hydration'
 import { ReactQueryDevtools } from 'react-query/devtools'
+import '@/styles/global.css'
 
 import 'react-toastify/dist/ReactToastify.css'
 import '@/assets/css/main.css'

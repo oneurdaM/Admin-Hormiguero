@@ -60,6 +60,7 @@ export const useEventQuery = ({ id }: { id: number }) => {
   }
 }
 
+//Este dato puede tener la data del response al mandarlo a llamar en el onsucces
 export const useCreateEventMutation = () => {
   const queryClient = useQueryClient()
   const router = useRouter()
@@ -67,13 +68,60 @@ export const useCreateEventMutation = () => {
   return useMutation(eventsClient.register, {
     onSuccess() {
       toast.success('Se creó un nuevo evento.')
-      router.back()
+      // router.back()
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.EVENTS)
     },
     onError: (error: any) => {
       toast.error(error?.response?.data?.message ?? 'Error: no se pudo crear')
+    },
+  })
+}
+
+// export const useCreateEventMutation = () => {
+//   const queryClient = useQueryClient()
+//   const router = useRouter()
+
+//   const mutation = useMutation(eventsClient.register, {
+//     onSuccess: (data) => {
+//       toast.success('Se creó un nuevo evento.')
+//       // Puedes acceder al resultado de la mutación a través de la variable 'data'
+//       // router.back()
+//     },
+//     onSettled: () => {
+//       queryClient.invalidateQueries(API_ENDPOINTS.EVENTS)
+//     },
+//     onError: (error: any) => {
+//       toast.error(error?.response?.data?.message ?? 'Error: no se pudo crear')
+//     },
+//   })
+
+//   return mutation
+// }
+
+export const validateSpaceEventMutation = () => {
+  const queryClient = useQueryClient()
+  const router = useRouter()
+
+  return useMutation(eventsClient.validateDateSpace, {
+    onSuccess() {
+      //  toast.success('Se creó un nuevo evento.')
+      // router.back()
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(API_ENDPOINTS.VALIDATE_DATE)
+    },
+    onError: (error: any) => {
+      const date = error.response.data.data.startDate
+      const dateFormat =
+        date.split('T')[0] + ' ' + date.split('T')[1].split('.')[0]
+      toast.error(
+        'Fecha invalida, el dia y la hora ' +
+          dateFormat +
+          ' tienen evento para ' +
+          error.response.data.data.spaceId
+      )
     },
   })
 }
@@ -111,6 +159,24 @@ export const useDeleteEventMutation = () => {
       toast.error(
         error?.response?.data?.message ?? 'Error: no se pudo eliminar'
       )
+    },
+  })
+}
+
+export const useCreateSpaceEventMutation = () => {
+  const queryClient = useQueryClient()
+  const router = useRouter()
+
+  return useMutation(eventsClient.spaceEvent, {
+    onSuccess() {
+      toast.success('Se logro.')
+      // router.back()
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(API_ENDPOINTS.SPACE_EVENT)
+    },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message ?? 'Error: no se pudo crear')
     },
   })
 }

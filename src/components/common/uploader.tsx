@@ -89,7 +89,7 @@ export default function Uploader({
         <aside className="mt-2 flex flex-wrap">
           {!loading && (
             <div
-              className={`relative mt-2 inline-flex flex-col overflow-hidden rounded border border-border-200 me-2`}
+              className={`relative me-2 mt-2 inline-flex flex-col overflow-hidden rounded border border-border-200`}
             >
               <figure className="relative h-16 w-28">
                 <Image
@@ -103,7 +103,7 @@ export default function Uploader({
             </div>
           )}
           {loading && (
-            <div className="mt-2 flex h-16 items-center ms-2">
+            <div className="ms-2 mt-2 flex h-16 items-center">
               <Loader simple={true} className="h-6 w-6" />
             </div>
           )}

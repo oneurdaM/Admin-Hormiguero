@@ -19,6 +19,8 @@ module.exports = withPWA({
       '127.0.0.1',
       'static.wixstatic.com',
       'localhost',
+      'upload.wikimedia.org',
+      'painani-dev-bucket.s3.us-west-1.amazonaws.com',
     ],
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
