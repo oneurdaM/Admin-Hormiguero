@@ -59,7 +59,6 @@ export default function OrderUpdateForm({ order }: Order | any) {
 
   const { mutate: updateOrderStatus, isLoading: loading } =
     useUpdateOrderStatusMutation()
-
   const optionsStatus = [
     {
       id: 1,
