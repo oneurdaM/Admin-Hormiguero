@@ -31,6 +31,9 @@ type Props = {
   role?: Role
   isReservationActive?: boolean
   reservationStatus?: boolean
+
+  isSpaceActive?: boolean
+  spaceStatus?: boolean
 }
 
 const ActionButtons = ({
@@ -48,8 +51,12 @@ const ActionButtons = ({
   showContact = false,
   customLocale,
   role,
+
   isReservationActive = false,
   reservationStatus = false,
+
+  isSpaceActive = false,
+  spaceStatus = false,
 }: Props) => {
   const { openModal } = useModalAction()
 
@@ -67,6 +74,10 @@ const ActionButtons = ({
 
   function handleReservationStatus(active: boolean) {
     openModal('RESERVATION_STATUS', { id, active })
+  }
+
+  function handleSpaceActive(active: boolean) {
+    openModal('SPACE_STATUS', { id, active })
   }
 
   function handleMakeAdmin() {
@@ -178,6 +189,28 @@ const ActionButtons = ({
           ) : (
             <button
               onClick={() => handleReservationStatus(true)}
+              className="text-accent transition duration-200 hover:text-accent focus:outline-none"
+              title={'Activar'}
+            >
+              <CheckMarkCircle width={20} />
+            </button>
+          )}
+        </>
+      )}
+
+      {spaceStatus && (
+        <>
+          {isSpaceActive ? (
+            <button
+              onClick={() => handleSpaceActive(false)}
+              className="text-red-500 transition duration-200 hover:text-red-600 focus:outline-none"
+              title={'Bloquear'}
+            >
+              <BanUser width={20} />
+            </button>
+          ) : (
+            <button
+              onClick={() => handleSpaceActive(true)}
               className="text-accent transition duration-200 hover:text-accent focus:outline-none"
               title={'Activar'}
             >

@@ -40,7 +40,7 @@ export const useOrderQuery = ({ id }: { id: number }) => {
     }
   )
   return {
-    order: data?.data,
+    order: data,
     loading: isLoading,
     error,
   }
@@ -53,6 +53,26 @@ export const useUpdateOrderMutation = () => {
   return useMutation(orderClient.update, {
     onSuccess() {
       toast.success('Se actualizó el pedido')
+      router.back()
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(API_ENDPOINTS.ORDERS)
+    },
+    onError: (error: any) => {
+      toast.error(
+        error?.response?.data?.message ?? 'Error: no se pudo actualizar'
+      )
+    },
+  })
+}
+
+export const useUpdateOrderStatusMutation = () => {
+  const queryClient = useQueryClient()
+  const router = useRouter()
+
+  return useMutation(orderClient.updateStatus, {
+    onSuccess() {
+      toast.success('Se actualizó el estatus del pedido')
       router.back()
     },
     onSettled: () => {

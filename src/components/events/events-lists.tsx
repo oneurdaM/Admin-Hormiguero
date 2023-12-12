@@ -46,7 +46,7 @@ const EventList = ({ events, paginatorInfo, onPagination }: EventListProps) => {
           <ActionButtons
             id={id}
             detailsUrl={Routes.events.details({ id })}
-            deleteModalView="DELETE_EVENT"
+            // deleteModalView="DELETE_EVENT"
           />
         )
       },

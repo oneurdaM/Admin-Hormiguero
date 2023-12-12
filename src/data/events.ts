@@ -113,6 +113,7 @@ export const validateSpaceEventMutation = () => {
       queryClient.invalidateQueries(API_ENDPOINTS.VALIDATE_DATE)
     },
     onError: (error: any) => {
+      // console.log(error)
       const date = error.response.data.data.startDate
       const dateFormat =
         date.split('T')[0] + ' ' + date.split('T')[1].split('.')[0]
@@ -120,7 +121,11 @@ export const validateSpaceEventMutation = () => {
         'Fecha invalida, el dia y la hora ' +
           dateFormat +
           ' tienen evento para ' +
-          error.response.data.data.spaceId
+          error.response.data.data.spaceName,
+        {
+          autoClose: false, // 5000 milisegundos = 5 segundos
+          closeOnClick: true,
+        }
       )
     },
   })

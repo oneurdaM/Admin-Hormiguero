@@ -51,9 +51,11 @@ export const useCreateProductMutation = () => {
   const router = useRouter()
 
   return useMutation(productClient.register, {
-    onSuccess() {
-      toast.success('Se creó un nuevo producto')
-      router.back()
+    onSuccess: async () => {
+      await router.back()
+      setTimeout(() => {
+        toast.success('Se creó un nuevo producto')
+      }, 400)
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.PRODUCTS)

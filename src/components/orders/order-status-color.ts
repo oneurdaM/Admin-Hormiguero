@@ -2,17 +2,20 @@ const StatusColor = (status: string) => {
   let bg_class = ''
 
   switch (status) {
-    case 'dispatch':
-      bg_class = 'bg-[#dc2626]'
+    case 'PROCESANDO':
+      bg_class = 'bg-[#FF6666]' // Rojo suave
       break
-    case 'pending':
-      bg_class = 'bg-[#10B981]'
+    case 'PROCESADO':
+      bg_class = 'bg-[#FFD700]' // Amarillo suave
       break
-    case 'complete':
-      bg_class = 'bg-[#9CA3AF]'
+    case 'ENVIANDO':
+      bg_class = 'bg-[#A0522D]' // Café suave
+      break
+    case 'ENTREGADO':
+      bg_class = 'bg-[#66CDAA]' // Verde suave
       break
     default:
-      bg_class = 'bg-[#9CA3AF]'
+      bg_class = 'bg-[#B0C4DE]' // Por defecto (Gris azulado)
   }
 
   return bg_class

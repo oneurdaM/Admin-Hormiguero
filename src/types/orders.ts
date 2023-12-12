@@ -45,3 +45,7 @@ export type OrderRegistration = {
   address: string
   total: number
 }
+
+export type Orderstatus = {
+  deliveryStatus: string
+}

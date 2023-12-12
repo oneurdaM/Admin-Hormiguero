@@ -14,6 +14,10 @@ const DeleteProduct = dynamic(
 const DeleteEvent = dynamic(
   () => import('@/components/events/delete-event-view')
 )
+
+const ActiveSpace = dynamic(
+  () => import('@/components/spaces/space-status-view')
+)
 const DeleteDepartment = dynamic(
   () => import('@/components/departments/delete-department-view')
 )
@@ -41,6 +45,8 @@ const DeleteCast = dynamic(() => import('@/components/casts/delete-cast-view'))
 
 function renderModal(view: MODAL_VIEWS | undefined, data: any) {
   switch (view) {
+    case 'SPACE_STATUS':
+      return <ActiveSpace />
     case 'DELETE_EVENT':
       return <DeleteEvent />
     case 'BAN_CUSTOMER':

@@ -95,7 +95,7 @@ const ProductsList = ({
         <div>
           <Pagination
             total={paginatorInfo.total}
-            current={paginatorInfo.currentPage}
+            current={parseInt(paginatorInfo.currentPage)}
             pageSize={paginatorInfo.perPage}
             onChange={onPagination}
           />

@@ -1,7 +1,7 @@
 import { API_ENDPOINTS } from './api-endpoints'
 import { HttpClient } from './http-client'
 import { GenericQueryOptions } from '@/types'
-import { OrderResponse, OrderRegistration } from '@/types/orders'
+import { OrderResponse, OrderRegistration, OrderStatus } from '@/types/orders'
 import { OrderQueryResponse } from '../order'
 
 export const orderClient = {
@@ -22,6 +22,13 @@ export const orderClient = {
 
   update: ({ id, input }: { id: number; input: OrderRegistration }) => {
     return HttpClient.put(`${API_ENDPOINTS.ORDERS}/${id}`, input)
+  },
+
+  updateStatus: ({ id, input }: { id: number; input: OrderStatus }) => {
+    return HttpClient.put(
+      `${API_ENDPOINTS.ORDERS + '/actulizarEstatus'}/${id}`,
+      input
+    )
   },
 
   delete: (id: number) => {

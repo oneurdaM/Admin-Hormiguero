@@ -73,13 +73,15 @@ const SpacesList = ({ spaces, paginatorInfo, onPagination }: SpacesProps) => {
       title: 'Acciones',
       dataIndex: 'id',
       key: 'id',
-      align: 'right' as AlignType,
-      render: (id: string) => {
+      align: 'center' as AlignType,
+      render: (id: string, space: Space) => {
         return (
           <ActionButtons
             id={id}
             detailsUrl={Routes.spaces.details({ id })}
             deleteModalView="DELETE_SPACE"
+            isSpaceActive={space.active}
+            spaceStatus={true}
           />
         )
       },

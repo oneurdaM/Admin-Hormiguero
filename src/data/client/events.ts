@@ -20,6 +20,7 @@ export const eventsClient = {
   },
 
   update: ({ id, input }: { id: string; input: Event }) => {
+    console.log('llegue aqui', input)
     return HttpClient.put(`${API_ENDPOINTS.EVENTS}/${id}`, input)
   },
 

@@ -1,9 +1,12 @@
+// @ts-nocheck
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import React, { useState, ChangeEvent } from 'react'
 import Uploader from '../common/uploaderAntd'
 import { format } from 'date-fns'
 import moment from 'moment'
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
 
 import {
   Upload,
@@ -39,6 +42,7 @@ import { validateSpaceEventMutation } from '@/data/events'
 import { useSpacesQuery } from '@/data/space'
 import { useGenresQuery } from '@/data/genre'
 import { useCastsQuery } from '@/data/casts'
+import Image from 'next/image'
 
 type FormValues = {
   title: string
@@ -48,6 +52,7 @@ type FormValues = {
   dramaturgy: string
   director: string
   public?: boolean
+  capacity: number
   gender?: []
   cast?: []
   schedule?: string[] | []
@@ -57,7 +62,6 @@ type FormValues = {
   [key: string]: any
 }
 const { RangePicker } = DatePicker
-
 const defaultValues: FormValues = {
   title: '',
   synopsis: '',
@@ -66,7 +70,10 @@ const defaultValues: FormValues = {
   director: '',
   video: '',
   duration: 0,
+  capacity: 0,
 }
+dayjs.extend(customParseFormat)
+const dateFormat = 'YYYY-MM-DD HH:mm'
 
 const EventForm = ({ eventos }) => {
   const router = useRouter()
@@ -124,205 +131,163 @@ const EventForm = ({ eventos }) => {
   }
 
   const [selectedSpaces, setSelectedSpaces] = useState([])
+  const [selectedDates, setSelectedDates] = useState([])
+
   const [duration, selectDuration] = useState(0)
   const today = moment()
 
-  // const onFinish = (values: FormValues) => {
-  //   if (eventos === undefined) {
-  //     const lengthEvents = values.eventos.length
+  const onFinish = (values: FormValues) => {
+    if (eventos === undefined) {
+      const lengthEvents = values.eventos.length
 
-  //     for (let index = 0; index < lengthEvents; index++) {
-  //       const input = {
-  //         title: values?.title ?? '',
-  //         synopsis: values?.synopsis ?? '',
-  //         type: 'Production',
-  //         company: values?.company ?? '',
-  //         dramaturgy: values?.dramaturgy ?? '',
-  //         director: values?.director ?? '',
-  //         public: true,
-  //         schedules: [],
-  //         duration: values.duration,
-  //         video: values?.video ?? null,
-  //         gender: values.genre,
-  //         thumbnailUrl: values.thumbnailUrl,
-  //         cast: values.castF,
-  //         price: values.price,
-  //       }
-
-  //       createEvent(
-  //         {
-  //           ...input,
-  //         },
-  //         {
-  //           onSuccess(data) {
-  //             const lenghtDate = values.eventos[index].fechas.length
-
-  //             //el id de esta data es para obtener el id del evento, que se requiere en el otro servicio
-  //             console.log(data.id)
-  //             for (let indexY = 0; indexY < lenghtDate; indexY++) {
-  //               const fechaString = values.eventos[index].fechas[indexY].fecha
-  //               const fechaFormateada = fechaString.format(
-  //                 'YYYY-MM-DD HH:mm:00'
-  //               )
-
-  //               const prueba = {
-  //                 eventId: data.id,
-  //                 spaceId: values.eventos[index].spaceId,
-  //                 startDate: fechaFormateada,
-  //                 // endDate: fechaFormateada,
-  //               }
-  //               createSpace({ ...prueba })
-  //               //Aqui comsume el servicio de davo
-  //             }
-  //           },
-  //         },
-  //         {
-  //           onError: (error: any) => {
-  //             if (error.response?.data?.errors) {
-  //               error.response.data.errors.forEach((error: any) => {
-  //                 setError(error.field, {
-  //                   type: 'manual',
-  //                   message: error.message,
-  //                 })
-  //               })
-  //             }
-  //           },
-  //         }
-  //       )
-  //     }
-  //   } else {
-  //     const input = {
-  //       title: values?.title ?? '',
-  //       synopsis: values?.synopsis ?? '',
-  //       company: values?.company ?? '',
-  //       dramaturgy: values?.dramaturgy ?? '',
-  //       director: values?.director ?? '',
-  //       public: true,
-  //       schedules: [],
-  //       video: values?.video ?? null,
-  //       gender: values.genre,
-  //       thumbnailUrl: values.thumbnailUrl,
-  //       cast: values.castF,
-  //       price: values.price,
-  //     }
-
-  //     console.log(input)
-  //   }
-  // }
-
-  const onFinish = async (values: FormValues) => {
-    const lengthEvents = values.eventos.length
-
-    for (let index = 0; index < lengthEvents; index++) {
-      const lenghtDate = values.eventos[index].fechas.length
-
-      for (let indexY = 0; indexY < lenghtDate; indexY++) {
-        const fechaString = values.eventos[index].fechas[indexY].fecha
-        const fechaFormateada = fechaString.format('YYYY-MM-DD HH:mm:00')
-
-        const validateDate = {
-          spaceId: values.eventos[index].spaceId,
-          startDate: fechaFormateada,
+      for (let index = 0; index < lengthEvents; index++) {
+        const input = {
+          title: values?.title ?? '',
+          synopsis: values?.synopsis ?? '',
+          type: 'Production',
+          company: values?.company ?? '',
+          dramaturgy: values?.dramaturgy ?? '',
+          director: values?.director ?? '',
+          public: true,
+          schedules: [],
           duration: values.duration,
+          video: values?.video ?? null,
+          gender: values.genre,
+          thumbnailUrl: values.thumbnailUrl,
+          cast: values.castF,
+          price: values.price,
+          capacity: values.capacity,
         }
-        validateSpaceDate(
-          { ...validateDate },
-          {
-            onSuccess(data) {
-              console.log(data)
+        const lenghtDate = values.eventos[index].fechas.length
 
-              //aqui mando a llamar todo el pedo de insertar evento
-            },
+        for (let indexY = 0; indexY < lenghtDate; indexY++) {
+          const fechaString = values.eventos[index].fechas[indexY].fecha
+          const fechaFormateada = fechaString.format('YYYY-MM-DD HH:mm:00')
+
+          const validateDate = {
+            spaceId: values.eventos[index].spaceId,
+            startDate: fechaFormateada,
+            duration: values.duration,
           }
-        )
-        //Aqui consume la validacion de davo
+          validateSpaceDate(
+            { ...validateDate },
+            {
+              onSuccess(data) {
+                if (data.length === 0) {
+                  createEvent(
+                    {
+                      ...input,
+                    },
+                    {
+                      onSuccess(data: any) {
+                        const lenghtDate = values.eventos[index].fechas.length
+                        //el id de esta data es para obtener el id del evento, que se requiere en el otro servicio
+                        console.log(data.id)
+                        for (let indexY = 0; indexY < lenghtDate; indexY++) {
+                          const fechaString =
+                            values.eventos[index].fechas[indexY].fecha
+                          const fechaFormateada = fechaString.format(
+                            'YYYY-MM-DD HH:mm:00'
+                          )
+                          const horasDesabilitadas = {
+                            eventId: data.id,
+                            spaceId: values.eventos[index].spaceId,
+                            startDate: fechaFormateada,
+                            endDate: fechaFormateada,
+                          }
+                          createSpace({ ...horasDesabilitadas })
+                        }
+                      },
+                    },
+                    {
+                      onError: (error: any) => {
+                        if (error.response?.data?.errors) {
+                          error.response.data.errors.forEach((error: any) => {
+                            setError(error.field, {
+                              type: 'manual',
+                              message: error.message,
+                            })
+                          })
+                        }
+                      },
+                    }
+                  )
+                }
+              },
+            }
+          )
+        }
       }
-    }
-
-    // try {
-    //   if (eventos === undefined) {
-    //     await handleMultipleEvents(values)
-    //   } else {
-    //     const input = {
-    //       title: values?.title ?? '',
-    //       synopsis: values?.synopsis ?? '',
-    //       company: values?.company ?? '',
-    //       dramaturgy: values?.dramaturgy ?? '',
-    //       director: values?.director ?? '',
-    //       public: true,
-    //       schedules: [],
-    //       video: values?.video ?? null,
-    //       gender: values.genre,
-    //       thumbnailUrl: values.thumbnailUrl,
-    //       cast: values.castF,
-    //       price: values.price,
-    //     }
-
-    //     console.log(input)
-    //   }
-    // } catch (error) {
-    //   // handleErrors(error)
-    // }
-  }
-
-  const handleMultipleEvents = async (values: FormValues) => {
-    const lengthEvents = values.eventos.length
-
-    for (let index = 0; index < lengthEvents; index++) {
-      const input = {
+    } else {
+      const eventUpdate = {
         title: values?.title ?? '',
         synopsis: values?.synopsis ?? '',
-        type: 'Production',
         company: values?.company ?? '',
         dramaturgy: values?.dramaturgy ?? '',
         director: values?.director ?? '',
         public: true,
-        schedules: [],
-        duration: values.duration,
         video: values?.video ?? null,
         gender: values.genre,
         thumbnailUrl: values.thumbnailUrl,
         cast: values.castF,
-        price: values.price,
       }
 
-      const data = await createEventAsync(input)
-      console.log(data.id)
-
-      await handleEventDates(data.id, values.eventos[index].fechas)
+      console.log(eventUpdate)
+      updateEvent({
+        id: eventos.id as string,
+        input: eventUpdate,
+      })
     }
-  }
-
-  const handleEventDates = async (eventId: any, dates: any) => {
-    for (let indexY = 0; indexY < dates.length; indexY++) {
-      const fechaString = dates[indexY].fecha
-      const fechaFormateada = fechaString.format('YYYY-MM-DD HH:mm:00')
-
-      const prueba = {
-        eventId: eventId,
-        spaceId: values.eventos[index].spaceId,
-        startDate: fechaFormateada,
-        // endDate: fechaFormateada,
-      }
-
-      await createSpaceAsync(prueba)
-      // Aquí consume el servicio de davo
-    }
-  }
-
-  // Funciones para llamadas asíncronas a los servicios
-  const createEventAsync = async (input: any) => {
-    const { data } = await createEvent(input)
-    return data
-  }
-
-  const createSpaceAsync = async (input) => {
-    const { data } = await createSpace(input)
-    return data
   }
 
   const disabledDate = (current: any) => {
-    return current && current < today.startOf('day')
+    return current && current < today
+  }
+
+  const [horasDesabilitadas, sethorasDesabilitadas] = useState({})
+
+  const disableTime = (index: number, value: any) => {
+    let flag = false
+    if (index > 0) {
+      const fecha = moment(value?.$d)
+      const fechaFormateada = fecha.format('YYYY-MM-DD HH:mm')
+
+      for (const fecha2 in horasDesabilitadas) {
+        if (fecha2 === fechaFormateada.split(' ')[0]) {
+          const horasUnidas = horasDesabilitadas[fecha2].reduce(
+            (result, value) => {
+              return [...result, ...value.horas]
+            },
+            []
+          )
+
+          let minutosUnidos = []
+
+          for (const valor of horasDesabilitadas[fecha2]) {
+            if (valor.horas.length === 0) {
+              minutosUnidos = horasDesabilitadas[fecha2].reduce(
+                (result, value) => {
+                  return [...result, ...value.minutos]
+                },
+                []
+              )
+            } else {
+              minutosUnidos = horasDesabilitadas[fecha2].reduce(
+                (result, value) => {
+                  return [...result, ...value.minutos]
+                },
+                []
+              )
+            }
+          }
+
+          return {
+            disabledHours: () => horasUnidas,
+            disabledMinutes: () => minutosUnidos,
+          }
+        }
+      }
+    }
   }
 
   const handleSpaceChange = (index: number, value: any) => {
@@ -330,6 +295,82 @@ const EventForm = ({ eventos }) => {
     const updatedSelectedSpaces = [...selectedSpaces]
     updatedSelectedSpaces[index] = value
     setSelectedSpaces(updatedSelectedSpaces)
+  }
+
+  const handleDateChange = (index: number, value: any) => {
+    const fechaFormateada = value.format('YYYY-MM-DD HH:mm')
+    //Actualiza el estado con las opciones seleccionadas
+    const updatedSelectedSpaces = [...selectedDates]
+    updatedSelectedSpaces[index] = fechaFormateada
+    setSelectedDates(updatedSelectedSpaces)
+
+    const nuevaFecha = moment(fechaFormateada).add(duration, 'minutes')
+
+    const fechaSTr = nuevaFecha.format('YYYY-MM-DD HH:mm')
+
+    const minutoNuevapriema = fechaFormateada.split(' ')[1].split(':')[1]
+    const horaNuevaprimera = fechaFormateada.split(' ')[1].split(':')[0]
+
+    const minutoNueva = fechaSTr.split(' ')[1].split(':')[1]
+    const horaNueva = fechaSTr.split(' ')[1].split(':')[0]
+
+    //rango de una fecha por horas solo para horas
+    const rango = []
+    for (let index = parseInt(horaNuevaprimera); index < horaNueva; index++) {
+      rango.push(index)
+    }
+
+    const rangoMinuti = []
+    for (
+      let index = parseInt(minutoNuevapriema);
+      index <= minutoNueva;
+      index++
+    ) {
+      rangoMinuti.push(index)
+    }
+
+    sethorasDesabilitadas((prevDatos) => ({
+      ...prevDatos,
+      [fechaFormateada.split(' ')[0]]: [
+        ...(prevDatos[fechaFormateada.split(' ')[0]] || []), // Mantén los datos anteriores si existen
+        {
+          horas: rango,
+          minutos: rangoMinuti,
+        },
+      ],
+    }))
+  }
+
+  console.log(horasDesabilitadas)
+
+  const handleRemoveDate = (index: any) => {
+    // Elimina el campo y actualiza el estado de selectedSpaces
+    const updatedSelectedSpaces = [...selectedDates]
+    const fechamia = updatedSelectedSpaces.splice(index, 1)
+    setSelectedDates(updatedSelectedSpaces)
+
+    if (fechamia.length === 0) {
+    } else {
+      for (let i = 0; i < Object.keys(horasDesabilitadas).length; i++) {
+        const fecha2 = Object.keys(horasDesabilitadas)[i]
+
+        if (fecha2 === fechamia[0].split(' ')[0]) {
+          for (let j = 0; j < horasDesabilitadas[fecha2].length; j++) {
+            const valor = horasDesabilitadas[fecha2][j]
+
+            for (let k = 0; k < valor.horas.length; k++) {
+              const valorHoras = valor.horas[k]
+
+              if (
+                valorHoras === parseInt(fechamia[0].split(' ')[1].split(':')[0])
+              ) {
+                horasDesabilitadas[fecha2].splice(j, 1)
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   const handleRemove = (index: any) => {
@@ -352,7 +393,13 @@ const EventForm = ({ eventos }) => {
   )
 
   return (
-    <Form onFinish={onFinish} form={form} initialValues={eventos}>
+    <Form
+      onFinish={onFinish}
+      form={form}
+      initialValues={eventos}
+      labelCol={{ span: 24 }}
+      wrapperCol={{ span: 24 }}
+    >
       <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
         <Description
           title="Imagen"
@@ -361,8 +408,6 @@ const EventForm = ({ eventos }) => {
         />
         <Card className=" w-full sm:w-8/12 md:w-2/3">
           <Form.Item
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
             name="thumbnailUrl"
             label="Imagen del evento"
             valuePropName="fileList"
@@ -375,7 +420,16 @@ const EventForm = ({ eventos }) => {
             ]}
           >
             <Uploader form={form} />
-          </Form.Item>{' '}
+          </Form.Item>
+
+          {eventos !== undefined ? (
+            <Image
+              src={eventos.thumbnailUrl}
+              alt="thumbnail"
+              width={40}
+              height={40}
+            />
+          ) : null}
         </Card>
       </div>
 
@@ -388,8 +442,6 @@ const EventForm = ({ eventos }) => {
 
         <Card className="w-full sm:w-8/12 md:w-2/3">
           <Form.Item
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
             label="Título del evento"
             name="title"
             rules={[
@@ -402,8 +454,6 @@ const EventForm = ({ eventos }) => {
             <Input placeholder="Título" />
           </Form.Item>
           <Form.Item
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
             label="Sinopsis del evento"
             name="synopsis"
             rules={[
@@ -416,8 +466,6 @@ const EventForm = ({ eventos }) => {
             <Input.TextArea placeholder="Sinopsis" />
           </Form.Item>
           <Form.Item
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
             label="Compañía del evento"
             name="company"
             rules={[
@@ -430,8 +478,6 @@ const EventForm = ({ eventos }) => {
             <Input placeholder="Compañía" />
           </Form.Item>
           <Form.Item
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
             label="Dramaturgia del evento"
             name="dramaturgy"
             rules={[
@@ -444,8 +490,6 @@ const EventForm = ({ eventos }) => {
             <Input placeholder="Dramaturgia" />
           </Form.Item>
           <Form.Item
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
             label="Director del evento"
             name="director"
             rules={[
@@ -458,8 +502,6 @@ const EventForm = ({ eventos }) => {
             <Input placeholder="Director" />
           </Form.Item>
           <Form.Item
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
             label="URL Detrás de cámaras"
             name="video"
             rules={[
@@ -473,8 +515,6 @@ const EventForm = ({ eventos }) => {
           </Form.Item>
 
           <Form.Item
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
             label="Genero del evento"
             name="genre"
             rules={[
@@ -494,53 +534,73 @@ const EventForm = ({ eventos }) => {
           </Form.Item>
 
           {eventos === undefined ? (
-            <Form.Item
-              labelCol={{ span: 24 }}
-              wrapperCol={{ span: 24 }}
-              label="Duración en minutos"
-              name="duration"
-              rules={[
-                {
-                  required: true,
-                  message: 'Por favor, ingrese la duración',
-                },
-              ]}
-            >
-              <InputNumber
-                onChange={handleDuration}
-                min={1}
-                className="w-full"
-                placeholder="Duración del evento"
-              />
-            </Form.Item>
+            <>
+              <Form.Item
+                labelCol={{ span: 24 }}
+                wrapperCol={{ span: 24 }}
+                label="Duración en minutos"
+                name="duration"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Por favor, ingrese la duración',
+                  },
+                ]}
+              >
+                <InputNumber
+                  onChange={handleDuration}
+                  min={1}
+                  className="w-full"
+                  placeholder="Duración del evento"
+                />
+              </Form.Item>
+
+              <Form.Item
+                labelCol={{ span: 24 }}
+                wrapperCol={{ span: 24 }}
+                label="Capacidad de asientos"
+                name="capacity"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Por favor, ingrese la capacidad',
+                  },
+                ]}
+              >
+                <InputNumber
+                  onChange={handleDuration}
+                  min={1}
+                  className="w-full"
+                  placeholder="Capacidad del evento"
+                />
+              </Form.Item>
+
+              <Form.Item
+                labelCol={{ span: 24 }}
+                wrapperCol={{ span: 24 }}
+                label="Precio del evento"
+                name="price"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Por favor, ingrese el precio',
+                  },
+                ]}
+              >
+                <InputNumber
+                  min={1}
+                  className="w-full"
+                  placeholder="Precio del evento"
+                  formatter={(value) =>
+                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                  }
+                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                />
+              </Form.Item>
+            </>
           ) : null}
 
           <Form.Item
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
-            label="Precio del evento"
-            name="price"
-            rules={[
-              {
-                required: true,
-                message: 'Por favor, ingrese el precio',
-              },
-            ]}
-          >
-            <InputNumber
-              min={1}
-              className="w-full"
-              placeholder="Precio del evento"
-              formatter={(value) =>
-                `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-              }
-              parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
-            />
-          </Form.Item>
-
-          <Form.Item
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
             label="Elenco del evento"
             name="castF"
             rules={[
@@ -629,11 +689,14 @@ const EventForm = ({ eventos }) => {
                           ) => (
                             <>
                               {dateFields.map(
-                                ({
-                                  key: dateKey,
-                                  name: dateName,
-                                  fieldKey: dateFieldKey,
-                                }) => (
+                                (
+                                  {
+                                    key: dateKey,
+                                    name: dateName,
+                                    fieldKey: dateFieldKey,
+                                  },
+                                  indexDate
+                                ) => (
                                   <div className="w-full">
                                     <div
                                       key={dateKey}
@@ -657,10 +720,18 @@ const EventForm = ({ eventos }) => {
                                         ]}
                                       >
                                         <DatePicker
+                                          placeholder="Selecciona una fecha"
+                                          allowClear={false}
                                           showTime
-                                          format="YYYY-MM-DD HH:mm"
                                           disabledDate={disabledDate}
+                                          disabledTime={(value) =>
+                                            disableTime(indexDate, value)
+                                          }
+                                          format="YYYY-MM-DD HH:mm"
                                           style={{ width: '100%' }}
+                                          onChange={(value) =>
+                                            handleDateChange(indexDate, value)
+                                          }
                                           disabled={
                                             duration === 0 ||
                                             (duration === null && true)
@@ -668,10 +739,20 @@ const EventForm = ({ eventos }) => {
                                         />
                                       </Form.Item>
 
-                                      <MinusCircleOutlined
+                                      {/* <MinusCircleOutlined
                                         onClick={() => removeDate(dateName)}
                                         style={{ marginLeft: '8px' }}
-                                      />
+                                      /> */}
+                                      {indexDate >= 1 && (
+                                        <MinusCircleOutlined
+                                          // onClick={() => remove(name)}
+                                          onClick={() => {
+                                            removeDate(dateName)
+                                            handleRemoveDate(indexDate)
+                                          }}
+                                          style={{ marginLeft: '8px' }}
+                                        />
+                                      )}
                                     </div>
                                   </div>
                                 )

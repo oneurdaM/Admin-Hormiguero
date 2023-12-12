@@ -25,57 +25,57 @@ const OrdersList = ({ orders, paginatorInfo, onPagination }: OrdersProps) => {
       key: 'id',
       align: 'center',
     },
-    {
-      title: 'Categoría',
-      dataIndex: 'category',
-      key: 'category',
-      align: 'center',
-    },
-    {
-      title: 'Usuario',
-      dataIndex: ['user', 'name'],
-      key: 'user',
-      align: 'center',
-    },
-    {
-      title: 'Correo electrónico',
-      dataIndex: ['user', 'email'],
-      key: 'email',
-      align: 'center',
-    },
-    {
-      title: 'Telefono',
-      dataIndex: ['user', 'phone'],
-      key: 'phone',
-      align: 'center',
-    },
-    {
-      title: 'Dirección',
-      dataIndex: ['user', 'address'],
-      key: 'address',
-      align: 'center',
-    },
+    // {
+    //   title: 'Categoría',
+    //   dataIndex: 'category',
+    //   key: 'category',
+    //   align: 'center',
+    // },
+    // {
+    //   title: 'Usuario',
+    //   dataIndex: ['user', 'name'],
+    //   key: 'user',
+    //   align: 'center',
+    // },
+    // {
+    //   title: 'Correo electrónico',
+    //   dataIndex: ['user', 'email'],
+    //   key: 'email',
+    //   align: 'center',
+    // },
+    // {
+    //   title: 'Telefono',
+    //   dataIndex: ['user', 'phone'],
+    //   key: 'phone',
+    //   align: 'center',
+    // },
+    // {
+    //   title: 'Dirección',
+    //   dataIndex: ['user', 'address'],
+    //   key: 'address',
+    //   align: 'center',
+    // },
     {
       title: 'Fecha pedido',
-      dataIndex: 'effectiveFrom',
+      dataIndex: ['payment', 'createdAt'],
       key: 'effectiveFrom',
       align: 'center',
       render: (date: string) => (
         <div className="text-sm text-gray-600">{date && formatDate(date)} </div>
       ),
     },
-    {
-      title: 'Fecha entrega',
-      dataIndex: 'expiredAt',
-      key: 'expiredAt',
-      align: 'center',
-      render: (date: string) => (
-        <div className="text-sm text-gray-600">{date && formatDate(date)} </div>
-      ),
-    },
+    // {
+    //   title: 'Fecha entrega',
+    //   dataIndex: 'expiredAt',
+    //   key: 'expiredAt',
+    //   align: 'center',
+    //   render: (date: string) => (
+    //     <div className="text-sm text-gray-600">{date && formatDate(date)} </div>
+    //   ),
+    // },
     {
       title: 'Estatus',
-      dataIndex: 'status',
+      dataIndex: 'deliveryStatus',
       key: 'status',
       align: 'center' as AlignType,
       render: (text: string) => <Badge text={text} color={StatusColor(text)} />,
@@ -84,7 +84,7 @@ const OrdersList = ({ orders, paginatorInfo, onPagination }: OrdersProps) => {
       title: 'Acciones',
       dataIndex: 'id',
       key: 'id',
-      align: 'right' as AlignType,
+      align: 'center' as AlignType,
       render: (id: string) => {
         return (
           <ActionButtons id={id} detailsUrl={Routes.orders.details({ id })} />

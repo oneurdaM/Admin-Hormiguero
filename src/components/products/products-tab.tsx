@@ -16,7 +16,7 @@ function ProductsTab() {
   const [searchTerm, setSearchTerm] = useState('')
   const [page, setPage] = useState(1)
   const { products, loading, error, paginatorInfo } = useProductsQuery({
-    limit: 10,
+    limit: 1,
     page,
     search: searchTerm,
   })

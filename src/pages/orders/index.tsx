@@ -12,12 +12,7 @@ import { useOrdersQuery } from '@/data/order'
 export default function Orders() {
   const [searchTerm, setSearchTerm] = useState('')
   const [page, setPage] = useState(1)
-  const {
-    orders,
-    loading,
-    error,
-    paginatorInfo,
-  } = useOrdersQuery({
+  const { orders, loading, error, paginatorInfo } = useOrdersQuery({
     limit: 5,
     page,
     search: searchTerm,
@@ -32,6 +27,7 @@ export default function Orders() {
     setPage(1)
   }
 
+  console.log(orders)
   function handlePagination(current: number) {
     setPage(current)
   }
