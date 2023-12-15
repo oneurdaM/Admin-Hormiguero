@@ -260,6 +260,7 @@ const EventForm = ({ eventos }) => {
             },
             []
           )
+          console.log('hola')
 
           let minutosUnidos = []
 
