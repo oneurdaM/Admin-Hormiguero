@@ -298,6 +298,7 @@ const EventForm = ({ eventos }) => {
   }
 
   const handleDateChange = (index: number, value: any) => {
+    let rangoMinuti = []
     const fechaFormateada = value.format('YYYY-MM-DD HH:mm')
     //Actualiza el estado con las opciones seleccionadas
     const updatedSelectedSpaces = [...selectedDates]
@@ -320,15 +321,17 @@ const EventForm = ({ eventos }) => {
       rango.push(index)
     }
 
-    const rangoMinuti = []
-    for (
-      let index = parseInt(minutoNuevapriema);
-      index <= minutoNueva;
-      index++
-    ) {
-      rangoMinuti.push(index)
+    if (duration % 60 != 0) {
+      for (
+        let index = parseInt(minutoNuevapriema);
+        index <= minutoNueva;
+        index++
+      ) {
+        rangoMinuti.push(index)
+      }
+    } else {
+      rangoMinuti = []
     }
-
     sethorasDesabilitadas((prevDatos) => ({
       ...prevDatos,
       [fechaFormateada.split(' ')[0]]: [
