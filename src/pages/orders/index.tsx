@@ -13,7 +13,7 @@ export default function Orders() {
   const [searchTerm, setSearchTerm] = useState('')
   const [page, setPage] = useState(1)
   const { orders, loading, error, paginatorInfo } = useOrdersQuery({
-    limit: 5,
+    limit: 10,
     page,
     search: searchTerm,
   })

@@ -87,7 +87,11 @@ const OrdersList = ({ orders, paginatorInfo, onPagination }: OrdersProps) => {
       align: 'center' as AlignType,
       render: (id: string) => {
         return (
-          <ActionButtons id={id} detailsUrl={Routes.orders.details({ id })} />
+          <ActionButtons
+            id={id}
+            detailsUrl={Routes.orders.details({ id })}
+            downloadTicket={id}
+          />
         )
       },
     },

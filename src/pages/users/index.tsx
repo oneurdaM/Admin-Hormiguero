@@ -11,6 +11,7 @@ import { useUsersQuery } from '@/data/users'
 import Loader from '@/components/ui/loader/loader'
 import ErrorMessage from '@/components/ui/error-message'
 import UserList from '@/components/user/user-list'
+import { Tooltip } from 'antd'
 
 export default function Users() {
   const { t } = useTranslation()
@@ -46,12 +47,14 @@ export default function Users() {
 
         <div className="ms-auto flex w-full flex-col items-center space-y-4 md:flex-row md:space-y-0 xl:w-2/3">
           <Search onSearch={handleSearch} />
-          <LinkButton
-            href={`${Routes.users.create}`}
-            className="h-12 w-full md:ms-6 md:w-auto"
-          >
-            <span>+</span>
-          </LinkButton>
+          <Tooltip placement="top" title="Crear">
+            <LinkButton
+              href={`${Routes.users.create}`}
+              className="h-12 w-full md:ms-6 md:w-auto"
+            >
+              <span>+</span>
+            </LinkButton>
+          </Tooltip>
         </div>
       </Card>
 

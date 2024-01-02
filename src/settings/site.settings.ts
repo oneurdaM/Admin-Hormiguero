@@ -74,6 +74,17 @@ export const siteSettings = {
         label: 'Blog',
         icon: 'ChatIcon',
       },
+
+      {
+        href: Routes.buyBoxOffice.list,
+        label: 'Comprar en taquilla',
+        icon: 'TaxesIcon',
+      },
+      {
+        href: Routes.banner.list,
+        label: 'Banners',
+        icon: 'DiaryIcon',
+      },
     ],
     communication: [
       {

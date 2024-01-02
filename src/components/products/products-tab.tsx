@@ -10,13 +10,14 @@ import Search from '@/components/common/search'
 import Loader from '@/components/ui/loader/loader'
 import ErrorMessage from '@/components/ui/error-message'
 import { useProductsQuery } from '@/data/product'
+import { Tooltip } from 'antd'
 
 function ProductsTab() {
   const { t } = useTranslation()
   const [searchTerm, setSearchTerm] = useState('')
   const [page, setPage] = useState(1)
   const { products, loading, error, paginatorInfo } = useProductsQuery({
-    limit: 1,
+    limit: 5,
     page,
     search: searchTerm,
   })
@@ -45,12 +46,15 @@ function ProductsTab() {
 
         <div className="ms-auto flex w-full flex-col items-center space-y-4 md:flex-row md:space-y-0 xl:w-2/3">
           <Search onSearch={handleSearch} />
-          <LinkButton
-            href={`${Routes.products.create}`}
-            className="h-12 w-full md:ms-6 md:w-auto"
-          >
-            <span>+</span>
-          </LinkButton>
+
+          <Tooltip placement="top" title="Crear">
+            <LinkButton
+              href={`${Routes.products.create}`}
+              className="h-12 w-full md:ms-6 md:w-auto"
+            >
+              <span>+</span>
+            </LinkButton>
+          </Tooltip>
         </div>
       </Card>
       <ProductsList

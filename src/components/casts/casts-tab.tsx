@@ -9,6 +9,7 @@ import LinkButton from '@/components/ui/link-button'
 import { Routes } from '@/config/routes'
 import Loader from '@/components/ui/loader/loader'
 import ErrorMessage from '@/components/ui/error-message'
+import { Tooltip } from 'antd'
 
 export default function CastsTab() {
   const { t } = useTranslation()
@@ -45,12 +46,14 @@ export default function CastsTab() {
 
         <div className="ms-auto flex w-full items-center md:w-3/4">
           <Search onSearch={handleSearch} />
-          <LinkButton
-            href={`${Routes.casts.create}`}
-            className="ms-4 h-12 md:ms-6"
-          >
-            <span>+</span>
-          </LinkButton>
+          <Tooltip placement="top" title="Crear">
+            <LinkButton
+              href={`${Routes.casts.create}`}
+              className="ms-4 h-12 md:ms-6"
+            >
+              <span>+</span>
+            </LinkButton>
+          </Tooltip>
         </div>
       </Card>
 

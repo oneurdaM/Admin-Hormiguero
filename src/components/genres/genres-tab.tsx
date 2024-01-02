@@ -9,6 +9,7 @@ import Loader from '@/components/ui/loader/loader'
 import ErrorMessage from '@/components/ui/error-message'
 import { Routes } from '@/config/routes'
 import { useGenresQuery } from '@/data/genre'
+import { Tooltip } from 'antd'
 
 export default function GenresTab() {
   const { t } = useTranslation()
@@ -46,12 +47,14 @@ export default function GenresTab() {
 
         <div className="ms-auto flex w-full items-center md:w-3/4">
           <Search onSearch={handleSearch} />
-          <LinkButton
-            href={`${Routes.genres.create}`}
-            className="ms-4 h-12 md:ms-6"
-          >
-            <span>+</span>
-          </LinkButton>
+          <Tooltip placement="top" title="Crear">
+            <LinkButton
+              href={`${Routes.genres.create}`}
+              className="ms-4 h-12 md:ms-6"
+            >
+              <span>+</span>
+            </LinkButton>
+          </Tooltip>
         </div>
       </Card>
 

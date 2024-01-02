@@ -175,7 +175,7 @@ export const useCreateSpaceEventMutation = () => {
   return useMutation(eventsClient.spaceEvent, {
     onSuccess() {
       toast.success('Se logro.')
-      // router.back()
+      router.back()
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.SPACE_EVENT)

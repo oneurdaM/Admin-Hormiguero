@@ -9,6 +9,7 @@ import Loader from '@/components/ui/loader/loader'
 import { Routes } from '@/config/routes'
 import { useCategoriesQuery } from '@/data/category'
 import CategoryList from '@/components/category/category-list'
+import { Tooltip } from 'antd'
 
 function CategoryTab() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -41,12 +42,14 @@ function CategoryTab() {
 
         <div className="ms-auto flex w-full flex-col items-center space-y-4 md:flex-row md:space-y-0 xl:w-2/3">
           <Search onSearch={handleSearch} />
-          <LinkButton
-            href={`${Routes.categories.create}`}
-            className="h-12 w-full md:ms-6 md:w-auto"
-          >
-            <span>+</span>
-          </LinkButton>
+          <Tooltip placement="top" title="Crear">
+            <LinkButton
+              href={`${Routes.categories.create}`}
+              className="h-12 w-full md:ms-6 md:w-auto"
+            >
+              <span>+</span>
+            </LinkButton>
+          </Tooltip>
         </div>
       </Card>
 

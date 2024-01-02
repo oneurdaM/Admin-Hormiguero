@@ -48,7 +48,7 @@ const Uploader = ({ form, onChange, multiple, helperText }: any) => {
         customRequest={customRequest}
         onChange={handleChange}
         multiple={multiple}
-        accept="image/jpeg, image/png"
+        accept="image/jpeg, image/png, image/gif"
       >
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
@@ -59,7 +59,7 @@ const Uploader = ({ form, onChange, multiple, helperText }: any) => {
           ) : (
             <>
               <span className="font-semibold text-accent">
-                Carga una imagen
+                Carga una imagen{' '}
               </span>
               o arrastra y suelta <br />
               <span className="text-xs text-body">PNG, JPG</span>

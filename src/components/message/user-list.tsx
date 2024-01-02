@@ -74,7 +74,7 @@ const UserList = ({ className, filterText, permission, ...rest }: Props) => {
       <Loader
         className="!h-auto flex-grow"
         showText={false}
-        text={t('common:text-loading') ?? 'Loading...'}
+        text={'Cargando' ?? 'Loading...'}
       />
     )
   }

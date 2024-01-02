@@ -27,6 +27,7 @@ export type MODAL_VIEWS =
   | 'DELETE_GENRE'
   | 'DELETE_CAST'
   | 'SPACE_STATUS'
+  | 'DELETE_BANNER'
 
 interface State {
   view?: MODAL_VIEWS

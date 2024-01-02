@@ -155,10 +155,7 @@ const UserMessageIndex = ({ className, ...rest }: Props) => {
                 </div>
               </div>
             ) : (
-              <Loader
-                className="!h-full"
-                text={t('common:text-loading') ?? 'Loading...'}
-              />
+              <Loader className="!h-full" text={'Cargando' ?? 'Loading...'} />
             )}
           </>
         ) : (
