@@ -62,7 +62,8 @@ const UserList = ({ users, paginatorInfo, onPagination }: UserListProps) => {
       dataIndex: 'role',
       key: 'role',
       align: 'center' as AlignType,
-      render: (rol: string) => (rol === 'USER' ? 'Pendiente de asignar' : t(`common:${rol}`)),
+      render: (rol: string) =>
+        rol === 'USER' ? 'Pendiente de asignar' : t(`common:${rol}`),
     },
     {
       title: 'Estatus',
@@ -112,9 +113,9 @@ const UserList = ({ users, paginatorInfo, onPagination }: UserListProps) => {
       {!!paginatorInfo?.total && (
         <div className="flex items-center justify-end">
           <Pagination
-            total={paginatorInfo.total}
-            current={paginatorInfo.currentPage}
-            pageSize={paginatorInfo.perPage}
+            total={parseInt(paginatorInfo.total)}
+            current={parseInt(paginatorInfo.currentPage)}
+            pageSize={parseInt(paginatorInfo.perPage)}
             onChange={onPagination}
           />
         </div>

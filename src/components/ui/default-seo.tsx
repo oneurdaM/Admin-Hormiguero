@@ -5,7 +5,7 @@ const DefaultSeo = () => {
   const settings = useSettings()
   return (
     <NextDefaultSeo
-      title={settings.siteTitle ?? 'Centro Cultural El Hormiguero'}
+      title={'Centro Cultural El Hormiguero'}
       titleTemplate={`%s | ${settings?.seo?.metaTitle ?? 'Dashboard'}`}
       description={settings?.seo?.metaDescription || settings?.siteSubtitle}
       canonical={settings?.seo?.canonicalUrl}

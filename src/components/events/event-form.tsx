@@ -1,7 +1,6 @@
 // @ts-nocheck
-import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
-import React, { useState, ChangeEvent } from 'react'
+import React, { useState } from 'react'
 import Uploader from '../common/uploaderAntd'
 import { format } from 'date-fns'
 import moment from 'moment'
@@ -24,15 +23,9 @@ import {
   PlusOutlined,
 } from '@ant-design/icons'
 
-import FileInput from '../ui/file-input'
 import Card from '../common/card'
 import ButtonMy from '../ui/button'
 import Description from '../ui/description'
-// import Input from '../ui/input'
-// import Select from '../select/select'
-// import Label from '../ui/label'
-// import { yupResolver } from '@hookform/resolvers/yup'
-// import { eventValidationSchema } from './event-validation-schema'
 
 import { useCreateEventMutation } from '@/data/events'
 import { useUpdateEventMutation } from '@/data/events'
@@ -260,8 +253,6 @@ const EventForm = ({ eventos }) => {
             },
             []
           )
-          console.log('hola')
-
           let minutosUnidos = []
 
           for (const valor of horasDesabilitadas[fecha2]) {
@@ -455,7 +446,7 @@ const EventForm = ({ eventos }) => {
               },
             ]}
           >
-            <Input placeholder="Título" />
+            <Input.TextArea placeholder="Título" autoSize />
           </Form.Item>
           <Form.Item
             label="Sinopsis del evento"
@@ -479,7 +470,7 @@ const EventForm = ({ eventos }) => {
               },
             ]}
           >
-            <Input placeholder="Compañía" />
+            <Input.TextArea placeholder="Compañía" autoSize />
           </Form.Item>
           <Form.Item
             label="Dramaturgia del evento"
@@ -491,7 +482,7 @@ const EventForm = ({ eventos }) => {
               },
             ]}
           >
-            <Input placeholder="Dramaturgia" />
+            <Input.TextArea autoSize placeholder="Dramaturgia" />
           </Form.Item>
           <Form.Item
             label="Director del evento"
@@ -503,7 +494,7 @@ const EventForm = ({ eventos }) => {
               },
             ]}
           >
-            <Input placeholder="Director" />
+            <Input.TextArea autoSize placeholder="Director" />
           </Form.Item>
           <Form.Item
             label="URL Detrás de cámaras"
@@ -515,7 +506,7 @@ const EventForm = ({ eventos }) => {
               },
             ]}
           >
-            <Input placeholder="Vídeo de YouTube" />
+            <Input.TextArea autoSize placeholder="Vídeo de YouTube" />
           </Form.Item>
 
           <Form.Item
@@ -728,9 +719,9 @@ const EventForm = ({ eventos }) => {
                                           allowClear={false}
                                           showTime
                                           disabledDate={disabledDate}
-                                          disabledTime={(value) =>
-                                            disableTime(indexDate, value)
-                                          }
+                                          // disabledTime={(value) =>
+                                          //   disableTime(indexDate, value)
+                                          // }
                                           format="YYYY-MM-DD HH:mm"
                                           style={{ width: '100%' }}
                                           onChange={(value) =>

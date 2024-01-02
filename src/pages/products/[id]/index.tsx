@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-import ProductUpdateForm from '@/components/products/product-detail'
+import ProductUpdateForm from '@/components/products/product-form'
 import Layout from '@/components/layout/admin'
 import ErrorMessage from '@/components/ui/error-message'
 import Loader from '@/components/ui/loader/loader'

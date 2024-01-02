@@ -120,12 +120,7 @@ const UserMessageView = ({
   }, [loading])
 
   if (loading || meLoading)
-    return (
-      <Loader
-        className="!h-full flex-1"
-        text={t('common:text-loading') ?? ''}
-      />
-    )
+    return <Loader className="!h-full flex-1" text={'Cargando' ?? ''} />
   if (meError)
     return (
       <div className="!h-full flex-1">

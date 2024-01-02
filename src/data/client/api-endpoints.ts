@@ -1,4 +1,5 @@
 export const API_ENDPOINTS = {
+  BANNER: 'banner',
   REGISTER: '/auth/signup',
   LOGOUT: '/auth/logout',
   LOGIN: '/auth/login',

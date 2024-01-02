@@ -9,6 +9,7 @@ import { useNotesQuery } from '@/data/blog'
 import NotesList from '@/components/blog/notes-list'
 import ErrorMessage from '@/components/ui/error-message'
 import Loader from '@/components/ui/loader/loader'
+import { Tooltip } from 'antd'
 
 function NoteTab() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -46,13 +47,14 @@ function NoteTab() {
 
         <div className="ms-auto flex w-full flex-col items-center space-y-4 md:flex-row md:space-y-0 xl:w-2/3">
           <Search onSearch={handleSearch} />
-
-          <LinkButton
-            className="h-12 w-full md:ms-6 md:w-auto"
-            href={`${Routes.blog.create}`}
-          >
-            <span>+</span>
-          </LinkButton>
+          <Tooltip placement="top" title="Crear">
+            <LinkButton
+              className="h-12 w-full md:ms-6 md:w-auto"
+              href={`${Routes.blog.create}`}
+            >
+              <span>+</span>
+            </LinkButton>
+          </Tooltip>
         </div>
       </Card>
       <NotesList

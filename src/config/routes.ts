@@ -52,12 +52,17 @@ export const Routes = {
     ...routesFactory('/about'),
   },
   community: {
-    ...routesFactory('/community')
+    ...routesFactory('/community'),
   },
   sections: {
-    ...routesFactory('/sections')
-  }
-  
+    ...routesFactory('/sections'),
+  },
+  buyBoxOffice: {
+    ...routesFactory('/boxOffice'),
+  },
+  banner: {
+    ...routesFactory('/banner'),
+  },
 }
 
 function routesFactory(endpoint: string) {

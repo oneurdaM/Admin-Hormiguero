@@ -8,6 +8,7 @@ import Search from '@/components/common/search'
 import Loader from '@/components/ui/loader/loader'
 import ErrorMessage from '@/components/ui/error-message'
 import { useSpacesQuery } from '@/data/space'
+import { Tooltip } from 'antd'
 
 function Spaces() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -40,12 +41,14 @@ function Spaces() {
 
         <div className="ms-auto flex w-full flex-col items-center space-y-4 md:flex-row md:space-y-0 xl:w-2/3">
           <Search onSearch={handleSearch} />
-          <LinkButton
-            href={`${Routes.spaces.create}`}
-            className="h-12 w-full md:ms-6 md:w-auto"
-          >
-            <span>+</span>
-          </LinkButton>
+          <Tooltip placement="top" title="Crear">
+            <LinkButton
+              href={`${Routes.spaces.create}`}
+              className="h-12 w-full md:ms-6 md:w-auto"
+            >
+              <span>+</span>
+            </LinkButton>
+          </Tooltip>
         </div>
       </Card>
       <SpacesList

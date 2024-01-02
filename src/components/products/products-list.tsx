@@ -24,16 +24,18 @@ const ProductsList = ({
   const columns: any = [
     {
       title: 'Imagen',
-      dataIndex: 'thumbnail',
+      dataIndex: 'thumbnailUrl',
       key: 'thumbnail',
       align: 'center' as AlignType,
       render: (image: string) => (
-        <Image
-          src={image ?? siteSettings.logo.url}
-          alt="thumbnail"
-          width={40}
-          height={40}
-        />
+        <div className="flex justify-center">
+          <Image
+            src={image ?? siteSettings.logo.url}
+            alt="thumbnail"
+            width={40}
+            height={40}
+          />
+        </div>
       ),
     },
     {

@@ -20,14 +20,16 @@ const EventList = ({ events, paginatorInfo, onPagination }: EventListProps) => {
       title: 'Imagen',
       dataIndex: 'thumbnailUrl',
       key: 'thumbnailUrl',
-      align: 'center' as AlignType,
+
       render: (image: string) => (
-        <Image
-          src={image ?? siteSettings.logo.url}
-          alt="thumbnailUrl"
-          width={40}
-          height={40}
-        />
+        <div className="flex justify-center">
+          <Image
+            src={image ?? siteSettings.logo.url}
+            alt="thumbnailUrl"
+            width={40}
+            height={40}
+          />
+        </div>
       ),
     },
     {

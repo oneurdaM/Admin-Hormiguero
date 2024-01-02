@@ -43,8 +43,14 @@ const DeleteGenre = dynamic(
 
 const DeleteCast = dynamic(() => import('@/components/casts/delete-cast-view'))
 
+const DeleteBanner = dynamic(
+  () => import('@/components/banner/delete-banner-view')
+)
+
 function renderModal(view: MODAL_VIEWS | undefined, data: any) {
   switch (view) {
+    case 'DELETE_BANNER':
+      return <DeleteBanner />
     case 'SPACE_STATUS':
       return <ActiveSpace />
     case 'DELETE_EVENT':

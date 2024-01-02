@@ -22,22 +22,23 @@ const TicketsList = ({
   const columns = [
     {
       title: 'Imagen',
-      dataIndex: 'image',
-      key: 'image',
-      align: 'center' as AlignType,
+      dataIndex: 'thumbnailUrl',
+      key: 'thumbnailUrl',
       render: (image: string) => (
-        <Image
-          src={image ?? siteSettings.logo.url}
-          alt="image"
-          width={40}
-          height={40}
-        />
+        <div className="flex justify-center">
+          <Image
+            src={image ?? siteSettings.logo.url}
+            alt="image"
+            width={80}
+            height={80}
+          />
+        </div>
       ),
     },
     {
       title: 'Nombre',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'title',
+      key: 'title',
       align: 'center' as AlignType,
     },
     {
@@ -45,6 +46,7 @@ const TicketsList = ({
       dataIndex: 'price',
       key: 'price',
       align: 'center' as AlignType,
+      render: (text: string) => <span>${text}</span>,
     },
     // {
     //   title: 'Acciones',
@@ -66,8 +68,8 @@ const TicketsList = ({
       {!!paginatorInfo?.total && (
         <div className="flex items-center justify-end">
           <Pagination
-            total={paginatorInfo.total}
-            current={paginatorInfo.currentPage}
+            total={parseInt(paginatorInfo.total)}
+            current={parseInt(paginatorInfo.currentPage)}
             pageSize={paginatorInfo.perPage}
             onChange={onPagination}
           />

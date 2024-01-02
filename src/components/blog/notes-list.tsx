@@ -77,14 +77,14 @@ const NotesList = ({ notes, paginatorInfo, onPagination }: NotesListProps) => {
       width: 100,
       render: (date: string) => formatDate(date),
     },
-    {
-      title: 'Actualizado',
-      dataIndex: 'updatedAt',
-      key: 'updatedAt',
-      align: 'center' as AlignType,
-      width: 100,
-      render: (date: string) => formatDate(date),
-    },
+    // {
+    //   title: 'Actualizado',
+    //   dataIndex: 'updatedAt',
+    //   key: 'updatedAt',
+    //   align: 'center' as AlignType,
+    //   width: 100,
+    //   render: (date: string) => formatDate(date),
+    // },
     {
       title: 'Acciones',
       dataIndex: 'id',

@@ -10,10 +10,14 @@ import Link from 'next/link'
 import { Role } from '@/types/users'
 import { ChatIcon } from '../icons/chat-icon'
 import { CalendarIcon } from '../icons/calendar'
+import { FaFilePdf } from 'react-icons/fa'
+import { downloadTicketpdf } from '@/data/client/pdf'
+import { Tooltip } from 'antd'
 
 type Props = {
   id: string
   editModalView?: string | any
+  downloadTicket?: string | any
   deleteModalView?: string | any
   editUrl?: string
   detailsUrl?: string
@@ -50,6 +54,7 @@ const ActionButtons = ({
   showReplyQuestion = false,
   showContact = false,
   customLocale,
+  downloadTicket,
   role,
 
   isReservationActive = false,
@@ -92,6 +97,32 @@ const ActionButtons = ({
     }
   }
 
+  const fetchData = async (order: any) => {
+    try {
+      const response = await downloadTicketpdf(order)
+      console.log('response', response)
+      if (response.error) {
+        console.log('error', response)
+      } else {
+        const url = window.URL.createObjectURL(
+          new Blob([response.downloadTicket])
+        )
+        const link = document.createElement('a')
+        link.href = url
+        link.download = 'Orden-' + order + '.pdf'
+
+        document.body.appendChild(link)
+        link.click()
+
+        console.log('success')
+      }
+    } catch (error: any) {}
+  }
+
+  function showPdf(id: any) {
+    fetchData(id)
+  }
+
   function handleShowContact() {
     openModal('SHOW_CONTACT', id)
   }
@@ -123,16 +154,16 @@ const ActionButtons = ({
         <button
           onClick={handleDelete}
           className="text-red-500 transition duration-200 hover:text-red-600 focus:outline-none"
-          title={'Eliminar'}
         >
-          <TrashIcon width={16} />
+          <Tooltip placement="bottom" title="Eliminar">
+            <TrashIcon width={16} />
+          </Tooltip>
         </button>
       )}
       {editModalView && (
         <button
           onClick={handleEditModal}
           className="text-body transition duration-200 hover:text-heading focus:outline-none"
-          title={'Editar'}
         >
           <EditIcon width={16} />
         </button>
@@ -142,7 +173,6 @@ const ActionButtons = ({
           <button
             onClick={() => handleShopStatus(true)}
             className="text-accent transition duration-200 hover:text-accent-hover focus:outline-none"
-            title={'Aprobar'}
           >
             <CheckMarkCircle width={20} />
           </button>
@@ -150,7 +180,6 @@ const ActionButtons = ({
           <button
             onClick={() => handleShopStatus(false)}
             className="text-red-500 transition duration-200 hover:text-red-600 focus:outline-none"
-            title={'Desaprobar'}
           >
             <CloseFillIcon width={20} />
           </button>
@@ -161,7 +190,6 @@ const ActionButtons = ({
             <button
               onClick={() => handleUserStatus(false)}
               className="text-red-500 transition duration-200 hover:text-red-600 focus:outline-none"
-              title={'Bloquear'}
             >
               <BanUser width={20} />
             </button>
@@ -169,7 +197,6 @@ const ActionButtons = ({
             <button
               onClick={() => handleUserStatus(true)}
               className="text-accent transition duration-200 hover:text-accent focus:outline-none"
-              title={'Activar'}
             >
               <CheckMarkCircle width={20} />
             </button>
@@ -182,7 +209,6 @@ const ActionButtons = ({
             <button
               onClick={() => handleReservationStatus(false)}
               className="text-red-500 transition duration-200 hover:text-red-600 focus:outline-none"
-              title={'Bloquear'}
             >
               <BanUser width={20} />
             </button>
@@ -190,7 +216,6 @@ const ActionButtons = ({
             <button
               onClick={() => handleReservationStatus(true)}
               className="text-accent transition duration-200 hover:text-accent focus:outline-none"
-              title={'Activar'}
             >
               <CheckMarkCircle width={20} />
             </button>
@@ -204,7 +229,6 @@ const ActionButtons = ({
             <button
               onClick={() => handleSpaceActive(false)}
               className="text-red-500 transition duration-200 hover:text-red-600 focus:outline-none"
-              title={'Bloquear'}
             >
               <BanUser width={20} />
             </button>
@@ -212,7 +236,6 @@ const ActionButtons = ({
             <button
               onClick={() => handleSpaceActive(true)}
               className="text-accent transition duration-200 hover:text-accent focus:outline-none"
-              title={'Activar'}
             >
               <CheckMarkCircle width={20} />
             </button>
@@ -223,19 +246,21 @@ const ActionButtons = ({
         <Link
           href={editUrl}
           className="text-base transition duration-200 hover:text-heading"
-          title={'Editar'}
         >
-          <EditIcon width={16} />
+          <Tooltip placement="bottom" title="Editar">
+            <EditIcon width={16} />
+          </Tooltip>
         </Link>
       )}
       {detailsUrl && (
         <Link
           href={detailsUrl}
           className="ml-2 text-base transition duration-200 hover:text-heading"
-          title={'Detalles'}
           locale={customLocale}
         >
-          <EditIcon width={24} />
+          <Tooltip placement="bottom" title="Editar">
+            <EditIcon width={24} />
+          </Tooltip>
         </Link>
       )}
       {
@@ -246,6 +271,22 @@ const ActionButtons = ({
             className="text-accent transition duration-200 hover:text-accent-hover focus:outline-none"
           >
             <ChatIcon width={20} />
+          </button>
+        )
+      }
+
+      {
+        // showContact - show icon to contact with user (only for admin)
+        downloadTicket && (
+          <button
+            onClick={() => {
+              showPdf(downloadTicket)
+            }}
+            className="text-accent transition duration-200 hover:text-accent-hover focus:outline-none"
+          >
+            <Tooltip placement="bottom" title="Descrgar PDF">
+              <FaFilePdf style={{ fontSize: '1.5em' }} />
+            </Tooltip>
           </button>
         )
       }

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import Card from '@/components/common/card'
 import Search from '@/components/common/search'
 import { useTicketsQuery } from '@/data/tickets'
-
+import { useEventsQuery } from '@/data/events'
 import TicketsList from './tickets-lists'
 import Loader from '@/components/ui/loader/loader'
 import ErrorMessage from '@/components/ui/error-message'
@@ -13,8 +13,9 @@ export default function TicketsTab() {
   const { t } = useTranslation()
   const [searchTerm, setSearchTerm] = useState('')
   const [page, setPage] = useState(1)
-  const { tickets, paginatorInfo, loading, error } = useTicketsQuery({
-    limit: 10,
+
+  const { events, paginatorInfo, loading, error } = useEventsQuery({
+    limit: 5,
     page,
     search: searchTerm,
   })
@@ -27,6 +28,8 @@ export default function TicketsTab() {
   function handlePagination(current: number) {
     setPage(current)
   }
+
+  console.log(events)
 
   // if (loading) return <Loader text="Cargando categorías..." />
 
@@ -51,7 +54,7 @@ export default function TicketsTab() {
       </Card>
 
       <TicketsList
-        tickets={tickets ?? []}
+        tickets={events ?? []}
         paginatorInfo={paginatorInfo}
         onPagination={handlePagination}
       />

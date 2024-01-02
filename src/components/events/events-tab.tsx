@@ -9,6 +9,7 @@ import { useEventsQuery } from '@/data/events'
 import EventList from '@/components/events/events-lists'
 import Loader from '@/components/ui/loader/loader'
 import ErrorMessage from '@/components/ui/error-message'
+import { Tooltip } from 'antd'
 
 export default function EventsTab() {
   const { t } = useTranslation()
@@ -44,12 +45,14 @@ export default function EventsTab() {
 
         <div className="ms-auto flex w-full items-center md:w-3/4">
           <Search onSearch={handleSearch} />
-          <LinkButton
-            href={`${Routes.events.create}`}
-            className="ms-4 h-12 md:ms-6"
-          >
-            <span>+</span>
-          </LinkButton>
+          <Tooltip placement="top" title="Crear">
+            <LinkButton
+              href={`${Routes.events.create}`}
+              className="ms-4 h-12 md:ms-6"
+            >
+              <span>+</span>
+            </LinkButton>
+          </Tooltip>
         </div>
       </Card>
 

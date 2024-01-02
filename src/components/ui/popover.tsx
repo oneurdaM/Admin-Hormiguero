@@ -1,21 +1,21 @@
-import { useEffect } from 'react';
-import { Popover, Transition } from '@headlessui/react';
-import { Fragment } from 'react';
-import cn from 'classnames';
-import { ToggleIcon, ToggleIconVertical } from '@/components/icons/toggle-icon';
+import { useEffect } from 'react'
+import { Popover, Transition } from '@headlessui/react'
+import { Fragment } from 'react'
+import cn from 'classnames'
+import { ToggleIcon, ToggleIconVertical } from '@/components/icons/toggle-icon'
 import {
   offset,
   flip,
   autoUpdate,
   useFloating,
   shift,
-} from '@floating-ui/react-dom-interactions';
+} from '@floating-ui/react-dom-interactions'
 
 interface PopOverProps {
-  children: any;
-  popOverButtonClass?: string;
-  popOverPanelClass?: string;
-  iconStyle?: 'vertical' | 'horizontal';
+  children: any
+  popOverButtonClass?: string
+  popOverPanelClass?: string
+  iconStyle?: 'vertical' | 'horizontal'
 }
 
 const PopOver = ({
@@ -28,15 +28,15 @@ const PopOver = ({
     strategy: 'fixed',
     placement: 'bottom',
     middleware: [offset(0), flip(), shift()],
-  });
+  })
 
   // This one is for recalculating the position of the floating element if no space is left on the given placement
   useEffect(() => {
     if (!refs.reference.current || !refs.floating.current) {
-      return;
+      return
     }
-    return autoUpdate(refs.reference.current, refs.floating.current, update);
-  }, [refs.reference, refs.floating, update]);
+    return autoUpdate(refs.reference.current, refs.floating.current, update)
+  }, [refs.reference, refs.floating, update])
 
   return (
     <Popover className="relative inline-block">
@@ -72,7 +72,7 @@ const PopOver = ({
         </Popover.Panel>
       </div>
     </Popover>
-  );
-};
+  )
+}
 
-export default PopOver;
+export default PopOver

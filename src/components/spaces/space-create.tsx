@@ -145,7 +145,7 @@ const SpaceCreateForm = () => {
             error={errors.price?.message?.toString()}
           />
 
-          {isLoaded && (
+          {/* {isLoaded && (
             <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
               <Input
                 label="Dirección del espacio"
@@ -159,7 +159,17 @@ const SpaceCreateForm = () => {
                 error={errors.location?.message?.toString()}
               />
             </Autocomplete>
-          )}
+          )} */}
+
+          <Input
+            label="Direcciín del espacio"
+            placeholder="Dirección"
+            {...register('location')}
+            type="text"
+            variant="outline"
+            className="mb-4"
+            error={errors.location?.message?.toString()}
+          />
         </Card>
         <div className="w-full text-end">
           <Button
