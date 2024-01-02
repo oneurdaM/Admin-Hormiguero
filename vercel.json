@@ -1,6 +1,6 @@
 {
   "env": {
-    "NEXT_PUBLIC_REST_API_ENDPOINT": "https://hormiguero-dc8e78e18915.herokuapp.com/",
+    "NEXT_PUBLIC_REST_API_ENDPOINT": "https://hormiguero-dc8e78e18915.herokuapp.com",
 
     "NEXT_PUBLIC_GOOGLE_MAP_API_KEY": "AIzaSyDbQ0EYliA5mpyqIwU9RfohMU5cVUHs6Hc",
     "NEXT_PUBLIC_AUTH_TOKEN_KEY": "AUTH_CRED",
@@ -13,7 +13,7 @@
     "env": {
       "PAYPAL_CLIENT_ID": "AfPMP9UGMMHatFve1JsJ2VWoSK13mDnXa8EFrPOlFGLSANnFYfJ8u2mWZ5KRHVF-SgF29HgR68IZ-BGS",
       "PAYPAL_CLIENT_SECRET": "EBQ6QhtH4R_FAfkl54V6qIDUd_WtCtYcBVQKpfYRpwqV0_rbv3eBv_i4zuj3Q0M9zOb77B8ATAyPCRRT",
-      "NEXT_PUBLIC_REST_API_ENDPOINT": "https://back-hormiguero-558b8cf43e32.herokuapp.com",
+      "NEXT_PUBLIC_REST_API_ENDPOINT": "https://hormiguero-dc8e78e18915.herokuapp.com",
       "NEXT_PUBLIC_GOOGLE_MAP_API_KEY": "AIzaSyDbQ0EYliA5mpyqIwU9RfohMU5cVUHs6Hc",
       "NEXT_PUBLIC_AUTH_TOKEN_KEY": "AUTH_CRED",
       "APPLICATION_MODE": "production",
