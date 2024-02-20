@@ -137,7 +137,7 @@ const EventForm = ({ eventos }) => {
         const input = {
           title: values?.title ?? '',
           synopsis: values?.synopsis ?? '',
-          type: 'Production',
+          type: 'PRODUCTION',
           company: values?.company ?? '',
           dramaturgy: values?.dramaturgy ?? '',
           director: values?.director ?? '',
@@ -414,7 +414,11 @@ const EventForm = ({ eventos }) => {
               },
             ]}
           >
-            <Uploader form={form} />
+            <Uploader
+              form={form}
+              field="thumbnailUrl"
+              accept="image/jpeg, image/png"
+            />
           </Form.Item>
 
           {eventos !== undefined ? (

@@ -6,7 +6,14 @@ import { useTranslation } from 'next-i18next'
 import { useUploadMutation } from '@/data/upload'
 import Image from 'next/image'
 
-const Uploader = ({ form, onChange, multiple, helperText }: any) => {
+const Uploader = ({
+  form,
+  onChange,
+  field,
+  multiple,
+  helperText,
+  accept,
+}: any) => {
   const { t } = useTranslation()
   const [image, setImage] = React.useState<string>('')
   const { mutate: upload, isLoading: loading } = useUploadMutation()
@@ -23,7 +30,7 @@ const Uploader = ({ form, onChange, multiple, helperText }: any) => {
             onChange(data)
 
             // Actualiza el estado del campo manualmente
-            form.setFieldsValue({ thumbnailUrl: data })
+            form.setFieldsValue({ [field]: data })
           }
         },
       })
@@ -48,7 +55,7 @@ const Uploader = ({ form, onChange, multiple, helperText }: any) => {
         customRequest={customRequest}
         onChange={handleChange}
         multiple={multiple}
-        accept="image/jpeg, image/png, image/gif"
+        accept={accept}
       >
         <p className="ant-upload-drag-icon">
           <InboxOutlined />

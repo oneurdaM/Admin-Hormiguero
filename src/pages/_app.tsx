@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { Hydrate } from 'react-query/hydration'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import '@/styles/global.css'
+import esES from 'antd/locale/es_ES'
 
 import 'react-toastify/dist/ReactToastify.css'
 import '@/assets/css/main.css'
@@ -26,6 +27,7 @@ import ManagedModal from '@/components/ui/modal/managed-modal'
 import PrivateRoute from '@/utils/private-route'
 import { Config } from '@/config'
 import type { NextPageWithLayout } from '@/types'
+import { ConfigProvider } from 'antd'
 
 const Noop: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
   <>{children}</>
@@ -60,18 +62,20 @@ const CustomApp = ({ Component, pageProps }: AppPropsWithLayout) => {
               <UIProvider>
                 <ModalProvider>
                   <>
-                    <DefaultSeo />
-                    {authProps ? (
-                      <PrivateRoute authProps={authProps}>
+                    <ConfigProvider locale={esES}>
+                      <DefaultSeo />
+                      {authProps ? (
+                        <PrivateRoute authProps={authProps}>
+                          <Layout {...pageProps}>
+                            <Component {...pageProps} />
+                          </Layout>
+                        </PrivateRoute>
+                      ) : (
                         <Layout {...pageProps}>
                           <Component {...pageProps} />
                         </Layout>
-                      </PrivateRoute>
-                    ) : (
-                      <Layout {...pageProps}>
-                        <Component {...pageProps} />
-                      </Layout>
-                    )}
+                      )}
+                    </ConfigProvider>
                     <ToastContainer autoClose={2000} theme="colored" />
                     <ManagedModal />
                   </>

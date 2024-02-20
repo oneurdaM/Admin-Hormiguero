@@ -1,28 +1,23 @@
-import type { GetServerSideProps } from 'next'
+import { GetServerSideProps } from 'next'
 import {
   allowedRoles,
   getAuthCredentials,
   hasAccess,
   isAuthenticated,
 } from '@/utils/auth-utils'
-import { Routes } from '@/config/routes'
 
-import CreateBanneForm from '@/components/banner/banner-form'
 import Layout from '@/components/layout/admin'
+import { Tabs, Tab } from '@/components/ui/tabs'
+import CategoryTab from '@/components/banner/banner-tab'
+import { Routes } from '@/config/routes'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import FisclaTab from '@/components/fiscal/fislcal-tab'
 
-export default function CreateNotePage() {
-  return (
-    <>
-      <div className="flex border-b border-dashed border-border-base py-5 sm:py-8">
-        <h1 className="text-lg font-semibold text-heading">Crea un banner</h1>
-      </div>
-      <CreateBanneForm initialValues={null} />
-    </>
-  )
+export default function Fiscal() {
+  return <FisclaTab />
 }
 
-CreateNotePage.Layout = Layout
+Fiscal.Layout = Layout
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { token, permissions } = getAuthCredentials(ctx)

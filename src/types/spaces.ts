@@ -8,6 +8,19 @@ export interface Space {
   image: string
 }
 
+export interface BlockSpaceInput {
+  id: number
+  active: boolean
+}
+
+export interface Rent {
+  startDate?: string
+  id: number
+  name: string
+  spaceId?: number
+  space: Space
+}
+
 export interface SpacesResponse {
   id?: number | string
   dimensions: string | number

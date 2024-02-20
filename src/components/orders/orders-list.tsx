@@ -97,6 +97,8 @@ const OrdersList = ({ orders, paginatorInfo, onPagination }: OrdersProps) => {
     },
   ]
 
+  console.log(orders)
+
   return (
     <>
       <div className="mb-6 overflow-hidden overflow-x-auto rounded shadow">
@@ -105,9 +107,9 @@ const OrdersList = ({ orders, paginatorInfo, onPagination }: OrdersProps) => {
       {!!paginatorInfo && (
         <div>
           <Pagination
-            total={paginatorInfo.total}
-            current={paginatorInfo.currentPage}
-            pageSize={paginatorInfo.perPage}
+            total={parseInt(paginatorInfo.total)}
+            current={parseInt(paginatorInfo.currentPage)}
+            pageSize={parseInt(paginatorInfo.perPage)}
             onChange={onPagination}
           />
         </div>

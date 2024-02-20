@@ -85,6 +85,16 @@ export const siteSettings = {
         label: 'Banners',
         icon: 'DiaryIcon',
       },
+      {
+        href: Routes.fiscal.list,
+        label: 'Datos fiscales',
+        icon: 'FountainPenIcon',
+      },
+      {
+        href: Routes.reserve.list,
+        label: 'Reserva un espació',
+        icon: 'TaxesIcon',
+      },
     ],
     communication: [
       {

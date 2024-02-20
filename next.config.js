@@ -20,6 +20,7 @@ module.exports = withPWA({
       'static.wixstatic.com',
       'localhost',
       'upload.wikimedia.org',
+      'video.wixstatic.com',
       'painani-dev-bucket.s3.us-west-1.amazonaws.com',
     ],
     formats: ['image/avif', 'image/webp'],

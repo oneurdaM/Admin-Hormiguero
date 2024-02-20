@@ -112,7 +112,7 @@ const CategoryForm = () => {
           Atrás
         </Button>
         <Button disabled={loading} loading={loading}>
-          Crear
+          Crear Categoria
         </Button>
       </div>
     </form>

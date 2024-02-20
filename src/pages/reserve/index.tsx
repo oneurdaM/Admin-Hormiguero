@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Layout from '@/components/layout/admin'
 
 import Card from '@/components/common/card'
 import Search from '@/components/common/search'
@@ -9,9 +11,11 @@ import { useEventsQuery } from '@/data/events'
 import EventList from '@/components/events/events-lists'
 import Loader from '@/components/ui/loader/loader'
 import ErrorMessage from '@/components/ui/error-message'
+import BillboardList from '@/components/billboard/billboard-list'
 import { Tooltip } from 'antd'
+import Schedule from '@/components/reserve/schedule'
 
-export default function EventsTab() {
+export default function boxOffice() {
   const { t } = useTranslation()
   const [searchTerm, setSearchTerm] = useState('')
   const [page, setPage] = useState(1)
@@ -19,7 +23,6 @@ export default function EventsTab() {
     limit: 10,
     page,
     search: searchTerm,
-    type: 'PRODUCTION',
   })
 
   function handleSearch({ searchText }: { searchText: string }) {
@@ -38,30 +41,16 @@ export default function EventsTab() {
   return (
     <>
       <Card className="mb-8 flex flex-col items-center md:flex-row">
-        <div className="mb-4 md:mb-0 md:w-1/4">
-          <h1 className="text-lg font-semibold text-heading">
-            {t('form:input-label-events')}
-          </h1>
-        </div>
-
-        <div className="ms-auto flex w-full items-center md:w-3/4">
-          <Search onSearch={handleSearch} />
-          <Tooltip placement="top" title="Crear">
-            <LinkButton
-              href={`${Routes.events.create}`}
-              className="ms-4 h-12 md:ms-6"
-            >
-              <span>+</span>
-            </LinkButton>
-          </Tooltip>
-        </div>
+        <Schedule />
       </Card>
-
-      <EventList
-        events={events ?? []}
-        paginatorInfo={paginatorInfo}
-        onPagination={handlePagination}
-      />
     </>
   )
 }
+
+boxOffice.Layout = Layout
+
+export const getStaticProps = async ({ locale }: any) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['table', 'common', 'form'])),
+  },
+})

@@ -3,6 +3,7 @@ import {
   SpacePagination,
   SpaceRegistration,
   SpacesResponse,
+  BlockSpaceInput,
 } from '@/types/spaces'
 import { API_ENDPOINTS } from './api-endpoints'
 import { HttpClient } from './http-client'
@@ -28,6 +29,19 @@ export const spaceClient = {
 
   deleteSpace: (id: string) => {
     return HttpClient.delete(`${API_ENDPOINTS.SPACES}/spaces/${id}`)
+  },
+
+  unblock: (variables: BlockSpaceInput) => {
+    return HttpClient.put(
+      `${API_ENDPOINTS.SPACES}/activar/${variables.id}`,
+      variables
+    )
+  },
+  block: (variables: BlockSpaceInput) => {
+    return HttpClient.put(
+      `${API_ENDPOINTS.SPACES}/activar/${variables.id}`,
+      variables
+    )
   },
 
   // toggleSpace: (variables: ReserveSpace) => {

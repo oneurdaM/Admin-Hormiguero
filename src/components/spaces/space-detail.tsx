@@ -162,7 +162,7 @@ export default function SpaceDetailForm({ space }: Space | any) {
             className="mb-4"
             error={errors.price?.message?.toString()}
           />
-          {isLoaded && (
+          {/* {isLoaded && (
             <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
               <Input
                 label="Dirección del espacio"
@@ -176,7 +176,17 @@ export default function SpaceDetailForm({ space }: Space | any) {
                 error={errors.location?.message?.toString()}
               />
             </Autocomplete>
-          )}
+          )} */}
+
+          <Input
+            label="Direcciín del espacio"
+            placeholder="Dirección"
+            {...register('location')}
+            type="text"
+            variant="outline"
+            className="mb-4"
+            error={errors.location?.message?.toString()}
+          />
         </Card>
       </div>
       <div className="mb-4 text-end sm:mb-8">

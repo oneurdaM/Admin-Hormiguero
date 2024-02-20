@@ -14,24 +14,22 @@ type EventListProps = {
   onPagination?: (current: number) => void
 }
 
-const SocialEventList = ({
-  events,
-  paginatorInfo,
-  onPagination,
-}: EventListProps) => {
+const EventList = ({ events, paginatorInfo, onPagination }: EventListProps) => {
   const columns = [
     {
       title: 'Imagen',
       dataIndex: 'thumbnailUrl',
       key: 'thumbnailUrl',
-      align: 'center' as AlignType,
+
       render: (image: string) => (
-        <Image
-          src={image ?? siteSettings.logo.url}
-          alt="thumbnailUrl"
-          width={40}
-          height={40}
-        />
+        <div className="flex justify-center">
+          <Image
+            src={image ?? siteSettings.logo.url}
+            alt="thumbnailUrl"
+            width={40}
+            height={40}
+          />
+        </div>
       ),
     },
     {
@@ -49,7 +47,8 @@ const SocialEventList = ({
         return (
           <ActionButtons
             id={id}
-            detailsUrl={Routes.community.details({ id })}
+            detailsUrl={Routes.events.details({ id })}
+            // deleteModalView="DELETE_EVENT"
           />
         )
       },
@@ -74,4 +73,4 @@ const SocialEventList = ({
   )
 }
 
-export default SocialEventList
+export default EventList

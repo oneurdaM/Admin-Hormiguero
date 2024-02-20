@@ -62,9 +62,9 @@ const EventList = ({ events, paginatorInfo, onPagination }: EventListProps) => {
       {!!paginatorInfo?.total && (
         <div className="flex items-center justify-end">
           <Pagination
-            total={paginatorInfo.total}
-            current={paginatorInfo.currentPage}
-            pageSize={paginatorInfo.perPage}
+            total={parseInt(paginatorInfo.total)}
+            current={parseInt(paginatorInfo.currentPage)}
+            pageSize={parseInt(paginatorInfo.perPage)}
             onChange={onPagination}
           />
         </div>

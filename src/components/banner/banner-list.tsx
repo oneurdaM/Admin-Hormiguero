@@ -16,6 +16,39 @@ type BannerListProps = {
   onPagination: (page: number) => void
 }
 
+interface RenderMediaProps {
+  media: string
+}
+
+const RenderMedia: React.FC<RenderMediaProps> = ({ media }) => {
+  // Verifica si la URL es un archivo de imagen
+  const isImage = /\.(jpg|jpeg|png|gif)$/i.test(media)
+
+  // Verifica si la URL es un archivo de video
+  const isVideo = /\.(mp4|webm|ogg)$/i.test(media)
+
+  if (isImage) {
+    return (
+      <Image
+        src={media}
+        alt="artile"
+        className="overflow-hidden rounded"
+        width={200}
+        height={200}
+      />
+    )
+  } else if (isVideo) {
+    return (
+      <video width={200} height={200} controls>
+        <source src={media} type={`video/${media.split('.').pop()}`} />
+        Tu navegador no soporta el tag de video.
+      </video>
+    )
+  }
+
+  return null // Puedes manejar otros casos o simplemente retornar null si no es una imagen ni un video
+}
+
 const BannerList = ({
   banners,
   paginatorInfo,
@@ -23,20 +56,12 @@ const BannerList = ({
 }: BannerListProps) => {
   const columns = [
     {
-      title: 'Imágen',
+      title: 'Imágen o Video',
       dataIndex: 'thumbnailUrl',
       key: 'thumbnailUrl',
       align: 'center' as AlignType,
       width: 74,
-      render: (image: string) => (
-        <Image
-          src={image}
-          alt="artile"
-          className="overflow-hidden rounded"
-          width={42}
-          height={42}
-        />
-      ),
+      render: (media: string) => <RenderMedia media={media} />,
     },
     {
       title: 'Titulo',

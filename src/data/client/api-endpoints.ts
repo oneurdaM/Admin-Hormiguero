@@ -1,5 +1,6 @@
 export const API_ENDPOINTS = {
   BANNER: 'banner',
+  FISCALGET: '/datos-fiscales',
   REGISTER: '/auth/signup',
   LOGOUT: '/auth/logout',
   LOGIN: '/auth/login',

@@ -4,16 +4,22 @@ import { useTranslation } from 'next-i18next'
 import { API_ENDPOINTS } from './client/api-endpoints'
 import { settingsClient } from './client/settings'
 import { useSettings } from '@/contexts/settings.context'
+import { useRouter } from 'next/router'
 
 export const useUpdateSettingsMutation = () => {
   const { t } = useTranslation()
   const queryClient = useQueryClient()
   const { updateSettings } = useSettings()
+  const router = useRouter()
 
   return useMutation(settingsClient.update, {
-    onSuccess: (data) => {
-      updateSettings(data?.options)
-      toast.success(t('common:successfully-updated'))
+    onSuccess: async (data) => {
+      await router.push('/blog')
+      setTimeout(() => {
+        updateSettings(data?.options)
+
+        toast.success('Información actualizada')
+      }, 400)
     },
     // Always refetch after error or success:
     onSettled: () => {

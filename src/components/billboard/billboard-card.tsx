@@ -56,6 +56,15 @@ function BillboardCard({ event }: { event: any }) {
     setSeatsSelected(seatsSelected)
     setDetails(details)
   }
+  let genderList: any[] = []
+
+  if (event && event.gender && event.gender.length > 0) {
+    event.gender.forEach((element: any, index: number) => {
+      genderList.push(
+        element.name + (index < event.gender.length - 1 ? ', ' : '')
+      )
+    })
+  }
 
   const fetchData = async (eventId: any, spaceId: any) => {
     try {
@@ -261,6 +270,7 @@ function BillboardCard({ event }: { event: any }) {
           header: 'dark:backgroundDrawerNigthHeader',
         }}
       >
+        {console.log('Evento', event)}
         {!fetchingEventsSpaces ? (
           <Row justify={'space-around'} gutter={[8, 8]}>
             <Col xs={22} lg={14}>
@@ -295,8 +305,10 @@ function BillboardCard({ event }: { event: any }) {
                 </Col>
                 <Col className="text-primary-6000 line-clamp-1 text-lg">
                   <p>
-                    <TagsOutlined />
-                    {' ' + event.genderList}
+                    <TagsOutlined />{' '}
+                    {genderList?.map((element) => (
+                      <>{element}</>
+                    ))}
                   </p>
                 </Col>
                 <Col span={24}>
@@ -408,16 +420,15 @@ function BillboardCard({ event }: { event: any }) {
               </Row>
             </Col>
 
+            {console.log('evento seleccionado', eventSelected)}
             <Drawer
               destroyOnClose={true}
               title={
                 <p className="text-primary-6000 text-xl dark:text-white">
-                  {eventSelected?.event.title +
-                    ', ' +
-                    moment(eventSelected?.startDate)
-                      .format('dddd D MMMM YYYY')
-                      .charAt(0)
-                      .toUpperCase() +
+                  {moment(eventSelected?.startDate)
+                    .format('dddd D MMMM YYYY')
+                    .charAt(0)
+                    .toUpperCase() +
                     moment(eventSelected?.startDate)
                       .format('dddd D MMMM YYYY')
                       .slice(1) +

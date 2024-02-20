@@ -78,8 +78,10 @@ const SpacesList = ({ spaces, paginatorInfo, onPagination }: SpacesProps) => {
         return (
           <ActionButtons
             id={id}
-            detailsUrl={Routes.spaces.details({ id })}
-            deleteModalView="DELETE_SPACE"
+            detailsUrl={
+              space.active === true ? Routes.spaces.details({ id }) : ''
+            }
+            deleteModalView={space.active === true ? 'DELETE_SPACE' : ''}
             isSpaceActive={space.active}
             spaceStatus={true}
           />

@@ -8,6 +8,7 @@ import Loader from '@/components/ui/loader/loader'
 import ErrorMessage from '@/components/ui/error-message'
 import Search from '@/components/common/search'
 import { useOrdersQuery } from '@/data/order'
+import Select from '@/components/select/select'
 
 export default function Orders() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -18,16 +19,36 @@ export default function Orders() {
     search: searchTerm,
   })
 
+  const options = [
+    {
+      name: 'Enviando',
+      id: 0,
+    },
+    {
+      name: 'Procesado',
+      id: 1,
+    },
+    {
+      name: 'Entregado',
+      id: 2,
+    },
+    {
+      name: 'Procesando',
+      id: 3,
+    },
+  ]
+
   // if (loading) return <Loader text="Cargando pedidos..." />
 
   // if (error) return <ErrorMessage message={error.message} />
 
-  function handleSearch({ searchText }: { searchText: string }) {
-    setSearchTerm(searchText)
+  function handleSearch(value: String) {
+    setSearchTerm(String(value).toLocaleUpperCase())
     setPage(1)
   }
 
-  console.log(orders)
+  const habdleFiler = ({ searchText }: { searchText: string }) => {}
+
   function handlePagination(current: number) {
     setPage(current)
   }
@@ -39,7 +60,19 @@ export default function Orders() {
         </div>
 
         <div className="ms-auto flex w-full flex-col items-center space-y-4 md:flex-row md:space-y-0 xl:w-2/3">
-          <Search onSearch={handleSearch} />
+          <label className="mx-2 text-lg font-bold text-[#1f2937]">
+            Filtro
+          </label>
+          <Select
+            className="w-full"
+            name="estatus"
+            options={options ?? []}
+            getOptionLabel={(option: any) => option?.name ?? ''}
+            getOptionValue={(option: any) => option?.id ?? ''}
+            placeholder="Estatus"
+            onChange={(value: any) => handleSearch(value?.name ?? '')}
+            isClearable={true}
+          />
         </div>
       </Card>
 

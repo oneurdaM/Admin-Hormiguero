@@ -185,7 +185,11 @@ const ProductCreateForm = ({ product }) => {
               },
             ]}
           >
-            <Uploader form={form} />
+            <Uploader
+              form={form}
+              field="thumbnailUrl"
+              accept="image/jpeg, image/png"
+            />
           </Form.Item>
 
           {product !== undefined ? (

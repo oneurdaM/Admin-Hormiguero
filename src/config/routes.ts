@@ -63,6 +63,12 @@ export const Routes = {
   banner: {
     ...routesFactory('/banner'),
   },
+  fiscal: {
+    ...routesFactory('/fiscal'),
+  },
+  reserve: {
+    ...routesFactory('/reserve'),
+  },
 }
 
 function routesFactory(endpoint: string) {

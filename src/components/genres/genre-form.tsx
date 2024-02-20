@@ -110,7 +110,7 @@ const GenreForm = () => {
             className=" h-12 rounded-md border border-transparent bg-accent px-5 py-0 font-semibold text-light transition duration-300 ease-in-out hover:bg-accent-hover"
             htmlType="submit"
           >
-            Crear
+            Crear Categoría
           </button>
         </div>
       </Form.Item>

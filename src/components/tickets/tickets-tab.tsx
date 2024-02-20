@@ -18,6 +18,7 @@ export default function TicketsTab() {
     limit: 5,
     page,
     search: searchTerm,
+    type: 'PRODUCTION',
   })
 
   function handleSearch({ searchText }: { searchText: string }) {

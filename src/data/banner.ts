@@ -55,9 +55,13 @@ export const useUpdateBannerMutation = () => {
   const queryClient = useQueryClient()
   const router = useRouter()
   return useMutation(bannerClient.update, {
-    onSuccess: () => {
-      toast.success('Se actualizó la nota.')
-      router.back()
+    onSuccess: async () => {
+      {
+        await router.back() // Espera a que la navegación se complete
+        setTimeout(() => {
+          toast.success('Se actualizó el banner.')
+        }, 400) // Espera 400 milisegundos antes de mostrar el Toast
+      }
     },
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.BLOG)

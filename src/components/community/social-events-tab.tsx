@@ -19,7 +19,7 @@ export default function SocialEventsTab() {
     limit: 10,
     page,
     search: searchTerm,
-    type: 'Social',
+    type: 'SOCIAL',
   })
 
   function handleSearch({ searchText }: { searchText: string }) {

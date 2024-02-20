@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { useCreateBannerMutation, useUpdateBannerMutation } from '@/data/banner'
 import { Note } from '@/types/blog'
 import { getErrorMessage } from '@/utils/form-error'
@@ -33,9 +34,9 @@ type FormValues = {
 //   initialValues?: Note | null
 // }
 
-export default function CreateOrUpdateNoteForm({ initialValues }) {
-  console.log(initialValues)
+export default function CreateOrUpdateNoteForm({ initialValues }: any) {
   const router = useRouter()
+
   const [selectedCategory, setSelectedCategory] = useState(null)
 
   const {
@@ -97,22 +98,42 @@ export default function CreateOrUpdateNoteForm({ initialValues }) {
       thumbnailUrl: values.thumbnailUrl,
     }
 
-    try {
-      createBanner(input)
-    } catch (error) {
-      const serverErrors = getErrorMessage(error)
-      Object.keys(serverErrors?.validation).forEach((field: any) => {
-        setError(field.split('.')[1], {
-          type: 'manual',
-          message: serverErrors?.validation[field][0],
+    if (initialValues) {
+      const {
+        query: { id },
+      } = router
+
+      const idBannerUpdate = id as unknown as number
+
+      try {
+        updateBanner({ id: idBannerUpdate, ...input })
+      } catch (error) {
+        const serverErrors = getErrorMessage(error)
+        Object.keys(serverErrors?.validation).forEach((field: any) => {
+          setError(field.split('.')[1], {
+            type: 'manual',
+            message: serverErrors?.validation[field][0],
+          })
         })
-      })
+      }
+    } else {
+      try {
+        createBanner(input)
+      } catch (error) {
+        const serverErrors = getErrorMessage(error)
+        Object.keys(serverErrors?.validation).forEach((field: any) => {
+          setError(field.split('.')[1], {
+            type: 'manual',
+            message: serverErrors?.validation[field][0],
+          })
+        })
+      }
     }
   }
 
   const imageInformation = (
     <span>
-      Carga la imagen del banner desde aquí <br />
+      Carga la imagen o video del banner desde aquí <br />
       La dimensión de la imagen se recomienda sea de&nbsp;
       <span className="font-bold">1024x1024 px</span>
     </span>
@@ -137,7 +158,7 @@ export default function CreateOrUpdateNoteForm({ initialValues }) {
           <div className="container mx-auto p-4">
             <Form.Item
               name="thumbnailUrl"
-              label="Imagen del banner"
+              label="Imagen o video del banner"
               valuePropName="fileList"
               getValueFromEvent={(e) => e && e.fileList}
               rules={[
@@ -147,7 +168,11 @@ export default function CreateOrUpdateNoteForm({ initialValues }) {
                 },
               ]}
             >
-              <Uploader form={form} />
+              <Uploader
+                form={form}
+                field="thumbnailUrl"
+                accept="image/jpeg, image/png, image/gif, video/mp4, video/mpeg, video/quicktime, video/x-msvideo, video/x-ms-wmv"
+              />
             </Form.Item>
           </div>
         </Card>
@@ -214,7 +239,7 @@ export default function CreateOrUpdateNoteForm({ initialValues }) {
           className=" h-12 rounded-md border border-transparent bg-accent px-5 py-0 font-semibold text-light transition duration-300 ease-in-out hover:bg-accent-hover"
           htmlType="submit"
         >
-          Crear
+          {initialValues ? 'Actualizar ' : 'Crear'}
         </button>
       </div>
     </Form>

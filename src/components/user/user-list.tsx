@@ -86,7 +86,7 @@ const UserList = ({ users, paginatorInfo, onPagination }: UserListProps) => {
         return (
           <ActionButtons
             id={id}
-            userStatus={me?.id !== parseInt(id) ? true : false}
+            userStatus={me?.role === 'DIRECTOR' ? true : false}
             isUserActive={!banned}
             detailsUrl={
               me?.id !== parseInt(id)

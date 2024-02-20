@@ -221,69 +221,116 @@ export default function OrderUpdateForm({ order }: Order | any) {
               />
             </Descriptions.Item>
 
-            <Descriptions.Item label="Tipo de pago">
-              <span className="lowercase">{order?.payment.method}</span>
-            </Descriptions.Item>
+            {order && order.payment && order.payment.method !== null ? (
+              <Descriptions.Item label="Tipo de pago">
+                <span className="lowercase">{order.payment.method}</span>
+              </Descriptions.Item>
+            ) : null}
 
-            <Descriptions.Item label="Total del pago">
-              <span className="text-green-600">${order?.payment.total}</span>
-            </Descriptions.Item>
+            {order && order.payment && order.payment.total !== null ? (
+              <Descriptions.Item label="Total del pago">
+                <span className="text-green-600">${order?.payment.total}</span>
+              </Descriptions.Item>
+            ) : null}
 
-            <Descriptions.Item label="Nombre del Evento">
-              <span>{order?.payment.name}</span>
-            </Descriptions.Item>
+            {order && order.payment && order.payment.name !== null ? (
+              <Descriptions.Item label="Nombre del Evento">
+                <span>{order?.payment.name}</span>
+              </Descriptions.Item>
+            ) : null}
 
-            <Descriptions.Item label="Caratula del Evento">
-              <div className="flex justify-center">
-                <Image
-                  src={order?.seats[0].EventsSpaces.event.thumbnailUrl}
-                  alt={'image'}
-                  width={100}
-                  height={100}
-                />
-              </div>
-            </Descriptions.Item>
+            {order &&
+            order.seats[0] &&
+            order?.seats[0].EventsSpaces.event.thumbnailUrl !== null ? (
+              <Descriptions.Item label="Caratula del Evento">
+                <div className="flex justify-center">
+                  <Image
+                    src={order?.seats[0].EventsSpaces.event.thumbnailUrl}
+                    alt={'image'}
+                    width={100}
+                    height={100}
+                  />
+                </div>
+              </Descriptions.Item>
+            ) : (
+              <Descriptions.Item label="Caratula del Evento">
+                <div className="flex justify-center">
+                  <Image
+                    src={'/teatro.jpeg'}
+                    alt={'image'}
+                    width={100}
+                    height={100}
+                  />
+                </div>
+              </Descriptions.Item>
+            )}
 
-            <Descriptions.Item label="Fecha del Evento" span={2}>
-              <span className="text-sky-500">
-                {format(
-                  new Date(order?.seats[0].EventsSpaces.startDate),
-                  'EEEE, dd-MM-yyyy HH:mm',
-                  {
-                    locale: es,
-                  }
-                )}
-              </span>
-            </Descriptions.Item>
-
-            <Descriptions.Item label="Usuario del pedido" span={2}>
-              {order?.user.firstName + ' ' + order?.user.lastName}
-            </Descriptions.Item>
-
-            <Descriptions.Item label="Fecha del Evento" span={2}>
-              <span className="text-sky-500">
-                {format(
-                  new Date(order?.seats[0].EventsSpaces.startDate),
-                  'EEEE, dd-MM-yyyy HH:mm',
-                  {
-                    locale: es,
-                  }
-                )}
-              </span>
-            </Descriptions.Item>
-
-            <Descriptions.Item label="Asientos" span={2}>
-              {/* faltaria iterar */}
-
-              {order.seats.map((element: any, index: any) => (
-                <span
-                  key={index}
-                  className="ml-2 rounded-full bg-blue-300 px-4 py-2 text-white"
-                >
-                  {element.name}
+            {order &&
+            order?.seats[0] &&
+            order?.seats[0].EventsSpaces.startDate !== null ? (
+              <Descriptions.Item label="Fecha del Evento" span={2}>
+                <span className="text-sky-500">
+                  {format(
+                    new Date(order?.seats[0].EventsSpaces.startDate),
+                    'EEEE, dd-MM-yyyy HH:mm',
+                    {
+                      locale: es,
+                    }
+                  )}
                 </span>
-              ))}
-            </Descriptions.Item>
+              </Descriptions.Item>
+            ) : (
+              <Descriptions.Item label="Fecha de la renta" span={2}>
+                <span className="text-sky-500">
+                  {format(
+                    new Date(order?.rents[0].startDate),
+                    'EEEE, dd-MM-yyyy HH:mm',
+                    {
+                      locale: es,
+                    }
+                  )}
+                </span>
+              </Descriptions.Item>
+            )}
+
+            {order && order.user && order?.user.firstName !== null ? (
+              <Descriptions.Item label="Usuario del pedido" span={2}>
+                {order?.user.firstName + ' ' + order?.user.lastName}
+              </Descriptions.Item>
+            ) : null}
+
+            {/* <Descriptions.Item label="Fecha del Evento" span={2}>
+              <span className="text-sky-500">
+                {format(
+                  new Date(order?.seats[0].EventsSpaces.startDate),
+                  'EEEE, dd-MM-yyyy HH:mm',
+                  {
+                    locale: es,
+                  }
+                )}
+              </span>
+            </Descriptions.Item> */}
+
+            {order.seats.length > 0 ? (
+              <Descriptions.Item label="Asientos" span={2}>
+                {/* faltaria iterar */}
+
+                {order.seats.map((element: any, index: any) => (
+                  <span
+                    key={index}
+                    className="ml-2 rounded-full bg-blue-300 px-4 py-2 text-white"
+                  >
+                    {element.name}
+                  </span>
+                ))}
+              </Descriptions.Item>
+            ) : null}
+
+            {order && order.payment && order.payment.name !== null ? (
+              <Descriptions.Item label="Nombre del Evento">
+                <span>{order?.payment.name}</span>
+              </Descriptions.Item>
+            ) : null}
 
             {order?.orderProduct.length > 0 ?? (
               <Descriptions.Item label="Productos" span={2}>
