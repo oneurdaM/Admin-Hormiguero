@@ -107,104 +107,6 @@ export default function OrderUpdateForm({ order }: Order | any) {
           className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
         />
         <Card className="mb-5 w-full sm:w-8/12 md:w-2/3">
-          {/* <Input
-            label="ID/Folio"
-            {...register('id')}
-            type="text"
-            variant="outline"
-            className="mb-4"
-            disabled
-            error={errors.id?.message?.toString()}
-          /> */}
-
-          {/* <Input
-            label="Categoría del pedido"
-            {...register('category')}
-            type="text"
-            variant="outline"
-            className="mb-4"
-            disabled
-            error={errors.category?.message?.toString()}
-          />
-          <Input
-            label="Nombre"
-            {...register('name')}
-            type="text"
-            variant="outline"
-            className="mb-4"
-            disabled
-            error={errors.name?.message?.toString()}
-          /> */}
-          {/* <Input
-            label="Correo electrónico"
-            {...register('email')}
-            type="text"
-            variant="outline"
-            className="mb-4"
-            disabled
-            error={errors.email?.message?.toString()}
-          /> */}
-          {/* <Input
-            label="Telefono"
-            {...register('phone')}
-            type="text"
-            variant="outline"
-            className="mb-4"
-            disabled
-            error={errors.phone?.message?.toString()}
-          />
-          <Input
-            label="Dirección"
-            {...register('address')}
-            type="text"
-            variant="outline"
-            className="mb-4"
-            disabled
-            error={errors.address?.message?.toString()}
-          /> */}
-
-          {/* <Input
-            disabled
-            label="Fecha de creación"
-            {...register('createdAt')}
-            variant="outline"
-            className="mb-5"
-            error={errors.createdAt?.message?.toString()}
-          /> */}
-
-          {/* <Input
-            type="date"
-            label="Fecha de entrega"
-            {...register('deliverDate')}
-            variant="outline"
-            className="mb-5"
-            min={minDate}
-            error={errors.deliverDate?.message?.toString()}
-          /> */}
-
-          {/* <Label className="mb-4">Estatus</Label>
-          <Select
-            name="status"
-            isLoading={loading}
-            options={statusOptions}
-            getOptionLabel={(option: any) => option?.label ?? ''}
-            getOptionValue={(option: any) => option?.value ?? ''}
-            placeholder="Rol del usuario"
-            onChange={(value: any) => setStatus(value?.value ?? null)}
-            isClearable={true}
-            defaultValue={{ label: order?.status, value: order?.status }}
-          /> */}
-
-          {/* <Input
-            disabled
-            label="Total"
-            {...register('total')}
-            type="number"
-            variant="outline"
-            className="my-4"
-            error={errors.total?.message?.toString()}
-          /> */}
-
           {/* list/table of order products */}
           <Descriptions
             bordered
@@ -280,10 +182,10 @@ export default function OrderUpdateForm({ order }: Order | any) {
                 </span>
               </Descriptions.Item>
             ) : (
-              <Descriptions.Item label="Fecha de la renta" span={2}>
+              <Descriptions.Item label="Fecha de la venta" span={2}>
                 <span className="text-sky-500">
                   {format(
-                    new Date(order?.rents[0].startDate),
+                    new Date(order?.createdAt),
                     'EEEE, dd-MM-yyyy HH:mm',
                     {
                       locale: es,

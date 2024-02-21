@@ -18,8 +18,6 @@ export default function OrderDetail() {
     id: Number(id),
   })
 
-  console.log('SDSDSSD', order)
-
   if (loading) return <Loader text="Cargando información del pedido..." />
 
   if (error) return <ErrorMessage message={error.message} />
