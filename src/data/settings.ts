@@ -14,12 +14,9 @@ export const useUpdateSettingsMutation = () => {
 
   return useMutation(settingsClient.update, {
     onSuccess: async (data) => {
-      await router.push('/blog')
-      setTimeout(() => {
-        updateSettings(data?.options)
+      updateSettings(data?.options)
 
-        toast.success('Información actualizada')
-      }, 400)
+      toast.success('Información actualizada')
     },
     // Always refetch after error or success:
     onSettled: () => {

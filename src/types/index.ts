@@ -190,6 +190,7 @@ export type QueryOptionsType = {
   limit?: number
   orderBy?: string
   sortedBy?: SortOrder
+  type: string
 }
 
 export interface CreateMessageSeenInput {

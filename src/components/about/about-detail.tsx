@@ -717,20 +717,20 @@ const AboutDetailForm = ({ settings, error, loading }: Settings | any) => {
       </div>
       <div className="mb-4 text-end">
         <Form.Item>
-          <ButtonMy
+          {/* <ButtonMy
             variant="outline"
             onClick={router.back}
             className="me-4"
             type="button"
           >
             Atrás
-          </ButtonMy>
+          </ButtonMy> */}
 
           <button
             className=" h-12 rounded-md border border-transparent bg-accent px-5 py-0 font-semibold text-light transition duration-300 ease-in-out hover:bg-accent-hover"
             htmlType="submit"
           >
-            Crear{' '}
+            {settings ? 'Actualizar' : 'Crear'}
           </button>
         </Form.Item>
       </div>

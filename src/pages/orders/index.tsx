@@ -12,11 +12,14 @@ import Select from '@/components/select/select'
 
 export default function Orders() {
   const [searchTerm, setSearchTerm] = useState('')
+  const [orderType, setOrderType] = useState('') // Nuevo estado para el tipo de orden
+
   const [page, setPage] = useState(1)
   const { orders, loading, error, paginatorInfo } = useOrdersQuery({
     limit: 10,
     page,
     search: searchTerm,
+    type: orderType,
   })
 
   const options = [
@@ -38,6 +41,17 @@ export default function Orders() {
     },
   ]
 
+  const typeOrder = [
+    {
+      name: 'Eventos',
+      id: 0,
+    },
+    {
+      name: 'Rentas',
+      id: 1,
+    },
+  ]
+
   // if (loading) return <Loader text="Cargando pedidos..." />
 
   // if (error) return <ErrorMessage message={error.message} />
@@ -47,6 +61,25 @@ export default function Orders() {
     setPage(1)
   }
 
+  function handleOrder(value: string) {
+    let type = ''
+    switch (value) {
+      case 'Eventos':
+        type = 'SEATS'
+        break
+
+      case 'Rentas':
+        type = 'RENTS'
+
+        break
+      default:
+        type = ''
+
+        break
+    }
+    setOrderType(type) // Actualiza el tipo de orden
+    setPage(1)
+  }
   const habdleFiler = ({ searchText }: { searchText: string }) => {}
 
   function handlePagination(current: number) {
@@ -55,8 +88,18 @@ export default function Orders() {
   return (
     <>
       <Card className="mb-8 flex flex-col items-center md:flex-row">
-        <div className="mb-4 md:mb-0 md:w-1/4">
-          <h1 className="text-lg font-semibold text-heading">Pedidos</h1>
+        <div className="mb-4 flex items-center md:mb-0 md:w-1/4">
+          <h1 className="mr-3 text-lg font-semibold text-heading">Pedidos</h1>
+          <Select
+            className="w-full"
+            name="estatus"
+            options={typeOrder ?? []}
+            getOptionLabel={(option: any) => option?.name ?? ''}
+            getOptionValue={(option: any) => option?.id ?? ''}
+            placeholder="Tipo de orden"
+            onChange={(value: any) => handleOrder(value?.name ?? '')}
+            isClearable={true}
+          />
         </div>
 
         <div className="ms-auto flex w-full flex-col items-center space-y-4 md:flex-row md:space-y-0 xl:w-2/3">
